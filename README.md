@@ -22,10 +22,7 @@
 
 ## Descrição
 
-## Critério de Permanencia na Equipe
-# 
-
-> > 
+## Critérios de Permanência na Equipe
 
 ## Tecnologias Utilizadas
 
@@ -89,7 +86,8 @@
             </tr>
           </tbody>
         </table>
-      </div></li>
+      </div>
+    </li>
     <!--Burndown-->
     <li>
       <h2>
@@ -145,7 +143,8 @@
             </tr>
           </tbody>
         </table>
-      </div></li>
+      </div>
+    </li>
     <!--Burndown-->
     <li>
       <h2>
