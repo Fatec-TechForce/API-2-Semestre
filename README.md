@@ -23,9 +23,7 @@
 ## Descrição
 
 ## Critério de Permanencia na Equipe
-# 
-
-> > 
+Acesse os critérios **[aqui.](https://github.com/Fatec-TechForce/API-2-Semestre/blob/main/%F0%9F%94%B9%20Crit%C3%A9rios%20de%20Perman%C3%AAncia.pdf)**
 
 ## Tecnologias Utilizadas
 
