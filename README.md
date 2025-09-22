@@ -31,7 +31,7 @@ Todos os integrantes devem seguir critérios claros de conduta e permanência, a
 
 ## 1. Participação nas Reuniões Semanais  
 
-+  Limite de faltas: 02 (faltas justificadas devem ser comunicadas previamente). 
++  Limite de faltas: 3 (faltas justificadas devem ser comunicadas previamente). 
 
 ## 2. Adesão a Padrões Definidos  
 
@@ -41,15 +41,11 @@ Todos os integrantes devem seguir critérios claros de conduta e permanência, a
 
 ## 3. Compromisso com o Objetivo Comum  
 
-+  Priorizar decisões que beneficiem o projeto como um todo, e não apenas interesses 
-
-individuais.  
-
 +  Estar disposto(a) a apoiar colegas quando houver necessidade. 
 
 ## 4. Entrega de Resultados Visíveis  
 
-+  Mostrar evolução do que foi feito em reuniões de acompanhamento. 
++  Mostrar evolução do que foi feito nas reuniões semanais. 
 
 ## 5. Capacidade de Autonomia  
 
@@ -58,9 +54,8 @@ individuais.
 +  Buscar soluções antes de solicitar ajuda, mostrando proatividade. 
 
 ## 6. Transparência
+
 +  Atualizar tarefas no quadro de gestão.
- 
-+  Não “sumir” sem dar retorno sobre atividades pendentes. 
 
 ## 7. Cumprimento dos Papéis  
 
@@ -70,15 +65,15 @@ individuais.
 
 ## 8. Respeito à Propriedade do Grupo  
 
-+  Não excluir arquivos/repositórios sem permissão.  
++  Não excluir arquivos/repositórios sem permissão.
 
-+  Não alterar código/documentação dos colegas sem aviso prévio. 
++  Não alterar código/documentação dos colegas sem aviso prévio.
+
++  Não realizar o commit na branch main sem o consentimento dos outros membros do grupo
 
 ## 9. Resolução de Problemas  
 
 +  Não abandonar tarefas quando surgir dificuldade: procurar ajuda antes de desistir.  
-
-+  Mostrar resiliência diante de bugs ou atrasos. 
 
 ##### ✅ Todos os integrantes que não cumprirem estes critérios poderão ser avaliados pelo grupo, podendo perder o direito de permanência no projeto.
 </details>
@@ -86,8 +81,9 @@ individuais.
 ## Tecnologias Utilizadas
 
 - 💻 **Linguagem:** Java
-- 🔧 **Ferramentas:** Eclipse IDE
+- 💾 **IDE:** Intellij
 - 🗃️ **Metodologia:** Scrum
+- 🔧 **Ferramentas:** Jira, Figma, Teams
 
 ## Funcionalidades
 
@@ -277,7 +273,6 @@ individuais.
  | -           | -                                        | -        | 
  |Team Member  | Gabriel Valente Belarmino                |  [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/gabrielvalentesjc)|
  |Team Member  | Guilherme Almeida de Arruda              |   [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/arrudaguilherme5)|
- |Team Member  | Paulo Henrique Silva Cumbica             |   [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/cumbicaphs)|
  |Scrum Master | Leonardo Amon Sumiyoshi Hashimoto        |   [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Leonardo1022) |
  |Product Owner| Maria Eduarda Teixeira Miller de Oliveira|  [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/maria-oliveira)|
  |Team Member  | Natália Pereira da Silva                 |  [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/nataliapersis)|
