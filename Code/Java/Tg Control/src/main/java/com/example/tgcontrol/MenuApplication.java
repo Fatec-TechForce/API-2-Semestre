@@ -14,7 +14,7 @@ public class MenuApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuApplication.class.getResource("navbar-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuApplication.class.getResource("login_User.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         primaryStage.setTitle("TgControl");
@@ -29,7 +29,7 @@ public class MenuApplication extends Application {
             primaryStage.setY(event.getScreenY() - yOffset);
         });
 
-        primaryStage.setMaximized(true);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
