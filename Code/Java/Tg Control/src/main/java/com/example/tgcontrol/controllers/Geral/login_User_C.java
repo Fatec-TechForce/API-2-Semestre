@@ -2,7 +2,9 @@ package com.example.tgcontrol.controllers.Geral;
 import com.example.tgcontrol.NavbarApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -53,5 +55,16 @@ public class login_User_C {
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void irParaCadastro(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/AlunoScenes/forms_Aluno.fxml"));
+        Scene cadastroScene = new Scene(fxmlLoader.load());
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(cadastroScene);
+        stage.setTitle("TgControl - Cadastro de Aluno");
+        stage.show();
     }
 }
