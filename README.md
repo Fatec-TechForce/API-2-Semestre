@@ -1,5 +1,7 @@
 # API 2° Semestre
 
+<img width="3264" height="1280" alt="Gemini_Generated_Image_sp9uipsp9uipsp9u (1)" src="https://github.com/user-attachments/assets/02221175-42b1-4903-89b7-8e7e9774dd6f" />
+
 ## Tópicos 
 
 :small_blue_diamond: [Descrição do projeto](#Descrição)
