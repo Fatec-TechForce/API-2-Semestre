@@ -1,0 +1,26 @@
+Definition of Done (DoD) – TG Control
+1. Critérios para uma User Story Concluída
+Uma User Story é considerada DONE quando todos os itens a seguir forem atendidos:
+
+1.1 Código e Desenvolvimento
+O código da funcionalidade foi implementado seguindo boas práticas de programação e os padrões de codificação definidos pela equipe.
+O código foi submetido a revisão por outro desenvolvedor e aprovado.
+A funcionalidade foi integrada ao repositório principal sem introduzir bugs ou causar regressões.
+O banco de dados armazena corretamente seções, versões, feedbacks, status e notificações, conforme especificação.
+
+1.2 Testes e Qualidade
+Foram criados e executados testes automatizados para a funcionalidade.
+Testes manuais de aceitação foram realizados, cobrindo os fluxos principais e casos de uso reais.
+Todos os critérios de aceitação da User Story foram validados.
+Não há bugs críticos ou de alta prioridade conhecidos na funcionalidade.
+
+1.3 Usabilidade e Conformidade
+A interface está funcional, intuitiva e consistente com o design geral da aplicação.
+Mensagens de erro, alertas e notificações são claras e úteis para o usuário.
+A performance é aceitável, com respostas rápidas em operações comuns.
+As regras de segurança foram aplicadas corretamente.
+
+1.4 Documentação e Validação Final
+A documentação técnica foi atualizada para refletir as mudanças realizadas.
+Notas de lançamento ou um guia de uso básico para a nova funcionalidade foram preparados, se necessário.
+O Incremento está pronto para ser lançado em ambiente de produção.
