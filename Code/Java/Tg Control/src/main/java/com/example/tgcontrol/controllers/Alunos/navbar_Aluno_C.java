@@ -23,6 +23,6 @@ public class navbar_Aluno_C extends BaseNavbarController {
 
     @FXML
     public void notifications(ActionEvent actionEvent) {
-        carregarPagina("GeralScenes/notifications_User.fxml");
+        carregarPagina("AlunoScenes/notifications_Aluno.fxml");
     }
 }
