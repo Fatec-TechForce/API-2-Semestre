@@ -22,7 +22,7 @@
                <children>
                   <ImageView fitHeight="117.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../Downloads/API-2-Semestre-main/API-2-Semestre-main/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/TgControlSymbol.png" />
+                        <Image url="@../images/TgControlSymbol.png" />
                      </image>
                      <HBox.margin>
                         <Insets top="5.0" />
@@ -38,7 +38,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Downloads/API-2-Semestre-main/API-2-Semestre-main/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/homeSymbol.png" />
+                              <Image url="@../images/homeSymbol.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -56,7 +56,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Downloads/API-2-Semestre-main/API-2-Semestre-main/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/peopleSymbol.png" />
+                              <Image url="@../images/peopleSymbol.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -68,7 +68,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Downloads/API-2-Semestre-main/API-2-Semestre-main/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/peopleSymbol.png" />
+                              <Image url="@../images/peopleSymbol.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -84,7 +84,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Downloads/API-2-Semestre-main/API-2-Semestre-main/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/peopleSymbol.png" />
+                              <Image url="@API-2-Semestre/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/IconeListaSymbol.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -107,7 +107,7 @@
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Downloads/API-2-Semestre-main/API-2-Semestre-main/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/UserSymbol.png" />
+                              <Image url="@../images/UserSymbol.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -117,7 +117,7 @@
                   </Button>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../Downloads/API-2-Semestre-main/API-2-Semestre-main/Code/Java/Tg%20Control/src/main/resources/com/example/tgcontrol/images/notificationSymbol.png" />
+                        <Image url="@../images/notificationSymbol.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="5.0" right="10.0" top="18.0" />
