@@ -1,16 +1,17 @@
 package com.example.tgcontrol.controllers;
 
 import com.example.tgcontrol.utils.UIUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.StackPane;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public abstract class BaseNavbarController implements Initializable {
-
-    @FXML
-    protected StackPane contentArea;
 
     protected abstract String getInitialFxmlPath();
 
@@ -22,8 +23,15 @@ public abstract class BaseNavbarController implements Initializable {
         }
     }
 
+    @FXML
+    public void sair(ActionEvent actionEvent)
+    {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        UIUtils.loadNewScene(stage, "GeralScenes/login_User.fxml");
+    }
+
     protected void carregarPagina(String nomeArquivo) {
-        String caminhoCompleto = "/com/example/tgcontrol/" + nomeArquivo;
-        UIUtils.loadFxmlInPane(contentArea, caminhoCompleto);
+        UIUtils.loadFxml(nomeArquivo);
     }
 }
