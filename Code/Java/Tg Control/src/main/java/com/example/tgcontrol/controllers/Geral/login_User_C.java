@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -45,5 +46,12 @@ public class login_User_C {
         } else {
             UIUtils.showAlert("Erro de Login", "Usuário ou senha inválidos.");
         }
+    }
+
+    @FXML
+    public void register(MouseEvent mouseEvent) {
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        UIUtils.loadNewScene(stage, "GeralScenes/registration_User.fxml");
+
     }
 }

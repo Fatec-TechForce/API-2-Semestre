@@ -5,16 +5,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.login_User_C">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.registration_User_C">
    <children>
       <ImageView fitHeight="81.0" fitWidth="229.0" layoutX="330.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/TgControlSymbol.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tbx_Login" layoutX="343.0" layoutY="188.0" prefHeight="25.0" prefWidth="204.0" promptText="Login" />
+      <TextField fx:id="tbx_Login" layoutX="343.0" layoutY="188.0" prefHeight="25.0" prefWidth="204.0" promptText="Email Institucional" />
       <PasswordField fx:id="tbx_Senha" layoutX="343.0" layoutY="237.0" prefHeight="25.0" prefWidth="204.0" promptText="Senha" />
-      <Button fx:id="btn_Login" layoutX="378.0" layoutY="285.0" mnemonicParsing="false" onAction="#Login" prefHeight="25.0" prefWidth="134.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Logar" textFill="WHITE" />
+      <Button fx:id="btn_Resgister" layoutX="378.0" layoutY="319.0" mnemonicParsing="false" onAction="#Register" prefHeight="25.0" prefWidth="134.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Cadastrar" textFill="WHITE" />
       <AnchorPane layoutY="453.0" prefHeight="72.0" prefWidth="889.0" style="-fx-background-color: #D9D9D9;">
          <children>
             <Label layoutX="322.0" layoutY="4.0" text="Ao continuar, você concorda com os nossos.">
@@ -29,7 +29,8 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="470.0" layoutY="324.0" onMouseClicked="#register" text="Clique aqui!" textFill="#6a1b9a" />
-      <Label layoutX="365.0" layoutY="324.0" text="Primeira acesso?" />
+       <Label layoutX="378.0" layoutY="353.0" text="Fazer login?" />
+      <PasswordField fx:id="tbx_ConfirmarSenha" layoutX="343.0" layoutY="278.0" prefHeight="25.0" prefWidth="204.0" promptText="Confirmar Senha" />
+      <Label layoutX="455.0" layoutY="353.0" onMouseClicked="#Login" text="Clique Aqui!" textFill="#6a1b9a" />
    </children>
 </AnchorPane>

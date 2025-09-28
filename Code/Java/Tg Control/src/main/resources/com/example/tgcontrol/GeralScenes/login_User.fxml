@@ -29,5 +29,7 @@
             </Label>
          </children>
       </AnchorPane>
+      <Label layoutX="470.0" layoutY="324.0" onMouseClicked="#register" text="Clique aqui!" textFill="#6a1b9a" />
+      <Label layoutX="365.0" layoutY="324.0" text="Primeira acesso?" />
    </children>
 </AnchorPane>
