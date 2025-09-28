@@ -1,9 +1,9 @@
 package com.example.tgcontrol.controllers.Geral;
-import com.example.tgcontrol.NavbarApplication;
+
+import com.example.tgcontrol.utils.UIUtils; // 👈 Adicionar esta importação
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -40,18 +40,10 @@ public class login_User_C {
         if (fxmlParaCarregar != null) {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            NavbarApplication.load(stage, fxmlParaCarregar);
+            UIUtils.loadNewScene(stage, fxmlParaCarregar);
 
         } else {
-            mostrarAlerta("Erro de Login", "Usuário ou senha inválidos.");
+            UIUtils.showAlert("Erro de Login", "Usuário ou senha inválidos.");
         }
-    }
-
-    private void mostrarAlerta(String titulo, String mensagem) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
     }
 }
