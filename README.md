@@ -49,8 +49,6 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 
 ## Sprints
 
-## Sprints
-
 <!--Sprint 1-->
 <details>
   <summary>Sprint 1</summary>
@@ -108,9 +106,9 @@ Toda a documentação do projeto está disponível na pasta [`documentacao`](./d
 ### Conteúdo
 - Definition of Ready (DoR).
 - Definition of Done (DoD).
+- Modelagem de Banco de Dados.
 - Estratégia de Branch.
 - Padrão de Commits.
-- Outros documentos relevantes.
   
 
 ## Equipe
