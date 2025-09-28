@@ -1,6 +1,376 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" />
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
+    <top>
+        <HBox BorderPane.alignment="BOTTOM_CENTER" />
+    </top>
+    <right>
+        <StackPane fx:id="contentArea" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="BASELINE_CENTER" maxHeight="200.0" minHeight="200.0" prefHeight="200.0">
+                    <children>
+                        <HBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="180.0" prefHeight="180.0" prefWidth="890.0">
+                            <children>
+                                <VBox maxHeight="132.0" maxWidth="221.0" minHeight="132.0" minWidth="211.0" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
+                                    <children>
+                                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="197.0" text="Total de Alunos" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="System Bold" size="16.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="76.0" prefWidth="227.0" text="90" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="System Bold" size="40.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets top="-30.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="32.0" top="32.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox maxHeight="132.0" maxWidth="221.0" minHeight="132.0" minWidth="221.0" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
+                                    <children>
+                                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="198.0" text="TGs Concluídos" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="System Bold" size="16.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="76.0" prefWidth="230.0" text="15" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="System Bold" size="40.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets top="-30.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="32.0" top="32.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox maxHeight="132.0" maxWidth="221.0" minHeight="132.0" minWidth="221.0" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
+                                    <children>
+                                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="204.0" text="Pendentes" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="System Bold" size="16.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="76.0" prefWidth="230.0" text="3" textAlignment="CENTER">
+                                            <font>
+                                                <Font name="System Bold" size="40.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets top="-30.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="32.0" top="32.0" />
+                                    </HBox.margin>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+                <HBox maxHeight="350.0" minHeight="350.0" prefHeight="350.0" prefWidth="785.0" StackPane.alignment="BOTTOM_LEFT">
+                    <StackPane.margin>
+                        <Insets left="30.0" />
+                    </StackPane.margin>
+                    <children>
+                        <VBox maxHeight="302.0" minHeight="150.0" prefHeight="302.0" prefWidth="786.0" style="-fx-background-color: transparent; -fx-border-color: #e0e0e0; -fx-border-radius: 8px; -fx-border-width: 2px;">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" minWidth="150.0" prefHeight="31.0" prefWidth="150.0">
+                                    <children>
+                                        <Label maxWidth="200.0" minWidth="164.0" prefHeight="26.0" prefWidth="178.0" text="Aguardando Correção:">
+                                            <font>
+                                                <Font name="System Bold" size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets top="10.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" />
+                                    </padding>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="1348.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                    <children>
+                                        <Label prefHeight="30.0" prefWidth="81.0" text="Progresso" textFill="#828282">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="BOTTOM_LEFT" prefHeight="29.0" prefWidth="238.0" text="Aluno" textFill="#828282">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="BOTTOM_LEFT" prefHeight="29.0" prefWidth="164.0" text="Ação/Turma" textFill="#828282">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="BOTTOM_LEFT" prefHeight="29.0" prefWidth="84.0" text="Semestre" textFill="#828282">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="81.0" text="Status" textFill="#828282">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" />
+                                    </padding>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="73.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="781.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                    <children>
+                                        <Label prefHeight="30.0" prefWidth="72.0" text="100%">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="249.0" text="Guilherme de Almeida Arruda" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="181.0" style="-fx-border-color: #828282; -fx-border-radius: 8px;" text="YT_BANCO_DE_DADOS">
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="90.0" text="2025" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="124.0" style="-fx-border-color: #828282; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-background-color: #fbc02d;" text="Pendente" textFill="WHITE">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="2.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" />
+                                    </padding>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="781.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                    <children>
+                                        <Label prefHeight="30.0" prefWidth="72.0" text="90%">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="249.0" text="Guilherme de Almeida Arruda" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="15.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="180.0" style="-fx-border-color: #828282; -fx-border-radius: 8px;" text="YT_BANCO_DE_DADOS">
+                                            <font>
+                                                <Font size="12.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="90.0" text="2025" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="124.0" style="-fx-border-color: #828282; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-background-color: #e53935;" text="Revisão" textFill="WHITE">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="2.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" />
+                                    </padding>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="781.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                    <children>
+                                        <Label prefHeight="30.0" prefWidth="72.0" text="100%">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="249.0" text="Guilherme de Almeida Arruda" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="15.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="181.0" style="-fx-border-color: #828282; -fx-border-radius: 8px;" text="YT_BANCO_DE_DADOS">
+                                            <font>
+                                                <Font size="12.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="90.0" text="2025" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="121.0" style="-fx-border-color: #828282; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-background-color: #fbc02d;" text="Pendente" textFill="WHITE">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="2.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" />
+                                    </padding>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="781.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                    <children>
+                                        <Label prefHeight="30.0" prefWidth="72.0" text="100%">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="249.0" text="Guilherme de Almeida Arruda" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="15.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="181.0" style="-fx-border-color: #828282; -fx-border-radius: 8px;" text="YT_BANCO_DE_DADOS">
+                                            <font>
+                                                <Font size="12.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="90.0" text="2025" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets right="20.0" />
+                                            </padding>
+                                        </Label>
+                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="122.0" style="-fx-border-color: #828282; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-background-color: #fbc02d;" text="Pendente" textFill="WHITE">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="2.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" />
+                                    </padding>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </HBox>
+                            </children>
+                            <HBox.margin>
+                                <Insets bottom="20.0" left="32.0" top="20.0" />
+                            </HBox.margin>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children></StackPane>
+    </right>
+</BorderPane>
