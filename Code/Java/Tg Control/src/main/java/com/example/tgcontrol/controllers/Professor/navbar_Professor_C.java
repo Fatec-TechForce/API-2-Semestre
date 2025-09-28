@@ -28,6 +28,6 @@ public class navbar_Professor_C extends BaseNavbarController {
 
     @FXML
     public void notifications(ActionEvent actionEvent) {
-        carregarPagina("GeralScenes/notifications_User.fxml");
+        carregarPagina("ProfessorScenes/notifications_Professor.fxml");
     }
 }
