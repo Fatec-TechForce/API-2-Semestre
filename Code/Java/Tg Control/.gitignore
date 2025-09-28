@@ -45,3 +45,6 @@ out/
 # Mac / Linux / Windows system files
 .DS_Store
 Thumbs.db
+
+# Remove Target
+.API-2-Semestre/Code/Java/Tg Control/target/
