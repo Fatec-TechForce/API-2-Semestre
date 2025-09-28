@@ -1,6 +1,6 @@
 package com.example.tgcontrol.utils;
 
-import com.example.tgcontrol.Launcher; // Usado como referência para localizar FXMLs no classpath
+import com.example.tgcontrol.Launcher;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

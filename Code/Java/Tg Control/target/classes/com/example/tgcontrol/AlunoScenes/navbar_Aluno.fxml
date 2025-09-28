@@ -30,7 +30,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#andamentoTG" prefHeight="27.0" prefWidth="148.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Andamento do TG" textAlignment="CENTER">
+            <Button layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#andamentoTG" prefHeight="27.0" prefWidth="161.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Andamento do TG" textAlignment="CENTER">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font>
