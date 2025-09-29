@@ -36,6 +36,10 @@ public class login_User_C {
             {
                 fxmlParaCarregar = "ProfessorScenes/navbar_Professor.fxml";
             }
+            else if (login.equals("professortg.escola@fatec.sp.gov.br"))
+            {
+                fxmlParaCarregar = "ProfessorScenes/ProfessorTGScenes/navbar_ProfessorTG.fxml";
+            }
         }
 
         if (fxmlParaCarregar != null) {
