@@ -3,7 +3,9 @@ package com.example.tgcontrol.controllers.Geral;
 import com.example.tgcontrol.utils.UIUtils; // 👈 Adicionar esta importação
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -47,11 +49,15 @@ public class login_User_C {
             UIUtils.showAlert("Erro de Login", "Usuário ou senha inválidos.");
         }
     }
-
     @FXML
-    public void register(MouseEvent mouseEvent) {
-        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        UIUtils.loadNewScene(stage, "GeralScenes/registration_User.fxml");
+    public void irParaCadastro(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/AlunoScenes/forms_Aluno.fxml"));
+        Scene cadastroScene = new Scene(fxmlLoader.load());
 
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(cadastroScene);
+        stage.setTitle("TgControl - Cadastro de Aluno");
+        stage.show();
     }
 }
+
