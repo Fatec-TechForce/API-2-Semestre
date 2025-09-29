@@ -21,11 +21,6 @@ public class navbar_Professor_C extends BaseNavbarController {
     }
 
     @FXML
-    public void turmas(ActionEvent actionEvent) {
-        carregarPagina("ProfessorScenes/ProfessorTGScenes/turmas_ProfessorTG.fxml");
-    }
-
-    @FXML
     public void coordinations(ActionEvent actionEvent) {
         carregarPagina("ProfessorScenes/coordinations_Professor.fxml");
     }
