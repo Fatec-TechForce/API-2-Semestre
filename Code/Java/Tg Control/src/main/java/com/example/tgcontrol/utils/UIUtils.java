@@ -24,24 +24,6 @@ public final class UIUtils {
     private static double xOffset = 0;
     private static double yOffset = 0;
 
-    @Deprecated
-    public static void loadFxmlInPane(Pane pane, String fxmlFilename) {
-        if (pane == null) {
-            LOGGER.log(Level.SEVERE, "Erro: O painel (Pane) fornecido é nulo.");
-            return;
-        }
-        try {
-            URL fxmlLocation = UIUtils.class.getResource(fxmlFilename);
-            if (fxmlLocation == null) {
-                throw new IOException("Não foi possível encontrar o arquivo FXML: " + fxmlFilename);
-            }
-            Parent fxml = FXMLLoader.load(fxmlLocation);
-            pane.getChildren().setAll(fxml);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Falha ao carregar o FXML: " + fxmlFilename, e);
-        }
-    }
-
     public static void loadFxml(String fxmlFilename) {
         Stage stage = Launcher.getPrimaryStage();
         if (stage == null || stage.getScene() == null) {
