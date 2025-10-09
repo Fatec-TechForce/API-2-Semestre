@@ -54,14 +54,10 @@ public class login_User_C {
         }
     }
     @FXML
-    public void register(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/AlunoScenes/forms_Aluno.fxml"));
-        Scene cadastroScene = new Scene(fxmlLoader.load());
-
+    public void irParaCadastro(ActionEvent event) throws IOException {
+        String fxmlParaCarregar =  "/com/example/tgcontrol/AlunoScenes/forms_Aluno.fxml";
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(cadastroScene);
-        stage.setTitle("TgControl - Cadastro de Aluno");
-        stage.show();
+        UIUtils.loadNewScene(stage, fxmlParaCarregar);
     }
 }
 

@@ -1,6 +1,178 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" />
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="761.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
+    <center>
+        <StackPane fx:id="contentArea" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER_RIGHT">
+            <children>
+                <VBox prefHeight="200.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: WHITE;">
+                    <children>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="150.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-background-color: f5f5f5;">
+                            <children>
+                                <StackPane prefHeight="70.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Label text="Seção 1" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="20.0" />
+                                            </StackPane.margin>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="40.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="20.0" top="20.0" />
+                                            </StackPane.margin>
+                                        </ImageView>
+                                        <Label style="-fx-background-color: #00e100; -fx-background-radius: 5px;" text="Aceito" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+                                            <StackPane.margin>
+                                                <Insets right="15.0" />
+                                            </StackPane.margin>
+                                            <padding>
+                                                <Insets left="5.0" right="5.0" />
+                                            </padding>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </StackPane>
+                                <StackPane prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                    <children>
+                                        <Label alignment="BOTTOM_CENTER" text="API 1" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="10.0" top="5.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT">
+                                            <StackPane.margin>
+                                                <Insets bottom="5.0" left="10.0" />
+                                            </StackPane.margin>
+                                        </Button>
+                                    </children>
+                                </StackPane>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="150.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-background-color: f5f5f5;">
+                            <children>
+                                <StackPane prefHeight="70.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Label style="-fx-background-color: #fce40c; -fx-background-radius: 5px;" text="Pendente" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+                                            <padding>
+                                                <Insets left="5.0" right="5.0" />
+                                            </padding>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                            <StackPane.margin>
+                                                <Insets right="15.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <Label text="Seção 2" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="20.0" />
+                                            </StackPane.margin>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="40.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="20.0" top="20.0" />
+                                            </StackPane.margin>
+                                        </ImageView>
+                                    </children>
+                                </StackPane>
+                                <StackPane prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                    <children>
+                                        <Label alignment="BOTTOM_CENTER" text="API 2" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="10.0" top="5.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT">
+                                            <StackPane.margin>
+                                                <Insets bottom="5.0" left="10.0" />
+                                            </StackPane.margin>
+                                        </Button>
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="150.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-background-color: f5f5f5;">
+                            <children>
+                                <StackPane prefHeight="70.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Label text="Seção 3" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="20.0" />
+                                            </StackPane.margin>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="40.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="20.0" top="20.0" />
+                                            </StackPane.margin>
+                                        </ImageView>
+                                        <Label style="-fx-background-color: GRAY; -fx-background-radius: 5px;" text="Bloqueado" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+                                            <padding>
+                                                <Insets left="5.0" right="5.0" />
+                                            </padding>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                            <StackPane.margin>
+                                                <Insets right="15.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                    </children>
+                                </StackPane>
+                                <StackPane prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                    <children>
+                                        <Label alignment="BOTTOM_CENTER" text="API 3" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="10.0" top="5.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT">
+                                            <StackPane.margin>
+                                                <Insets bottom="5.0" left="10.0" />
+                                            </StackPane.margin>
+                                        </Button>
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </VBox>
+            </children>
+            <BorderPane.margin>
+                <Insets right="100.0" />
+            </BorderPane.margin></StackPane>
+    </center>
+</BorderPane>
