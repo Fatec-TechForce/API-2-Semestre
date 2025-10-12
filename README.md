@@ -1,115 +1,63 @@
 # TechForce - TG Control
+
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/adb62b93-78c0-4436-8ff7-2d5fe202f5f4" />
 
-## Tópicos 
+## Tópicos
 
-[Descrição do projeto](#Descrição) | [Tecnologias Utilizadas](#Tecnologias-Utilizadas) | [Funcionalidades](#Funcionalidades) | [Backlog do Produto](#Backlog-do-Produto) | [Backlog da Sprint](#Backlog-da-Sprint) | [User Stories](#User-Stories) | [Sprnts](#Sprints) | [Documentação](#Documentação-do-Projeto) | [Código](#Codigo) | [Equipe](#Equipe)
-
+[[Descrição do projeto](./DESCRICAO.md) | [Tecnologias Utilizadas](./TECNOLOGIAS.md) | [Funcionalidades](./FUNCIONALIDADES.md) | [Backlog do Produto](./BACKLOG_PRODUTO.md) | [Backlog da Sprint](./BACKLOG_SPRINT.md) | [User Stories](./USER_STORIES.md) | [Sprints](./SPRINTS.md) | [Documentação](./documentacao/) | [Código](./codigo/) | [Equipe](./EQUIPE.md)
 
 ## Descrição
+
 Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é um desafio para alunos, professores orientadores e coordenação, pois o processo de envio, correção e acompanhamento das seções ocorre de forma descentralizada em plataformas pouco adequadas (como e-mail institucional e MS Teams), o que gera atrasos, falha de notificações e risco de perda de mensagens; para os alunos, a dor está na demora dos feedbacks e na dificuldade de entregar o TG final em formato MD, enquanto os professores orientadores enfrentam problemas para manter histórico claro das correções e versões, e a coordenação tem dificuldade em monitorar o progresso dos trabalhos, o que torna essencial uma plataforma centralizada que organize, registre e acompanhe cada etapa, garantindo comunicação eficiente, rastreabilidade e geração facilitada do TG final.
 
-> > 
+> 
+> 
 
 ## Tecnologias Utilizadas
 
-[![Java](https://img.shields.io/badge/Java-007396?logo=java&logoColor=white)](https://www.java.com/)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/)
-[![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white)](https://www.figma.com/)
-[![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)](https://www.atlassian.com/software/jira)
-[![Scene Builder](https://img.shields.io/badge/Scene%20Builder-0091EA?logo=java&logoColor=white)](https://gluonhq.com/products/scene-builder/)
-[![JavaFX](https://img.shields.io/badge/JavaFX-FF0000?logo=openjdk&logoColor=white)](https://openjfx.io/)
+[![Java](https://img.shields.io/badge/Java-007396?logo=java&logoColor=white)](https://www.java.com/)  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/) [![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white)](https://www.figma.com/) [![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)](https://www.atlassian.com/software/jira) [![Scene Builder](https://img.shields.io/badge/Scene%20Builder-0091EA?logo=java&logoColor=white)](https://gluonhq.com/products/scene-builder/) [![JavaFX](https://img.shields.io/badge/JavaFX-FF0000?logo=openjdk&logoColor=white)](https://openjfx.io/)
+## Backlog do produto
 
-## Funcionalidades
+| Rank | Prioridade | User Story | Estimativa | Sprint |
+| --- | --- | --- | --- | --- |
+| 1 | **Alta** | Como aluno, quero enviar minhas seções do TG diretamente para o orientador, para facilitar a entrega e não depender de muitos canais diferentes. | 6 | 2 |
+| 2 | **Alta** | Como professor orientador, quero corrigir e devolver feedback diretamente no sistema para agilizar o processo de orientação. | 6 | 2 |
+| 3 | **Alta** | Como professor de TG/Orientador, quero acessar as versões anteriores das seções enviadas para acompanhar a evolução do trabalho do aluno. | 5 | 2 |
+| 4 | **Alta** | Como aluno, quero receber notificações quando meu professor responder para não perder prazos importantes.<br>Como professor, quero ser notificado quando um aluno enviar uma nova versão para não deixar passar revisões pendentes. | 6 | 2 |
+| 5 | **Alta** | Como aluno, quero ver o status de cada seção (pendente, revisada, aceita) para saber meu progresso no TG.<br>Como professor, quero atualizar o status das seções corrigidas para indicar a evolução ao aluno. | 3 | 2 |
+| 6 | **Média** | Como aluno, quero que minhas seções, versões e correções fiquem salvas, para não perder meu histórico e acompanhar minha evolução no trabalho.<br>Como professor, quero acessar facilmente os envios e versões dos alunos, para acompanhar o progresso de cada TG e manter registrado todo o processo de orientação. | 12 | 2 |
+| 7 | **Média** | Como aluno, quero gerar automaticamente meu TG consolidado em formato MD para entregar de acordo com o padrão exigido. | 8 | 2 |
+| 8| **Baixa** | Como professor de TG, quero ter estatísticas sobre tempo médio de correção e interações para melhorar a gestão acadêmica. | 5 | 3 |
+| 9| **Baixa** | Como professor de TG, quero visualizar quais alunos já concluíram todas as seções. | 3 | 3 |
+| 10 | **Baixa** | Como administrador, quero gerenciar cadastros de professores para garantir acesso controlado ao sistema. | 4 | 3 |
 
- ## Backlog do Produto
- 
-| Rank | Prioridade | User Story | Descrição | Item | Estimativa | Sprint |
-|:----:|:----------:|:----------:|:---------:|:----:|:----------:|:------:|
-| 1    | Alta       | [US01](#User-Stories) | Aluno envia cada seção do TG em formato digital. | Envio de Seções do TG |                 | 2      |
-| 2    | Alta       | [US02](#User-Stories) | Professor faz anotações e devolve comentários ao aluno. | Correção e Feedback |            | 2      |
-| 3    | Alta       | [US03](#User-Stories) | Manter versões anteriores das seções para consulta. | Histórico de Versões |               | 2      |
-| 4    | Alta       | [US04](#User-Stories) | Alerta quando professor ou aluno envia/recebe seção. | Notificações |                      | 2      |
-| 5    | Alta       | [US05](#User-Stories) | Mostrar status de cada seção (pendente, em revisão, aceita). | Controle de Acompanhamento |            | 2      |
-| 6    | Alta       | [US06](#User-Stories) | Criar estrutura de armazenamento para seções do TG, feedbacks, versões, status e notificações. | Implementar banco de dados |            | 2      |
-| 7    | Alta       | [US07](#User-Stories) | Exportar documento consolidado no formato exigido. | Geração Automática do TG Final |                                                    | 2      |
+---
 
+## Cronograma das Sprints
 
-## User Stories
-| ID   | User Story |
-|:----:|:--------------:|
-| US01 | Como aluno, quero enviar minhas seções do TG diretamente para o orientador, para facilitar a entrega e não depender de muitos canais diferentes. |
-| US02 | Como professor orientador, quero corrigir e devolver feedback diretamente no sistema para agilizar o processo de orientação. |
-| US03 | Como professor de TG/Orientador, quero acessar as versões anteriores das seções enviadas para acompanhar a evolução do trabalho do aluno. |
-| US04 | Como aluno, quero receber notificações quando meu professor responder para não perder prazos importantes. Como professor, quero ser notificado quando um aluno enviar uma nova versão para não deixar passar revisões pendentes.|
-| US05 | Como aluno, quero ver o status de cada seção (pendente, revisada, aceita) para saber meu progresso no TG.Como professor, quero atualizar o status das seções corrigidas para indicar a evolução ao aluno.  |
-| US06 | Como aluno, quero que minhas seções, versões e correções fiquem salvas, para não perder meu histórico e acompanhar minha evolução no trabalho. Como professor, quero acessar facilmente os envios e versões dos alunos, para acompanhar o progresso de cada TG e manter registrado todo o processo de orientação.|
-| US07 | Como aluno, quero gerar automaticamente meu TG consolidado em formato MD para entregar de acordo com o padrão exigido. |
+| **Sprint** | **Período** | **Entrega** | **Documentação** |
+| --- | --- | --- | --- |
+| Sprint 1 | 08/09 a 29/09 | Protótipos | [`Documentação`](./documentação/Sprint1.md) |
+| Sprint 2 | 06/10 a 26/10 | Envio de Seções do TG, Correção e Feedback, Histórico de Versões, Notificações, Controle de Acompanhamento, Geração Automática do TG Final | [`Documentação`](./documentação/Sprint2.md) |
+| Sprint 3 | 03/11 a 23/11 | Gerenciamento de Cadastros de Professores, Estatísticas de Tempo Médio de Correção e Interações | [`Documentação`](./documentação/Sprint3.md) |
 
 
-## Sprints
+---
 
-<!--Sprint 1-->
-<details>
-  <summary>Sprint 1</summary>
-  <div>
-    <h2>Descrição da Sprint</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Sprint</th>
-          <th>Período</th>
-          <th>Objetivo da Sprint</th>
-          <th>Descrição</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>08/09 - 28/09</td>
-          <td>Entregar protótipo do sistema</td>
-          <td>Protótipo inicial da interface, com telas e botões interativos.</td>
-        </tr>
-      </tbody>
-    </table>
+## 📖 Manual de Instalação
 
-    <h2>Burndown</h2>
-    <!-- Aqui você pode colocar imagem ou gráfico do burndown -->
-  </div>
-</details>
-
-<!--Sprint 2-->
-<details>
-  <summary>Sprint 2</summary>
-  <div>
-    <h2>Backlog</h2>
-    <!-- Backlog vazio -->
-    <h2>Burndown</h2>
-  </div>
-</details>
-
-<!--Sprint 3-->
-<details>
-  <summary>Sprint 3</summary>
-  <div>
-    <h2>Backlog</h2>
-    <!-- Backlog vazio -->
-    <h2>Burndown</h2>
-  </div>
-</details>
-
+---
 
 ## 📄 Documentação do Projeto
 
-Toda a documentação do projeto está disponível na pasta [`documentacao`](./documentação).
-
+Toda a documentação do projeto está disponível na pasta [`documentação`](./documentação/)
 ### Conteúdo
-- Definition of Ready (DoR).
-- Definition of Done (DoD).
-- Modelagem de Banco de Dados.
-- Estratégia de Branch.
-- Padrão de Commits.
-  
+
+- Definition of Ready (DoR
+- Definition of Done (DoD)
+- Estratégia de Branch
+- Padrão de Commits
+- Modelagem do Banco de Dados
 
 ## Equipe
 
