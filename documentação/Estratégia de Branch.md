@@ -1,6 +1,6 @@
-Estratégia de Branch – GitHub Flow
+# Estratégia de Branch – GitHub Flow
 
-1. Introdução
+## 1. Introdução
 Este documento descreve a estratégia de versionamento com Git e GitHub a ser utilizada no desenvolvimento do projeto. O objetivo é garantir um fluxo de trabalho organizado, manter a estabilidade do código principal e facilitar a colaboração entre os membros da equipe.
 A metodologia adotada é o GitHub Flow, um modelo simples e eficaz recomendado no Guia do GitHub da faculdade.
 2. Princípios Fundamentais
@@ -8,7 +8,7 @@ A branch main é a fonte da verdade: Ela deve conter sempre a versão mais está
 O desenvolvimento é feito em branches separadas: Toda nova funcionalidade, correção ou tarefa deve ser desenvolvida em sua própria branch. Isso isola o trabalho em andamento e previne instabilidade na main.
 Pull Requests (PRs) para integração: Todo código só é integrado à main através de um Pull Request, que permite a revisão e discussão do código antes do merge.
   
-3. Estrutura das Branches
+## 3. Estrutura das Branches
 3.1. Branch Principal: main
 Propósito: Representa a versão de "produção" do nosso projeto. O código nesta branch deve estar sempre compilando e funcionando.
 Proteção: Idealmente, deve ser configurada no GitHub para proibir pushes diretos, forçando o uso de Pull Requests para todas as alterações.
@@ -29,7 +29,7 @@ feature/professor/dashboard-acompanhamento
 bugfix/geral/correcao-login-lento
 docs/geral/manual-de-instalacao
   
-4. Fluxo de Trabalho (Passo a Passo)
+ ## 4. Fluxo de Trabalho (Passo a Passo)
 Este é o ciclo que cada dupla deve seguir para desenvolver uma tarefa:
 Sincronizar a Branch main Local:
 Antes de iniciar, certifique-se de que sua main local está atualizada.
@@ -64,3 +64,4 @@ Fazer o Merge:
 Após o PR ser aprovado e passar por qualquer verificação automática, o autor pode realizar o merge, integrando o código à branch main.
 Limpeza:
 Após o merge, a branch de desenvolvimento pode ser deletada no GitHub para manter o repositório limpo.
+
