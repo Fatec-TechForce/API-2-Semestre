@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<ScrollPane fitToWidth="true" prefHeight="524.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.Forms_Aluno_C">
+<ScrollPane fitToWidth="true" prefHeight="524.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.Forms_Aluno_C">
 
     <content>
         <AnchorPane prefHeight="700.0" prefWidth="870.0" style="-fx-background-color: WHITE;">

@@ -1,15 +1,15 @@
 package com.example.tgcontrol.controllers.Geral;
 
-import com.example.tgcontrol.utils.UIUtils; // 👈 Adicionar esta importação
+import com.example.tgcontrol.model.SessaoManager;
+import com.example.tgcontrol.model.TipoUsuario;
+import com.example.tgcontrol.utils.DatabaseUtils;
+import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,31 +28,37 @@ public class login_User_C {
         String login = tbx_Login.getText();
         String senha = tbx_Senha.getText();
 
+        TipoUsuario tipo = DatabaseUtils.autenticarUsuario(login, senha);
+
         String fxmlParaCarregar = null;
 
-        if (senha.equals("Troca123")) {
-            if (login.equals("aluno.escola@fatec.sp.gov.br"))
-            {
-                fxmlParaCarregar = "AlunoScenes/navbar_Aluno.fxml";
-            } else if (login.equals("professor.escola@fatec.sp.gov.br"))
-            {
-                fxmlParaCarregar = "ProfessorScenes/navbar_Professor.fxml";
-            }
-            else if (login.equals("professortg.escola@fatec.sp.gov.br"))
-            {
-                fxmlParaCarregar = "ProfessorScenes/ProfessorTGScenes/navbar_ProfessorTG.fxml";
+        if (tipo != TipoUsuario.NAO_AUTENTICADO) {
+
+            SessaoManager.getInstance().iniciarSessao(login, tipo);
+
+            switch (tipo) {
+                case ALUNO:
+                    fxmlParaCarregar = "AlunoScenes/navbar_Aluno.fxml";
+                    break;
+                case PROFESSOR:
+                    fxmlParaCarregar = "ProfessorScenes/navbar_Professor.fxml";
+                    break;
+                case PROFESSOR_TG:
+                    fxmlParaCarregar = "ProfessorScenes/ProfessorTGScenes/navbar_ProfessorTG.fxml";
+                    break;
+                default:
+                    break;
             }
         }
 
         if (fxmlParaCarregar != null) {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
             UIUtils.loadNewScene(stage, fxmlParaCarregar);
-
         } else {
             UIUtils.showAlert("Erro de Login", "Usuário ou senha inválidos.");
         }
     }
+
     @FXML
     public void irParaCadastro(ActionEvent event) throws IOException {
         String fxmlParaCarregar =  "/com/example/tgcontrol/AlunoScenes/forms_Aluno.fxml";
@@ -60,4 +66,3 @@ public class login_User_C {
         UIUtils.loadNewScene(stage, fxmlParaCarregar);
     }
 }
-

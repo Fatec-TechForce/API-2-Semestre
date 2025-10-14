@@ -1,101 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
-    <top>
-        <HBox BorderPane.alignment="BOTTOM_CENTER" />
-    </top>
+<BorderPane prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
     <right>
-        <StackPane fx:id="contentArea" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="571.0" prefWidth="889.0" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER">
             <children>
-                <HBox alignment="BASELINE_CENTER" maxHeight="200.0" minHeight="200.0" prefHeight="200.0">
+                <HBox alignment="TOP_LEFT" prefHeight="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <HBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="180.0" prefHeight="180.0" prefWidth="890.0">
+                        <VBox alignment="CENTER" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
                             <children>
-                                <VBox maxHeight="132.0" maxWidth="221.0" minHeight="132.0" minWidth="211.0" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
-                                    <children>
-                                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="197.0" text="Total de Alunos" textAlignment="CENTER">
-                                            <font>
-                                                <Font name="System Bold" size="16.0" />
-                                            </font>
-                                            <VBox.margin>
-                                                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="76.0" prefWidth="227.0" text="90" textAlignment="CENTER">
-                                            <font>
-                                                <Font name="System Bold" size="40.0" />
-                                            </font>
-                                            <VBox.margin>
-                                                <Insets top="-30.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                    </children>
-                                    <HBox.margin>
-                                        <Insets right="32.0" top="32.0" />
-                                    </HBox.margin>
-                                </VBox>
-                                <VBox maxHeight="132.0" maxWidth="221.0" minHeight="132.0" minWidth="221.0" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
-                                    <children>
-                                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="198.0" text="TGs Concluídos" textAlignment="CENTER">
-                                            <font>
-                                                <Font name="System Bold" size="16.0" />
-                                            </font>
-                                            <VBox.margin>
-                                                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="76.0" prefWidth="230.0" text="15" textAlignment="CENTER">
-                                            <font>
-                                                <Font name="System Bold" size="40.0" />
-                                            </font>
-                                            <VBox.margin>
-                                                <Insets top="-30.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                    </children>
-                                    <HBox.margin>
-                                        <Insets right="32.0" top="32.0" />
-                                    </HBox.margin>
-                                </VBox>
-                                <VBox maxHeight="132.0" maxWidth="221.0" minHeight="132.0" minWidth="221.0" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
-                                    <children>
-                                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="204.0" text="Total de Orientandos" textAlignment="CENTER">
-                                            <font>
-                                                <Font name="System Bold" size="16.0" />
-                                            </font>
-                                            <VBox.margin>
-                                                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="76.0" prefWidth="230.0" text="6" textAlignment="CENTER">
-                                            <font>
-                                                <Font name="System Bold" size="40.0" />
-                                            </font>
-                                            <VBox.margin>
-                                                <Insets top="-30.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                    </children>
-                                    <HBox.margin>
-                                        <Insets right="32.0" top="32.0" />
-                                    </HBox.margin>
-                                </VBox>
+                                <Label text="Total de Alunos">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label text="90">
+                                    <font>
+                                        <Font name="System Bold" size="40.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
                             </children>
-                        </HBox>
+                            <HBox.margin>
+                                <Insets left="30.0" right="20.0" top="30.0" />
+                            </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
+                            <children>
+                                <Label text="TGs Concluídos">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label text="15">
+                                    <font>
+                                        <Font name="System Bold" size="40.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                            <HBox.margin>
+                                <Insets right="20.0" top="30.0" />
+                            </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="132.0" prefWidth="221.0" style="-fx-border-radius: 8px; -fx-border-color: #e0e0e0; -fx-border-width: 2px;">
+                            <children>
+                                <Label text="Total de Orientandos">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label text="6">
+                                    <font>
+                                        <Font name="System Bold" size="40.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                            <HBox.margin>
+                                <Insets right="30.0" top="30.0" />
+                            </HBox.margin>
+                        </VBox>
                     </children>
                 </HBox>
-                <HBox maxHeight="350.0" minHeight="350.0" prefHeight="350.0" StackPane.alignment="BOTTOM_LEFT">
-                    <StackPane.margin>
-                        <Insets />
-                    </StackPane.margin>
+
+                <HBox alignment="TOP_LEFT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="180.0">
                     <children>
-                        <BarChart maxHeight="357.0" maxWidth="400.0" minHeight="250.0" minWidth="400.0" prefHeight="357.0" prefWidth="400.0">
+                        <BarChart HBox.hgrow="ALWAYS">
                             <xAxis>
                                 <CategoryAxis side="BOTTOM" />
                             </xAxis>
@@ -103,40 +90,33 @@
                                 <NumberAxis side="LEFT" />
                             </yAxis>
                             <HBox.margin>
-                                <Insets left="20.0" right="20.0" top="10.0" />
+                                <Insets left="10.0" right="20.0" top="20.0" />
                             </HBox.margin>
                         </BarChart>
-                        <VBox prefHeight="310.0" prefWidth="434.0" style="-fx-background-color: transparent; -fx-border-color: #e0e0e0; -fx-border-radius: 8px; -fx-border-width: 2px;">
+
+                        <VBox prefWidth="430.0" style="-fx-border-color: #e0e0e0; -fx-border-radius: 8px; -fx-border-width: 2px;">
                             <children>
-                                <HBox alignment="CENTER_LEFT" minWidth="150.0" prefHeight="31.0" prefWidth="150.0">
+                                <HBox alignment="CENTER_LEFT" prefHeight="40.0">
+                                    <padding>
+                                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                    </padding>
                                     <children>
-                                        <Label maxWidth="200.0" minWidth="164.0" prefHeight="26.0" prefWidth="164.0" text="Atividades Recentes:">
+                                        <Label text="Atividades Recentes:">
                                             <font>
-                                                <Font name="System Bold" size="16.0" />
+                                                <Font name="System Bold" size="18.0" />
                                             </font>
-                                            <HBox.margin>
-                                                <Insets top="10.0" />
-                                            </HBox.margin>
                                         </Label>
                                     </children>
-                                    <padding>
-                                        <Insets left="20.0" />
-                                    </padding>
-                                    <VBox.margin>
-                                        <Insets />
-                                    </VBox.margin>
-                                    <opaqueInsets>
-                                        <Insets />
-                                    </opaqueInsets>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="1348.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+
+                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" style="-fx-border-color: transparent transparent #999999 transparent;">
                                     <children>
-                                        <Label prefHeight="30.0" prefWidth="291.0" text="Ação" textFill="#828282">
+                                        <Label prefHeight="30.0" prefWidth="180.0" text="Ação" textFill="#828282">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="288.0" text="Aluno" textFill="#828282">
+                                        <Label prefHeight="30.0" prefWidth="230.0" text="Aluno" textFill="#828282">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
@@ -145,18 +125,15 @@
                                     <padding>
                                         <Insets left="20.0" />
                                     </padding>
-                                    <VBox.margin>
-                                        <Insets />
-                                    </VBox.margin>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="73.0" prefHeight="31.0" prefWidth="1348.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="35.0" style="-fx-border-color: transparent transparent #e0e0e0 transparent;">
                                     <children>
-                                        <Label prefHeight="35.0" prefWidth="203.0" text="Concluiu tg">
+                                        <Label prefWidth="180.0" text="Concluiu tg">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="200.0" text="Niuan Souza">
+                                        <Label prefWidth="230.0" text="Niuan Souza">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
@@ -165,18 +142,15 @@
                                     <padding>
                                         <Insets left="20.0" />
                                     </padding>
-                                    <opaqueInsets>
-                                        <Insets />
-                                    </opaqueInsets>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="1348.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="35.0" style="-fx-border-color: transparent transparent #e0e0e0 transparent;">
                                     <children>
-                                        <Label prefHeight="35.0" prefWidth="203.0" text="Entregou seção 1">
+                                        <Label prefWidth="180.0" text="Entregou seção 1">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="TOP_LEFT" prefHeight="48.0" prefWidth="199.0" text="Maria Eduarda">
+                                        <Label prefWidth="230.0" text="Maria Eduarda">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
@@ -185,18 +159,15 @@
                                     <padding>
                                         <Insets left="20.0" />
                                     </padding>
-                                    <opaqueInsets>
-                                        <Insets />
-                                    </opaqueInsets>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="1348.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="35.0" style="-fx-border-color: transparent transparent #e0e0e0 transparent;">
                                     <children>
-                                        <Label prefHeight="35.0" prefWidth="203.0" text="Entregou seção 4">
+                                        <Label prefWidth="180.0" text="Entregou seção 4">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="TOP_LEFT" prefHeight="48.0" prefWidth="130.0" text="Gabriel Bilarmino">
+                                        <Label prefWidth="230.0" text="Gabriel Bilarmino">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
@@ -205,18 +176,15 @@
                                     <padding>
                                         <Insets left="20.0" />
                                     </padding>
-                                    <opaqueInsets>
-                                        <Insets />
-                                    </opaqueInsets>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="1348.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="35.0" style="-fx-border-color: transparent transparent #e0e0e0 transparent;">
                                     <children>
-                                        <Label prefHeight="35.0" prefWidth="203.0" text="Iniciou TG">
+                                        <Label prefWidth="180.0" text="Iniciou TG">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="TOP_LEFT" prefHeight="48.0" prefWidth="130.0" text="Pedro Cumbica">
+                                        <Label prefWidth="230.0" text="Pedro Cumbica">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
@@ -225,18 +193,15 @@
                                     <padding>
                                         <Insets left="20.0" />
                                     </padding>
-                                    <opaqueInsets>
-                                        <Insets />
-                                    </opaqueInsets>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="1348.0" style="-fx-border-color: transparent transparent #999999 transparent;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="35.0" style="-fx-border-color: transparent transparent #e0e0e0 transparent;">
                                     <children>
-                                        <Label prefHeight="35.0" prefWidth="203.0" text="Concluiu tg">
+                                        <Label prefWidth="180.0" text="Concluiu tg">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="TOP_LEFT" prefHeight="48.0" prefWidth="130.0" text="Natália Silva">
+                                        <Label prefWidth="230.0" text="Natália Silva">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
@@ -245,20 +210,15 @@
                                     <padding>
                                         <Insets left="20.0" />
                                     </padding>
-                                    <opaqueInsets>
-                                        <Insets />
-                                    </opaqueInsets>
                                 </HBox>
                             </children>
                             <HBox.margin>
-                                <Insets bottom="20.0" top="20.0" />
+                                <Insets top="20.0" />
                             </HBox.margin>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
                         </VBox>
                     </children>
                 </HBox>
-            </children></StackPane>
+            </children>
+        </AnchorPane>
     </right>
 </BorderPane>

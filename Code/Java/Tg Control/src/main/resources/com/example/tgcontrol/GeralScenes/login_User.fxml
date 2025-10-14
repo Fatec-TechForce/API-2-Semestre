@@ -8,11 +8,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.login_User_C">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.login_User_C">
     <children>
         <ImageView fitHeight="81.0" fitWidth="229.0" layoutX="330.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../images/TgControlSymbol.png" />
+                <Image url="@../SceneImages/TgControlSymbol.png" />
             </image>
         </ImageView>
         <TextField fx:id="tbx_Login" layoutX="343.0" layoutY="188.0" prefHeight="25.0" prefWidth="204.0" promptText="Login" />

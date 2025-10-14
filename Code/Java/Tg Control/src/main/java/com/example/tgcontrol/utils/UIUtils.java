@@ -24,10 +24,40 @@ public final class UIUtils {
     private static double xOffset = 0;
     private static double yOffset = 0;
 
-    public static void loadFxml(String fxmlFilename) {
+    public static void loadFxmlInPane(Pane targetPane, String fxmlPath) {
+        if (targetPane == null) {
+            LOGGER.log(Level.WARNING, "Falha ao carregar FXML: Painel de destino é nulo.");
+            return;
+        }
+
+        try {
+            URL fxmlLocation = UIUtils.class.getResource("/com/example/tgcontrol/" + fxmlPath);
+
+            if (fxmlLocation == null) {
+                fxmlLocation = UIUtils.class.getResource(fxmlPath);
+            }
+
+            if (fxmlLocation == null) {
+                throw new IOException("Não foi possível encontrar o arquivo FXML: " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            targetPane.getChildren().clear();
+            targetPane.getChildren().add(root);
+
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Falha ao carregar o FXML em painel: " + fxmlPath, e);
+            showAlert("Erro de Carregamento FXML", "Não foi possível carregar a página: " + fxmlPath);
+        }
+    }
+
+    public static void loadFxml(String fxmlPath) {
         Stage stage = Launcher.getPrimaryStage();
         if (stage == null || stage.getScene() == null) {
             LOGGER.log(Level.SEVERE, "Falha: Stage principal ou Scene não estão definidos.");
+            showAlert("Erro de Navegação", "A tela principal não está pronta.");
             return;
         }
 
@@ -35,26 +65,11 @@ public final class UIUtils {
 
         if (contentArea == null) {
             LOGGER.log(Level.SEVERE, "Erro: Não foi encontrado o StackPane com fx:id='contentArea' na Scene.");
+            showAlert("Erro de Navegação", "Não foi possível encontrar a área de conteúdo (contentArea) para carregar a página.");
             return;
         }
 
-        try {
-            String caminhoAbsoluto = "/com/example/tgcontrol/" + fxmlFilename;
-            if (!caminhoAbsoluto.endsWith(".fxml")) {
-                caminhoAbsoluto += ".fxml";
-            }
-
-            URL fxmlLocation = UIUtils.class.getResource(caminhoAbsoluto);
-            if (fxmlLocation == null) {
-                throw new IOException("Não foi possível encontrar o arquivo FXML: " + caminhoAbsoluto);
-            }
-
-            Parent fxml = FXMLLoader.load(fxmlLocation);
-            contentArea.getChildren().setAll(fxml);
-
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Falha ao carregar o FXML: " + fxmlFilename, e);
-        }
+        loadFxmlInPane(contentArea, fxmlPath);
     }
 
     public static void showAlert(String title, String message) {
