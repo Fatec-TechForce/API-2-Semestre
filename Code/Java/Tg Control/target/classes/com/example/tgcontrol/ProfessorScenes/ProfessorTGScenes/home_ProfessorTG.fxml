@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
+<BorderPane prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12">
     <right>
         <AnchorPane prefHeight="571.0" prefWidth="889.0" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER">
             <children>

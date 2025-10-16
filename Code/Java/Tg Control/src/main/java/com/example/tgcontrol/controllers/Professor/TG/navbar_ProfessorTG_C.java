@@ -1,4 +1,4 @@
-package com.example.tgcontrol.controllers.Professor;
+package com.example.tgcontrol.controllers.Professor.TG;
 
 import com.example.tgcontrol.controllers.BaseNavbarController;
 import javafx.event.ActionEvent;
