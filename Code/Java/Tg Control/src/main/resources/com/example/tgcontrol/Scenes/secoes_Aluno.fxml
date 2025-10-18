@@ -32,7 +32,7 @@
 
                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
                            <image>
-                              <Image url="@../../SceneImages/Task Images/task-icon.png" />
+                              <Image url="@../SceneImages/Task Images/task-icon.png" />
                            </image></ImageView>
 
                                 <Label fx:id="section1Status" style="-fx-background-color: #00e100; -fx-background-radius: 5px;" text="Aceito" textFill="WHITE" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="15.0">
@@ -80,7 +80,7 @@
                         <Insets top="20.0" />
                     </VBox.margin>
                <image>
-                  <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
+                  <Image url="@../SceneImages/Task Images/fotoPerfil2Symbol.png" />
                </image>
                 </ImageView>
                 <Label fx:id="studentNameLabel" text="Nome do Aluno">

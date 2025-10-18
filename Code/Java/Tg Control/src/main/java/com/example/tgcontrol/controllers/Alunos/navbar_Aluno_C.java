@@ -24,6 +24,6 @@ public class navbar_Aluno_C extends BaseNavbarController {
     @FXML
     @Override
     public void notifications(ActionEvent actionEvent) {
-        navigateTo("AlunoScenes/notifications_Aluno.fxml");
+        navigateTo("GeralScenes/notifications_User.fxml");
     }
 }
