@@ -1,6 +1,6 @@
 package com.example.tgcontrol.controllers;
 
-import com.example.tgcontrol.model.SessaoManager;
+import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,5 +50,6 @@ public abstract class BaseNavbarController implements Initializable {
 
     @FXML
     public void notifications(ActionEvent actionEvent) {
+        navigateTo("GeralScenes/notifications_User.fxml");
     }
 }

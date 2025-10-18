@@ -17,12 +17,13 @@ import java.util.logging.Logger;
 public final class UIUtils {
 
     private static final Logger LOGGER = Logger.getLogger(UIUtils.class.getName());
-
-    private UIUtils() {
-    }
+    private static final String FXML_BASE_PATH = "/com/example/tgcontrol/Scenes/";
 
     private static double xOffset = 0;
     private static double yOffset = 0;
+
+    private UIUtils() {
+    }
 
     public static void loadFxmlInPane(Pane targetPane, String fxmlPath) {
         if (targetPane == null) {
@@ -31,14 +32,10 @@ public final class UIUtils {
         }
 
         try {
-            URL fxmlLocation = UIUtils.class.getResource("/com/example/tgcontrol/" + fxmlPath);
+            URL fxmlLocation = UIUtils.class.getResource(FXML_BASE_PATH + fxmlPath);
 
             if (fxmlLocation == null) {
-                fxmlLocation = UIUtils.class.getResource(fxmlPath);
-            }
-
-            if (fxmlLocation == null) {
-                throw new IOException("Não foi possível encontrar o arquivo FXML: " + fxmlPath);
+                throw new IOException("Não foi possível encontrar o arquivo FXML: " + FXML_BASE_PATH + fxmlPath);
             }
 
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
@@ -82,10 +79,10 @@ public final class UIUtils {
 
     public static void loadNewScene(Stage stage, String fxmlPath) {
         try {
-            URL fxmlLocation = Launcher.class.getResource(fxmlPath);
+            URL fxmlLocation = UIUtils.class.getResource(FXML_BASE_PATH + fxmlPath);
 
             if (fxmlLocation == null) {
-                throw new IOException("Não foi possível encontrar o arquivo FXML: " + fxmlPath);
+                throw new IOException("Não foi possível encontrar o arquivo FXML: " + FXML_BASE_PATH + fxmlPath);
             }
 
             Parent root = FXMLLoader.load(fxmlLocation);

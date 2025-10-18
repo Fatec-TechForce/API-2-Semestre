@@ -1,7 +1,6 @@
-package com.example.tgcontrol.controllers.Professor;
+package com.example.tgcontrol.controllers.ProfessorTG;
 
-import com.example.tgcontrol.model.DashboardData;
-import com.example.tgcontrol.utils.SessaoManager;
+import com.example.tgcontrol.model.DashboardTgData;
 import com.example.tgcontrol.model.TrabalhoPendente;
 import com.example.tgcontrol.utils.DatabaseUtils;
 import javafx.collections.FXCollections;
@@ -9,24 +8,34 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class home_Professor_C implements Initializable {
+public class home_ProfessorTG_C implements Initializable {
 
     @FXML private Label lblTotalAlunos;
     @FXML private Label lblTgsConcluidos;
-    @FXML private Label lblPendentes;
+    @FXML private Label lblTotalOrientandos;
+    @FXML private BarChart<String, Number> graficoProgressoAlunos;
     @FXML private VBox placeholderContainer;
-    @FXML private TableView<TrabalhoPendente> tabelaTgs;
+    @FXML private TableView<TrabalhoPendente> tabelaPendentes;
     @FXML private TableColumn<TrabalhoPendente, Double> colProgresso;
     @FXML private TableColumn<TrabalhoPendente, String> colAluno;
     @FXML private TableColumn<TrabalhoPendente, String> colTurma;
@@ -36,7 +45,7 @@ public class home_Professor_C implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarTabela();
-        carregarDadosDoDashboard();
+        carregarDadosDashboard();
     }
 
     private void configurarTabela() {
@@ -49,7 +58,6 @@ public class home_Professor_C implements Initializable {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty || item == null) {
                     setText(null);
                     setGraphic(null);
@@ -66,14 +74,13 @@ public class home_Professor_C implements Initializable {
             {
                 btn.getStyleClass().add("action-button");
                 btn.setOnAction(event -> {
-                    TrabalhoPendente trabalho = getTableView().getItems().get(getIndex());
                     try {
                         String fxmlPath = "/com/example/tgcontrol/Scenes/ProfessorScenes/correcao_View.fxml";
                         URL fxmlLocation = getClass().getResource(fxmlPath);
                         FXMLLoader loader = new FXMLLoader(fxmlLocation);
                         Parent novaTela = loader.load();
 
-                        StackPane contentArea = (StackPane) tabelaTgs.getScene().lookup("#contentArea");
+                        StackPane contentArea = (StackPane) tabelaPendentes.getScene().lookup("#contentArea");
                         if (contentArea != null) {
                             contentArea.getChildren().clear();
                             contentArea.getChildren().add(novaTela);
@@ -81,38 +88,63 @@ public class home_Professor_C implements Initializable {
                             System.err.println("Erro Crítico: #contentArea não foi encontrado na cena.");
                         }
                     } catch (IOException e) {
-                        Logger.getLogger(home_Professor_C.class.getName()).log(Level.SEVERE, "Falha ao carregar FXML.", e);
+                        Logger.getLogger(home_ProfessorTG_C.class.getName()).log(Level.SEVERE, "Falha ao carregar FXML.", e);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Erro de Navegação");
+                        alert.setHeaderText("Não foi possível carregar a tela de correção.");
+                        alert.showAndWait();
                     }
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) setGraphic(null);
-                else setGraphic(btn);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
             }
         });
 
-        tabelaTgs.managedProperty().bind(tabelaTgs.visibleProperty());
+        tabelaPendentes.managedProperty().bind(tabelaPendentes.visibleProperty());
         placeholderContainer.managedProperty().bind(placeholderContainer.visibleProperty());
     }
 
-    private void carregarDadosDoDashboard() {
-        String emailUsuario = SessaoManager.getInstance().getEmailUsuario();
-        DashboardData dados = DatabaseUtils.getProfessorDashboardData(emailUsuario);
+    private void carregarDadosDashboard() {
+        DashboardTgData dados = DatabaseUtils.getProfessorTGDashboardData();
 
         lblTotalAlunos.setText(String.valueOf(dados.getTotalAlunos()));
         lblTgsConcluidos.setText(String.valueOf(dados.getTgsConcluidos()));
-        lblPendentes.setText(String.valueOf(dados.getPendentes()));
+        lblTotalOrientandos.setText(String.valueOf(dados.getTotalOrientandos()));
 
-        boolean haTrabalhosPendentes = dados.getTrabalhos() != null && !dados.getTrabalhos().isEmpty();
+        configurarGraficoProgresso(dados.getProgressoAlunos());
+        popularTabela(dados.getTrabalhos());
+    }
 
-        if (haTrabalhosPendentes) {
-            tabelaTgs.setItems(FXCollections.observableArrayList(dados.getTrabalhos()));
-            tabelaTgs.setVisible(true);
+    private void configurarGraficoProgresso(Map<String, Integer> dadosGrafico) {
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Total de Alunos");
+
+        for (Map.Entry<String, Integer> entry : dadosGrafico.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
+
+        graficoProgressoAlunos.getData().clear();
+        graficoProgressoAlunos.getData().add(series);
+        graficoProgressoAlunos.setLegendVisible(false);
+    }
+
+    private void popularTabela(List<TrabalhoPendente> trabalhos) {
+        boolean haPendencias = trabalhos != null && !trabalhos.isEmpty();
+
+        if (haPendencias) {
+            tabelaPendentes.setItems(FXCollections.observableArrayList(trabalhos));
+            tabelaPendentes.setVisible(true);
             placeholderContainer.setVisible(false);
         } else {
-            tabelaTgs.setVisible(false);
+            tabelaPendentes.setVisible(false);
             placeholderContainer.setVisible(true);
         }
     }

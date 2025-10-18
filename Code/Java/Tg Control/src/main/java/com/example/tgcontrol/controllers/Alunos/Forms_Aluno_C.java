@@ -22,7 +22,7 @@ public class Forms_Aluno_C {
         alert.showAndWait();
 
         // Volta para tela de login
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/GeralScenes/login_User.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/Scenes/GeralScenes/login_User.fxml"));
         Scene loginScene = new Scene(fxmlLoader.load());
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -33,7 +33,7 @@ public class Forms_Aluno_C {
     @FXML
     public void voltarLogin(ActionEvent event) throws IOException {
         // Depois de "cadastrar", redireciona para tela de login
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/GeralScenes/login_User.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/Scenes/GeralScenes/login_User.fxml"));
         Scene loginScene = new Scene(fxmlLoader.load());
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

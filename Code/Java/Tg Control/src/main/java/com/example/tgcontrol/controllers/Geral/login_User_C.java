@@ -1,6 +1,6 @@
 package com.example.tgcontrol.controllers.Geral;
 
-import com.example.tgcontrol.model.SessaoManager;
+import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.model.TipoUsuario;
 import com.example.tgcontrol.utils.DatabaseUtils;
 import com.example.tgcontrol.utils.UIUtils;
@@ -29,13 +29,10 @@ public class login_User_C {
         String senha = tbx_Senha.getText();
 
         TipoUsuario tipo = DatabaseUtils.autenticarUsuario(login, senha);
-
         String fxmlParaCarregar = null;
 
         if (tipo != TipoUsuario.NAO_AUTENTICADO) {
-
             SessaoManager.getInstance().iniciarSessao(login, tipo);
-
             switch (tipo) {
                 case ALUNO:
                     fxmlParaCarregar = "AlunoScenes/navbar_Aluno.fxml";
@@ -44,7 +41,7 @@ public class login_User_C {
                     fxmlParaCarregar = "ProfessorScenes/navbar_Professor.fxml";
                     break;
                 case PROFESSOR_TG:
-                    fxmlParaCarregar = "ProfessorScenes/ProfessorTGScenes/navbar_ProfessorTG.fxml";
+                    fxmlParaCarregar = "ProfessorTGScenes/navbar_ProfessorTG.fxml";
                     break;
                 default:
                     break;
@@ -61,7 +58,7 @@ public class login_User_C {
 
     @FXML
     public void irParaCadastro(ActionEvent event) throws IOException {
-        String fxmlParaCarregar =  "/com/example/tgcontrol/AlunoScenes/forms_Aluno.fxml";
+        String fxmlParaCarregar = "AlunoScenes/forms_Aluno.fxml";
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         UIUtils.loadNewScene(stage, fxmlParaCarregar);
     }
