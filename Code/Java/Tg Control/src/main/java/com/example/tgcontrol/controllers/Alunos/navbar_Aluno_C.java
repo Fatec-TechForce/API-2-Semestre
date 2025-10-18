@@ -20,10 +20,4 @@ public class navbar_Aluno_C extends BaseNavbarController {
     public void andamentoTG(ActionEvent actionEvent) {
         navigateTo("AlunoScenes/andamentoTG_Aluno.fxml");
     }
-
-    @FXML
-    @Override
-    public void notifications(ActionEvent actionEvent) {
-        navigateTo("GeralScenes/notifications_User.fxml");
-    }
 }

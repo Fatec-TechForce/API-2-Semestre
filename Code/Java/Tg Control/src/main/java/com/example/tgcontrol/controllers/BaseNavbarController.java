@@ -50,5 +50,6 @@ public abstract class BaseNavbarController implements Initializable {
 
     @FXML
     public void notifications(ActionEvent actionEvent) {
+        navigateTo("GeralScenes/notifications_User.fxml");
     }
 }
