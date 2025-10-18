@@ -3,278 +3,65 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
+<BorderPane prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
+    <left>
+        <VBox prefWidth="200.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0 1 0 0;">
+            <Label text="Alunos">
+                <font>
+                    <Font name="System Bold" size="14.0" />
+                </font>
+            </Label>
+            <TextField promptText="Buscar aluno..." />
+            <ListView fx:id="studentListView" VBox.vgrow="ALWAYS" />
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </VBox>
+    </left>
     <center>
-        <StackPane fx:id="contentArea" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" style="-fx-background-color: #FFFCFC;" translateX="100.0" BorderPane.alignment="CENTER_RIGHT">
-            <children>
-                <VBox prefHeight="200.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: WHITE;">
-                    <children>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="150.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-background-color: f5f5f5;">
-                            <children>
-                                <StackPane layoutY="2.0" prefHeight="68.0" prefWidth="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <Label text="Seção 1" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="50.0" top="20.0" />
-                                            </StackPane.margin>
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="50.0" top="40.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="20.0" top="20.0" />
-                                            </StackPane.margin>
-                                        </ImageView>
-                                        <Label style="-fx-background-color: #00e100; -fx-background-radius: 5px;" text="Aceito" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
-                                            <StackPane.margin>
-                                                <Insets right="15.0" />
-                                            </StackPane.margin>
-                                            <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                            </padding>
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </StackPane>
-                                <StackPane prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                                    <children>
-                                        <Label alignment="BOTTOM_CENTER" text="API 1" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="10.0" top="5.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT">
-                                            <StackPane.margin>
-                                                <Insets bottom="5.0" left="10.0" />
-                                            </StackPane.margin>
-                                        </Button>
-                                    </children>
-                                </StackPane>
-                            </children>
-                            <VBox.margin>
-                                <Insets top="10.0" />
-                            </VBox.margin>
-                        </AnchorPane>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="150.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-background-color: f5f5f5;">
-                            <children>
-                                <StackPane prefHeight="70.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <Label style="-fx-background-color: #00e100; -fx-background-radius: 5px;" text="Aceito" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
-                                            <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                            </padding>
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                            <StackPane.margin>
-                                                <Insets right="15.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                        <Label text="Seção 2" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="50.0" top="20.0" />
-                                            </StackPane.margin>
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="50.0" top="40.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="20.0" top="20.0" />
-                                            </StackPane.margin>
-                                        </ImageView>
-                                    </children>
-                                </StackPane>
-                                <StackPane prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                                    <children>
-                                        <Label alignment="BOTTOM_CENTER" text="API 2" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="10.0" top="5.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT">
-                                            <StackPane.margin>
-                                                <Insets bottom="5.0" left="10.0" />
-                                            </StackPane.margin>
-                                        </Button>
-                                    </children>
-                                </StackPane>
-                            </children>
-                        </AnchorPane>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="150.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-background-color: f5f5f5;">
-                            <children>
-                                <StackPane prefHeight="70.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <Label text="Seção 3" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="50.0" top="20.0" />
-                                            </StackPane.margin>
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="50.0" top="40.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="20.0" top="20.0" />
-                                            </StackPane.margin>
-                                        </ImageView>
-                                        <Label style="-fx-background-color: #fce40c; -fx-background-radius: 5px;" text="Pendente" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
-                                            <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                            </padding>
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                            <StackPane.margin>
-                                                <Insets right="15.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                    </children>
-                                </StackPane>
-                                <StackPane prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                                    <children>
-                                        <Label alignment="BOTTOM_CENTER" text="API 3" StackPane.alignment="TOP_LEFT">
-                                            <StackPane.margin>
-                                                <Insets left="10.0" top="5.0" />
-                                            </StackPane.margin>
-                                        </Label>
-                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT">
-                                            <StackPane.margin>
-                                                <Insets bottom="5.0" left="10.0" />
-                                            </StackPane.margin>
-                                        </Button>
-                                    </children>
-                                </StackPane>
-                            </children>
-                        </AnchorPane>
-                    </children>
-                </VBox>
-            </children>
-            <BorderPane.margin>
-                <Insets right="100.0" />
-            </BorderPane.margin></StackPane>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox fx:id="sectionsContainer" alignment="TOP_CENTER" spacing="20.0">
+                <AnchorPane prefHeight="150.0" style="-fx-background-radius: 15px; -fx-background-color: #f5f5f5;" />
+                <AnchorPane prefHeight="150.0" style="-fx-background-radius: 15px; -fx-background-color: #f5f5f5;" />
+                <AnchorPane prefHeight="150.0" style="-fx-background-radius: 15px; -fx-background-color: #f5f5f5;" />
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+            </VBox>
+        </ScrollPane>
     </center>
     <right>
-        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="200.0" spacing="10.0" style="-fx-border-color: c7c7c7; -fx-border-image-width: 0 1 0 0;" BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fitHeight="150.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true">
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </ImageView>
-                <ImageView fitHeight="180.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" translateY="-100.0">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Gabriel Valente" translateY="-90.0" />
-                <Label text="Banco de Dados" textFill="#949494" translateY="-95.0" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" style="-fx-background-color: #9119B3;" text="Ver perfil" textFill="WHITE" translateY="-90.0" />
-                <Button mnemonicParsing="false" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Buscar conversas" translateY="-85.0">
-                    <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
-                    </graphic>
-                </Button>
-                <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Imagens enviadas" translateY="-90.0">
-                    <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
-                    </graphic>
-                </Button>
-                <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Mais opções" translateY="-95.0">
-                    <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
-                    </graphic>
-                </Button>
-            </children>
+        <VBox alignment="TOP_CENTER" prefWidth="250.0" spacing="15.0" style="-fx-border-color: #c7c7c7; -fx-border-width: 0 0 0 1;">
+            <ImageView fx:id="profileImageView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
+                </image>
+            </ImageView>
+            <Label fx:id="studentNameLabel" text="Gabriel Valente">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Label>
+            <Label fx:id="courseLabel" text="Banco de Dados" textFill="#949494" />
+            <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #9119B3; -fx-background-radius: 5px;" text="Ver perfil" textFill="WHITE" />
+
+            <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Buscar conversas" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Imagens enviadas" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Mais opções" />
+
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
         </VBox>
     </right>
-    <left>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
-                <TextField layoutX="33.0" layoutY="51.0" prefHeight="25.0" prefWidth="153.0" promptText="Buscar conversas" />
-                <Label layoutX="14.0" layoutY="27.0" text="Alunos" />
-                <ImageView fitHeight="22.0" fitWidth="24.0" layoutX="9.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Fillter Images/lupaSymbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="43.0" fitWidth="44.0" layoutX="12.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="43.0" fitWidth="44.0" layoutX="12.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="43.0" fitWidth="44.0" layoutX="12.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="43.0" fitWidth="44.0" layoutX="13.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="43.0" fitWidth="44.0" layoutX="12.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="43.0" fitWidth="44.0" layoutX="12.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="43.0" fitWidth="44.0" layoutX="12.0" layoutY="403.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
-                    </image>
-                </ImageView>
-                <Label layoutX="59.0" layoutY="113.0" prefHeight="17.0" prefWidth="83.0" text="Gabriel Valente" />
-                <Label layoutX="59.0" layoutY="130.0" text="Banco de Dados" />
-                <Label layoutX="59.0" layoutY="163.0" prefHeight="17.0" prefWidth="83.0" text="Vitor Samuel" />
-                <Label layoutX="61.0" layoutY="212.0" prefHeight="17.0" prefWidth="83.0" text="Maria Eduarda" />
-                <Label layoutX="59.0" layoutY="262.0" prefHeight="17.0" prefWidth="83.0" text="Leonardo" />
-                <Label layoutX="61.0" layoutY="305.0" prefHeight="17.0" prefWidth="83.0" text="Niuan" />
-                <Label layoutX="61.0" layoutY="359.0" prefHeight="17.0" prefWidth="83.0" text="Natalia" />
-                <Label layoutX="61.0" layoutY="408.0" prefHeight="17.0" prefWidth="83.0" text="Guilherme" />
-                <Label layoutX="57.0" layoutY="180.0" text="Banco de Dados" />
-                <Label layoutX="57.0" layoutY="229.0" text="Banco de Dados" />
-                <Label layoutX="57.0" layoutY="278.0" text="Banco de Dados" />
-                <Label layoutX="57.0" layoutY="322.0" text="Banco de Dados" />
-                <Label layoutX="57.0" layoutY="376.0" text="Banco de Dados" />
-                <Label layoutX="60.0" layoutY="425.0" text="Banco de Dados" />
-            </children>
-        </AnchorPane>
-    </left>
 </BorderPane>

@@ -46,15 +46,17 @@ public class home_Professor_C implements Initializable {
 
         colProgresso.setCellValueFactory(new PropertyValueFactory<>("progresso"));
         colProgresso.setCellFactory(column -> new TableCell<>() {
-            private final ProgressBar progressBar = new ProgressBar();
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
+
                 if (empty || item == null) {
+                    setText(null);
                     setGraphic(null);
                 } else {
-                    progressBar.setProgress(item);
-                    setGraphic(progressBar);
+                    String percentageText = String.format("%.0f%%", item * 100);
+                    setText(percentageText);
+                    setGraphic(null);
                 }
             }
         });
@@ -70,7 +72,6 @@ public class home_Professor_C implements Initializable {
                         URL fxmlLocation = getClass().getResource(fxmlPath);
                         FXMLLoader loader = new FXMLLoader(fxmlLocation);
                         Parent novaTela = loader.load();
-
 
                         StackPane contentArea = (StackPane) tabelaTgs.getScene().lookup("#contentArea");
                         if (contentArea != null) {
