@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.viewStudent_C">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.StudentsList_ProfessorTG_C">
     <children>
         <Line endX="704.2000122070312" endY="-7.62939453125E-6" layoutX="132.0" layoutY="200.0" startX="-100.0" stroke="#c4c4c4" />
         <Line endX="704.2000122070312" endY="-7.62939453125E-6" layoutX="132.0" layoutY="151.0" startX="-100.0" stroke="#c4c4c4" />

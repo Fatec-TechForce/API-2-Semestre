@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="81.0" fitWidth="229.0" layoutX="330.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../SceneImages/TgControlSymbol.png" />
+            <Image url="@../../SceneImages/TgControlSymbol.png" />
          </image>
       </ImageView>
       <TextField fx:id="tbx_Login" layoutX="343.0" layoutY="188.0" prefHeight="25.0" prefWidth="204.0" promptText="Email Institucional" />

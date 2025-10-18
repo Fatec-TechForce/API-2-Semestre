@@ -1,7 +1,7 @@
 package com.example.tgcontrol.controllers.Professor;
 
 import com.example.tgcontrol.model.DashboardData;
-import com.example.tgcontrol.model.SessaoManager;
+import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.model.TrabalhoPendente;
 import com.example.tgcontrol.utils.DatabaseUtils;
 import javafx.collections.FXCollections;
@@ -66,7 +66,7 @@ public class home_Professor_C implements Initializable {
                 btn.setOnAction(event -> {
                     TrabalhoPendente trabalho = getTableView().getItems().get(getIndex());
                     try {
-                        String fxmlPath = "/com/example/tgcontrol/ProfessorScenes/correcao_View.fxml";
+                        String fxmlPath = "/com/example/tgcontrol/Scenes/ProfessorScenes/correcao_View.fxml";
                         URL fxmlLocation = getClass().getResource(fxmlPath);
                         FXMLLoader loader = new FXMLLoader(fxmlLocation);
                         Parent novaTela = loader.load();

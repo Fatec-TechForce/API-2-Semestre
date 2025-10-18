@@ -12,7 +12,7 @@
             <children>
                 <ImageView fitHeight="117.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../SceneImages/TgControlSymbol.png" />
+                        <Image url="@../../SceneImages/TgControlSymbol.png" />
                     </image>
                 </ImageView>
                 <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="27.0" prefWidth="71.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Início" textAlignment="CENTER">
@@ -25,7 +25,7 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/homeSymbol.png" />
+                                <Image url="@../../SceneImages/homeSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -40,7 +40,7 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/peopleSymbol.png" />
+                                <Image url="@../../SceneImages/peopleSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -63,7 +63,7 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/searchSymbol.png" />
+                                <Image url="@../../SceneImages/searchSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -78,7 +78,7 @@
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/UserSymbol.png" />
+                                <Image url="@../../SceneImages/UserSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -96,7 +96,7 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/notificationSymbol.png" />
+                                <Image url="@../../SceneImages/notificationSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>

@@ -1,4 +1,4 @@
-package com.example.tgcontrol.controllers.Professor.TG;
+package com.example.tgcontrol.controllers.ProfessorTG;
 
 import com.example.tgcontrol.controllers.BaseNavbarController;
 import javafx.event.ActionEvent;
@@ -8,17 +8,17 @@ public class navbar_ProfessorTG_C extends BaseNavbarController {
 
     @Override
     protected String getInitialFxmlPath() {
-        return "ProfessorScenes/ProfessorTGScenes/home_ProfessorTG.fxml";
+        return "ProfessorTGScenes/home_ProfessorTG.fxml";
     }
 
     @FXML
     public void home(ActionEvent actionEvent) {
-        navigateTo("ProfessorScenes/ProfessorTGScenes/home_ProfessorTG.fxml");
+        navigateTo("ProfessorTGScenes/home_ProfessorTG.fxml");
     }
 
     @FXML
     public void turmas(ActionEvent actionEvent) {
-        navigateTo("ProfessorScenes/ProfessorTGScenes/turmas_ProfessorTG.fxml");
+        navigateTo("ProfessorTGScenes/turmas_ProfessorTG.fxml");
     }
 
     @FXML

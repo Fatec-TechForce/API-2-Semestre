@@ -1,4 +1,6 @@
-package com.example.tgcontrol.model;
+package com.example.tgcontrol.utils;
+
+import com.example.tgcontrol.model.TipoUsuario;
 
 public class SessaoManager {
     private static SessaoManager instance;

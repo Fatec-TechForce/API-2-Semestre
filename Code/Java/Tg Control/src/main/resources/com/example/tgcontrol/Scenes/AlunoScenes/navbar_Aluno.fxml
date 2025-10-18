@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.navbar_Professor_C">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
     <top>
         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="47.0" prefWidth="889.0" style="-fx-background-color: #E0D6D6;" BorderPane.alignment="BOTTOM_CENTER">
             <children>
                 <ImageView fitHeight="117.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../SceneImages/TgControlSymbol.png" />
+                        <Image url="@../../SceneImages/TgControlSymbol.png" />
                     </image>
                 </ImageView>
                 <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="27.0" prefWidth="71.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Início" textAlignment="CENTER">
@@ -25,12 +25,12 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/homeSymbol.png" />
+                                <Image url="@../../SceneImages/homeSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#coordinations" prefHeight="27.0" prefWidth="148.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Coordenados" textAlignment="CENTER">
+                <Button layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#andamentoTG" prefHeight="27.0" prefWidth="161.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Andamento do TG" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
@@ -40,7 +40,7 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/peopleSymbol.png" />
+                                <Image url="@../../SceneImages/peopleSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -63,7 +63,7 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/searchSymbol.png" />
+                                <Image url="@../../SceneImages/searchSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -78,7 +78,7 @@
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/UserSymbol.png" />
+                                <Image url="@../../SceneImages/UserSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -96,7 +96,7 @@
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../SceneImages/notificationSymbol.png" />
+                                <Image url="@../../SceneImages/notificationSymbol.png" />
                             </image>
                         </ImageView>
                     </graphic>

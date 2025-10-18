@@ -26,17 +26,17 @@
       <Label layoutX="336.0" layoutY="166.0" prefHeight="18.0" prefWidth="86.0" text="15/09/2025" />
       <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="557.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
-             <Image url="@../SceneImages/UserSymbol.png" />
+             <Image url="@../../SceneImages/UserSymbol.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="557.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
          <image>
-             <Image url="@../SceneImages/UserSymbol.png" />
+             <Image url="@../../SceneImages/UserSymbol.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="557.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
          <image>
-             <Image url="@../SceneImages/UserSymbol.png" />
+             <Image url="@../../SceneImages/UserSymbol.png" />
          </image>
       </ImageView>
       <Label layoutX="599.0" layoutY="66.0" text="Fernando Rocha" />
