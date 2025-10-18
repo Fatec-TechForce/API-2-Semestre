@@ -17,7 +17,7 @@
         <Button layoutX="688.0" layoutY="162.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="127.0" style="-fx-background-color: black; -fx-font-weight: bold; -fx-background-radius: 8px;" text="Ver Aluno" textFill="WHITE" />
         <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="385.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../SceneImages/UserSymbol.png" />
+                <Image url="@../../SceneImages/Navbar Images/UserSymbol.png" />
             </image>
         </ImageView>
         <Label layoutX="492.0" layoutY="165.0" prefHeight="18.0" prefWidth="101.0" text="Baltazar Trevor" />
@@ -27,7 +27,7 @@
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
              <image>
-                 <Image url="@../../SceneImages/fillterSymbol.png" />
+                 <Image url="@../../SceneImages/Fillter Images/fillterSymbol.png" />
              </image>
             </ImageView>
          </graphic>
@@ -35,24 +35,24 @@
       <TextField layoutX="66.0" layoutY="59.0" promptText="Buscar Alunos..." />
       <ImageView fitHeight="26.0" fitWidth="32.0" layoutX="38.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: white; -fx-font-weight: bold; -fx-background-radius: 8px;">
         <image>
-            <Image url="@../../SceneImages/searchSymbol.png" />
+            <Image url="@../../SceneImages/Navbar Images/searchSymbol.png" />
         </image>
     </ImageView>
       <Button layoutX="604.0" layoutY="56.0" mnemonicParsing="false" onAction="#goTurmas" prefHeight="32.0" prefWidth="116.0" style="-fx-background-color: black; -fx-font-weight: bold; -fx-background-radius: 8px;" text="Ver Turmas" textFill="WHITE" />
       <ImageView fitHeight="32.0" fitWidth="43.0" layoutX="736.0" layoutY="56.0" pickOnBounds="true" smooth="false">
         <image>
-            <Image url="@../../SceneImages/fillterSymbol1.png" />
+            <Image url="@../../SceneImages/Fillter Images/fillterSymbol1.png" />
         </image>
       </ImageView>
         <ImageView fitHeight="32.0" fitWidth="43.0" layoutX="768.0" layoutY="57.0" pickOnBounds="true" smooth="false">
         <image>
-            <Image url="@../../SceneImages/fillterSymbol2.png" />
+            <Image url="@../../SceneImages/Fillter Images/fillterSymbol2.png" />
         </image>
         </ImageView>
 
         <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="811.0" layoutY="56.0" pickOnBounds="true" smooth="false">
         <image>
-            <Image url="@../../SceneImages/fillterSymbol3.png" />
+            <Image url="@../../SceneImages/Fillter Images/fillterSymbol3.png" />
         </image>
         </ImageView>
 

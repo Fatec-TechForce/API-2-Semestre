@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="761.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="761.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
     <center>
         <StackPane fx:id="contentArea" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER_RIGHT">
             <children>
@@ -33,6 +38,9 @@
                                             <StackPane.margin>
                                                 <Insets left="20.0" top="20.0" />
                                             </StackPane.margin>
+                                 <image>
+                                    <Image url="@../../SceneImages/Task%20Images/task-icon.png" />
+                                 </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #00e100; -fx-background-radius: 5px;" text="Aceito" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
                                             <StackPane.margin>
@@ -98,6 +106,9 @@
                                             <StackPane.margin>
                                                 <Insets left="20.0" top="20.0" />
                                             </StackPane.margin>
+                                 <image>
+                                    <Image url="@../../SceneImages/Task%20Images/task-icon.png" />
+                                 </image>
                                         </ImageView>
                                     </children>
                                 </StackPane>
@@ -138,6 +149,9 @@
                                             <StackPane.margin>
                                                 <Insets left="20.0" top="20.0" />
                                             </StackPane.margin>
+                                 <image>
+                                    <Image url="@../../SceneImages/Task%20Images/task-icon.png" />
+                                 </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: GRAY; -fx-background-radius: 5px;" text="Bloqueado" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
                                             <padding>

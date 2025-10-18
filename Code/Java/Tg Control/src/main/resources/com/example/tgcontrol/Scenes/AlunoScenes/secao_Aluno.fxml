@@ -21,7 +21,7 @@
                     <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                             <image>
-                                <Image url="@../../SceneImages/fotoPerfil2Symbol.png" />
+                                <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
                             </image>
                             <StackPane.margin>
                                 <Insets left="20.0" />
@@ -73,7 +73,7 @@
                             <children>
                                 <ImageView fitHeight="28.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                                     <image>
-                                        <Image url="@../../SceneImages/task-icon.png" />
+                                        <Image url="@../../SceneImages/Task Images/task-icon.png" />
                                     </image>
                                     <StackPane.margin>
                                         <Insets left="10.0" />
