@@ -31,19 +31,14 @@ public class login_User_C {
         String fxmlParaCarregar = null;
 
         if (senha.equals("Troca123")) {
-            if (login.equals("aluno.escola@fatec.sp.gov.br"))
-            {
+            if (login.equals("aluno.escola@fatec.sp.gov.br")) {
                 fxmlParaCarregar = "AlunoScenes/navbar_Aluno.fxml";
-            } else if (login.equals("professor.escola@fatec.sp.gov.br"))
-            {
+            } else if (login.equals("professor.escola@fatec.sp.gov.br")) {
                 fxmlParaCarregar = "ProfessorScenes/navbar_Professor.fxml";
-            }
-            else if (login.equals("professortg.escola@fatec.sp.gov.br"))
-            {
+            } else if (login.equals("professortg.escola@fatec.sp.gov.br")) {
                 fxmlParaCarregar = "ProfessorScenes/ProfessorTGScenes/navbar_ProfessorTG.fxml";
             }
         }
-
         if (fxmlParaCarregar != null) {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 

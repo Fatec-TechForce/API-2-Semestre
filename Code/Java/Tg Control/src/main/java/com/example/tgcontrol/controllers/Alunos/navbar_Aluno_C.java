@@ -22,7 +22,7 @@ public class navbar_Aluno_C extends BaseNavbarController {
 
     @FXML
     public void andamentoTG(ActionEvent actionEvent) {
-        carregarPagina("AlunoScenes/andamentoTG_Aluno.fxml");
+        carregarPagina("AlunoScenes/secoes_Aluno.fxml");
     }
 
     @FXML
