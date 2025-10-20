@@ -48,3 +48,6 @@ Thumbs.db
 
 # Remove Target
 .API-2-Semestre/Code/Java/Tg Control/target/
+
+# Ignora arquivos do IntelliJ
+/.idea
