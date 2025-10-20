@@ -9,14 +9,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="524.0" prefWidth="889.0" stylesheets="@../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.Versoes_User_C">
    <Pane prefHeight="524.0" prefWidth="889.0">
       <children>
-          <TableView fx:id="tableView" layoutX="595.0" layoutY="58.0" prefHeight="386.0" prefWidth="286.0">
+          <TableView fx:id="tableView" layoutX="595.0" layoutY="105.0" prefHeight="353.0" prefWidth="286.0">
               <columns>
                   <TableColumn fx:id="colNome" maxWidth="175.9998779296875" minWidth="-Infinity" prefWidth="141.5999755859375" text="Nome do Arquivo" />
-                  <TableColumn fx:id="colData" maxWidth="152.0" minWidth="-Infinity" prefWidth="131.2000732421875" text="Data de Upload" />
+                  <TableColumn fx:id="colData" maxWidth="152.0" minWidth="-Infinity" prefWidth="132.0" text="Data de Upload" />
               </columns>
           </TableView>
       
@@ -32,5 +33,10 @@
          <Label layoutX="31.0" layoutY="304.0" text="Titulo" />
          <Label layoutX="31.0" layoutY="380.0" text="Feedback" />
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ccd4dc" height="42.0" layoutX="31.0" layoutY="220.0" stroke="BLACK" strokeType="INSIDE" width="153.0" />
+         <Label layoutX="607.0" layoutY="77.0" style="-fx-font-weight: bold;" text="Histórico" textAlignment="CENTER">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Label>
       </children></Pane>
 </AnchorPane>

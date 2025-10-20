@@ -14,6 +14,6 @@ public class Coord_Professor_C {
     public void irParaHistorico(ActionEvent event) throws IOException {
         String fxmlParaCarregar = "/com/example/tgcontrol/GeralScenes/historicoVers_User.fxml";
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        UIUtils.loadNewScene(stage, fxmlParaCarregar);
+        UIUtils.loadFxml(fxmlParaCarregar);
     }
 }
