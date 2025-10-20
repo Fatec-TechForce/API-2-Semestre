@@ -1,19 +1,17 @@
 package com.example.tgcontrol.utils;
 
 import com.example.tgcontrol.model.DashboardData;
-import com.example.tgcontrol.model.DashboardTgData;
 import com.example.tgcontrol.model.TipoUsuario;
 import com.example.tgcontrol.model.TrabalhoPendente;
+import com.example.tgcontrol.model.VersaoTG;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DatabaseUtils {
 
-    // ESTE MÉTODO PERMANECE INALTERADO
     public static TipoUsuario autenticarUsuario(String login, String senha) {
         if (!senha.equals("Troca123")) {
             return TipoUsuario.NAO_AUTENTICADO;
@@ -33,7 +31,6 @@ public class DatabaseUtils {
         }
     }
 
-    // ESTE MÉTODO (PARA O PROFESSOR NORMAL) PERMANECE INALTERADO
     public static DashboardData getProfessorDashboardData(String emailProfessor) {
         if (emailProfessor == null || emailProfessor.isEmpty()) {
             return new DashboardData(0, 0, 0, Collections.emptyList());
@@ -43,7 +40,8 @@ public class DatabaseUtils {
             List<TrabalhoPendente> trabalhos = new ArrayList<>();
             trabalhos.add(new TrabalhoPendente(1.0, "Guilherme de Almeida", "guilherme.arruda@aluno.fatec.sp.gov.br", "YT_BANCO_DE_DADOS", "2025", "Pendente"));
             trabalhos.add(new TrabalhoPendente(0.9, "Maria Oliveira", "maria.oliveira@aluno.fatec.sp.gov.br", "IA_PARA_JOGOS", "2025", "Pendente"));
-            trabalhos.add(new TrabalhoPendente(0.04, "João Silva", "joao.silva@aluno.fatec.sp.gov.br", "ENGENHARIA_REVERSA", "2025", "Pendente"));
+            trabalhos.add(new TrabalhoPendente(1.0, "João Silva", "joao.silva@aluno.fatec.sp.gov.br", "ENGENHARIA_REVERSA", "2025", "Pendente"));
+
             return new DashboardData(90, 15, 3, trabalhos);
         }
 
@@ -54,18 +52,26 @@ public class DatabaseUtils {
         return new DashboardData(0, 0, 0, Collections.emptyList());
     }
 
-    public static DashboardTgData getProfessorTGDashboardData() {
-        Map<String, Integer> progressoAlunos = new LinkedHashMap<>();
-        progressoAlunos.put("Concluído", 15);
-        progressoAlunos.put("Em Dia", 45);
-        progressoAlunos.put("Atrasado", 18);
-        progressoAlunos.put("Não Iniciado", 12);
+    public static List<VersaoTG> listarVersoesPorAluno(String emailAluno) {
+        List<VersaoTG> versoes = new ArrayList<>();
 
-        List<TrabalhoPendente> trabalhosPendentes = new ArrayList<>();
-        trabalhosPendentes.add(new TrabalhoPendente(0.5, "Ana Beatriz", "ana.b@aluno.fatec.sp.gov.br", "ADS", "2025", "Atrasado"));
-        trabalhosPendentes.add(new TrabalhoPendente(0.8, "Carlos Daniel", "carlos.d@aluno.fatec.sp.gov.br", "DSM", "2025", "Correção"));
-        trabalhosPendentes.add(new TrabalhoPendente(0.2, "Juliana Lima", "juliana.l@aluno.fatec.sp.gov.br", "GTI", "2025", "Revisão"));
+        if (emailAluno == null || emailAluno.isEmpty()) {
+            return versoes;
+        }
 
-        return new DashboardTgData(90, 15, 6, progressoAlunos, trabalhosPendentes);
+        if (emailAluno.equalsIgnoreCase("guilherme.arruda@aluno.fatec.sp.gov.br")) {
+            versoes.add(new VersaoTG(1, "TG_Versao1.docx", LocalDateTime.now().minusDays(5), "/uploads/TG_Versao1.docx"));
+            versoes.add(new VersaoTG(2, "TG_Versao2.docx", LocalDateTime.now().minusDays(3), "/uploads/TG_Versao2.docx"));
+            versoes.add(new VersaoTG(3, "TG_Versao3.docx", LocalDateTime.now().minusDays(1), "/uploads/TG_Versao3.docx"));
+        }
+        else if (emailAluno.equalsIgnoreCase("maria.oliveira@aluno.fatec.sp.gov.br")) {
+            versoes.add(new VersaoTG(1, "IA_PARA_JOGOS_V1.docx", LocalDateTime.now().minusDays(4), "/uploads/IA_PARA_JOGOS_V1.docx"));
+            versoes.add(new VersaoTG(2, "IA_PARA_JOGOS_V2.docx", LocalDateTime.now().minusDays(2), "/uploads/IA_PARA_JOGOS_V2.docx"));
+        }
+        else if (emailAluno.equalsIgnoreCase("joao.silva@aluno.fatec.sp.gov.br")) {
+            versoes.add(new VersaoTG(1, "ENG_REVERSA_V1.docx", LocalDateTime.now().minusDays(6), "/uploads/ENG_REVERSA_V1.docx"));
+        }
+
+        return versoes;
     }
 }

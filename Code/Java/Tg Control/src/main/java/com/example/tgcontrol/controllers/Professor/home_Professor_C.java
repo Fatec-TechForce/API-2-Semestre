@@ -1,7 +1,7 @@
 package com.example.tgcontrol.controllers.Professor;
 
 import com.example.tgcontrol.model.DashboardData;
-import com.example.tgcontrol.utils.SessaoManager;
+import com.example.tgcontrol.model.SessaoManager;
 import com.example.tgcontrol.model.TrabalhoPendente;
 import com.example.tgcontrol.utils.DatabaseUtils;
 import javafx.collections.FXCollections;
@@ -46,17 +46,15 @@ public class home_Professor_C implements Initializable {
 
         colProgresso.setCellValueFactory(new PropertyValueFactory<>("progresso"));
         colProgresso.setCellFactory(column -> new TableCell<>() {
+            private final ProgressBar progressBar = new ProgressBar();
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty || item == null) {
-                    setText(null);
                     setGraphic(null);
                 } else {
-                    String percentageText = String.format("%.0f%%", item * 100);
-                    setText(percentageText);
-                    setGraphic(null);
+                    progressBar.setProgress(item);
+                    setGraphic(progressBar);
                 }
             }
         });
@@ -68,10 +66,11 @@ public class home_Professor_C implements Initializable {
                 btn.setOnAction(event -> {
                     TrabalhoPendente trabalho = getTableView().getItems().get(getIndex());
                     try {
-                        String fxmlPath = "/com/example/tgcontrol/Scenes/ProfessorScenes/correcao_View.fxml";
+                        String fxmlPath = "/com/example/tgcontrol/ProfessorScenes/correcao_View.fxml";
                         URL fxmlLocation = getClass().getResource(fxmlPath);
                         FXMLLoader loader = new FXMLLoader(fxmlLocation);
                         Parent novaTela = loader.load();
+
 
                         StackPane contentArea = (StackPane) tabelaTgs.getScene().lookup("#contentArea");
                         if (contentArea != null) {
