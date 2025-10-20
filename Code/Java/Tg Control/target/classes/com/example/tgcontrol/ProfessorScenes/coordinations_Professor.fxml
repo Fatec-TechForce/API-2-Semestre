@@ -165,7 +165,7 @@
                                                 <Insets left="10.0" top="5.0" />
                                             </StackPane.margin>
                                         </Label>
-                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT">
+                                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-border-color: dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="BOTTOM_LEFT" onAction="#irParaHistorico">
                                             <StackPane.margin>
                                                 <Insets bottom="5.0" left="10.0" />
                                             </StackPane.margin>
@@ -196,7 +196,7 @@
                 </ImageView>
                 <Label alignment="CENTER" contentDisplay="CENTER" text="Gabriel Valente" translateY="-90.0" />
                 <Label text="Banco de Dados" textFill="#949494" translateY="-95.0" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" style="-fx-background-color: #9119B3;" text="Ver perfil" textFill="WHITE" translateY="-90.0" onAction="#irParaHistorico"/>
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" style="-fx-background-color: #9119B3;" text="Ver perfil" textFill="WHITE" translateY="-90.0"/>
                 <Button mnemonicParsing="false" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Buscar conversas" translateY="-85.0">
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />

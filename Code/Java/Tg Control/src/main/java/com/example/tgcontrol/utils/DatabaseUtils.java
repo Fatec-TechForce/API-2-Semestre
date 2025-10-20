@@ -60,16 +60,16 @@ public class DatabaseUtils {
         }
 
         if (emailAluno.equalsIgnoreCase("guilherme.arruda@aluno.fatec.sp.gov.br")) {
-            versoes.add(new VersaoTG(1, "TG_Versao1.docx", LocalDateTime.now().minusDays(5), "/uploads/TG_Versao1.docx"));
-            versoes.add(new VersaoTG(2, "TG_Versao2.docx", LocalDateTime.now().minusDays(3), "/uploads/TG_Versao2.docx"));
-            versoes.add(new VersaoTG(3, "TG_Versao3.docx", LocalDateTime.now().minusDays(1), "/uploads/TG_Versao3.docx"));
+            versoes.add(new VersaoTG(1, "TG_Versao1.md", LocalDateTime.now().minusDays(5), "/uploads/TG_Versao1.md"));
+            versoes.add(new VersaoTG(2, "TG_Versao2.md", LocalDateTime.now().minusDays(3), "/uploads/TG_Versao2.md"));
+            versoes.add(new VersaoTG(3, "TG_Versao3.md", LocalDateTime.now().minusDays(1), "/uploads/TG_Versao3.md"));
         }
         else if (emailAluno.equalsIgnoreCase("maria.oliveira@aluno.fatec.sp.gov.br")) {
-            versoes.add(new VersaoTG(1, "IA_PARA_JOGOS_V1.docx", LocalDateTime.now().minusDays(4), "/uploads/IA_PARA_JOGOS_V1.docx"));
-            versoes.add(new VersaoTG(2, "IA_PARA_JOGOS_V2.docx", LocalDateTime.now().minusDays(2), "/uploads/IA_PARA_JOGOS_V2.docx"));
+            versoes.add(new VersaoTG(1, "TG_Versao1.md", LocalDateTime.now().minusDays(4), "/uploads/TG_Versao1.md"));
+            versoes.add(new VersaoTG(2, "TG_Versao2.md", LocalDateTime.now().minusDays(2), "/uploads/TG_Versao2.md"));
         }
         else if (emailAluno.equalsIgnoreCase("joao.silva@aluno.fatec.sp.gov.br")) {
-            versoes.add(new VersaoTG(1, "ENG_REVERSA_V1.docx", LocalDateTime.now().minusDays(6), "/uploads/ENG_REVERSA_V1.docx"));
+            versoes.add(new VersaoTG(1, "TG_Versao1.md", LocalDateTime.now().minusDays(6), "/uploads/TG_Versao1.md"));
         }
 
         return versoes;
