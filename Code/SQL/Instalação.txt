@@ -1,0 +1,100 @@
+=========================================
+ GUIA DE INSTALAÇÃO - PROJETO TGCONTROL
+=========================================
+
+Este guia explica como configurar o banco de dados MySQL
+e conectá-lo ao projeto JavaFX.
+
+-------------------------------------------------
+ PARTE 1: CONFIGURAÇÃO DO BANCO DE DADOS (MYSQL)
+-------------------------------------------------
+
+Você precisará de um servidor MySQL rodando na sua máquina.
+
+1. PRÉ-REQUISITO: INSTALAR O MYSQL
+
+   -------------------------------------------------
+   --- Opção A: Linux (baseado em Ubuntu/Debian) ---
+   -------------------------------------------------
+   Abra seu terminal e execute os seguintes comandos, um por um:
+
+   # 1. Atualiza a lista de pacotes
+   sudo apt update
+
+   # 2. Instala o servidor MySQL
+   sudo apt install mysql-server
+
+   # 3. (Recomendado) Executa o script de segurança.
+   #    Isso ajudará a definir a senha 'root' e proteger o banco.
+   sudo mysql_secure_installation
+
+   # 4. (Opcional) Instala o cliente gráfico MySQL Workbench
+   sudo apt install mysql-workbench
+   
+   -------------------------------
+   --- Opção B: Windows / Outros ---
+   -------------------------------
+   - Baixe e instale o "MySQL Installer" (para Windows) do site oficial.
+   - Link: https://dev.mysql.com/downloads/installer/
+   - Durante a instalação, ele pedirá para você definir uma senha para o 
+     usuário 'root'. GUARDE ESTA SENHA.
+   - Recomendamos instalar também o "MySQL Workbench".
+
+2. EXECUTAR O SCRIPT SQL
+   - Abra o MySQL Workbench (ou seu cliente SQL preferido, como DBeaver).
+   - Conecte-se ao seu servidor local:
+     - Host: localhost (ou 127.0.0.1)
+     - Porta: 3306
+     - Usuário: root
+     - Senha: (A senha que você definiu na instalação)
+   - Abra o arquivo `TGControl.sql` (o script que está neste projeto)
+     no seu cliente SQL.
+   - Execute o script inteiro.
+   - Isso irá criar o banco de dados `TGControl` e todas as tabelas
+     e VIEWs necessárias.
+
+3. VERIFICAR
+   - Na barra lateral do Workbench (em "SCHEMAS"), clique em "Atualizar".
+   - O banco `TGControl` deve aparecer na lista.
+
+--------------------------------------------
+ PARTE 2: CONFIGURAÇÃO DO PROJETO (INTELLIJ)
+--------------------------------------------
+
+Agora que o banco de dados está rodando, vamos conectar o Java a ele.
+
+1. ABRA O PROJETO
+   - Abra o projeto no IntelliJ IDEA.
+
+2. CARREGUE AS DEPENDÊNCIAS (MAVEN)
+   - Abra o arquivo `pom.xml` na raiz do projeto.
+   - No canto superior direito, clique no ícone de "Recarregar Projeto Maven"
+     (duas setas azuis formando um círculo).
+   - Isso garantirá que o IntelliJ baixe o `mysql-connector-j` (o driver
+     de conexão).
+
+3. HABILITE A CONEXÃO (O PASSO MAIS IMPORTANTE)
+   - No projeto, navegue e abra o seguinte arquivo:
+     
+     src/main/java/com/example/tgcontrol/utils/DatabaseConnect.java
+
+   - No topo deste arquivo, você encontrará a seção "CONFIGURE SEUS DADOS AQUI".
+   - Altere os valores das variáveis `USER` e `PASSWORD` para
+     corresponder ao usuário ('root') e senha que você usa
+     no seu MySQL.
+
+     Exemplo:
+     private static final String USER = "root";
+     private static final String PASSWORD = "minha_senha_123";
+
+4. TESTE A CONEXÃO
+   - Para ter certeza de que tudo funcionou, clique com o botão direito no
+     arquivo `DatabaseConnect.java` e selecione "Run 'DatabaseConnect.main()'".
+   - Se o console exibir "Conexão com o banco 'TGControl' estabelecida...",
+     você está pronto!
+   - Se der erro, verifique sua senha ou se o servidor MySQL está ligado.
+
+================================================================================
+PRONTO! Agora você pode executar o projeto.
+O sistema irá tentar conectar ao banco. Se falhar, usará os dados de simulação.
+================================================================================

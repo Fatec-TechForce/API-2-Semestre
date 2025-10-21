@@ -12,6 +12,7 @@ module com.example.tgcontrol {
     requires javafx.graphics;
     requires java.logging;
     requires java.desktop;
+    requires java.sql;
 
     opens com.example.tgcontrol to javafx.fxml;
     exports com.example.tgcontrol;
@@ -22,5 +23,6 @@ module com.example.tgcontrol {
     opens com.example.tgcontrol.controllers.ProfessorTG to javafx.fxml;
     opens com.example.tgcontrol.model to javafx.base;
     opens com.example.tgcontrol.utils to javafx.base;
+
 
 }
