@@ -1,12 +1,8 @@
 package com.example.tgcontrol.controllers.Alunos;
 
 import com.example.tgcontrol.controllers.BaseNavbarController;
-import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 public class navbar_Aluno_C extends BaseNavbarController {
 
@@ -17,16 +13,11 @@ public class navbar_Aluno_C extends BaseNavbarController {
 
     @FXML
     public void home(ActionEvent actionEvent) {
-        carregarPagina("AlunoScenes/home_Aluno.fxml");
+        navigateTo("AlunoScenes/home_Aluno.fxml");
     }
 
     @FXML
     public void andamentoTG(ActionEvent actionEvent) {
-        carregarPagina("AlunoScenes/andamentoTG_Aluno.fxml");
-    }
-
-    @FXML
-    public void notifications(ActionEvent actionEvent) {
-        carregarPagina("AlunoScenes/notifications_Aluno.fxml");
+        navigateTo("AlunoScenes/andamentoTG_Aluno.fxml");
     }
 }

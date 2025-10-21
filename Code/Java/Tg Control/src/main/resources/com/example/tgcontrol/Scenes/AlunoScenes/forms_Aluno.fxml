@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<ScrollPane fitToWidth="true" prefHeight="524.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.Forms_Aluno_C">
+
+    <content>
+        <AnchorPane prefHeight="700.0" prefWidth="870.0" style="-fx-background-color: WHITE;">
+            <children>
+                <TextField layoutX="235.0" layoutY="64.0" prefHeight="34.0" prefWidth="416.0" style="-fx-background-radius: 5PX;" />
+                <TextField layoutX="235.0" layoutY="132.0" prefHeight="34.0" prefWidth="416.0" style="-fx-background-radius: 5PX;" />
+                <TextField layoutX="236.0" layoutY="201.0" prefHeight="34.0" prefWidth="416.0" style="-fx-background-radius: 5PX;" />
+                <TextField layoutX="234.0" layoutY="270.0" prefHeight="34.0" prefWidth="416.0" style="-fx-background-radius: 5PX;" />
+                <ChoiceBox layoutX="234.0" layoutY="340.0" prefHeight="34.0" prefWidth="416.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A1B9A; -fx-border-radius: 5PX;" />
+                <TextField layoutX="234.0" layoutY="410.0" prefHeight="34.0" prefWidth="416.0" style="-fx-background-radius: 5PX;" />
+                <ComboBox layoutX="237.0" layoutY="481.0" prefHeight="34.0" prefWidth="416.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A1B9A; -fx-border-radius: 5PX;" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="63.0" layoutX="234.0" layoutY="566.0" stroke="#6a1b9a" strokeType="INSIDE" width="423.0" />
+
+                <Label layoutX="234.0" layoutY="40.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="Nome Completo:" />
+                <Label layoutX="233.0" layoutY="108.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="E-mail Pessoal:" />
+                <Label layoutX="234.0" layoutY="177.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="E-mail Fatec (Se diferente do informado anteriormente):" />
+                <Label layoutX="235.0" layoutY="246.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="E-mail Fatec do professor orientador:" />
+                <Label layoutX="234.0" layoutY="316.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="Tipo de TG:" />
+                <Label layoutX="233.0" layoutY="386.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="Problema a ser resolvido caso esteja Artigo Tecnológico:" />
+                <Label layoutX="237.0" layoutY="456.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="Matriculado em:" />
+                <Label layoutX="234.0" layoutY="541.0" style="-fx-font-weight: bold; -fx-font-family: 'Noto Sans';" text="Anexe o documento de ACOMPANHAMENTO DE ORIENTAÇÃO DO PORTFÓLIO:" />
+                <Button layoutX="492.0" layoutY="648.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-font-family: 'Noto Sans'; -fx-font-weight: bold; -fx-background-color: #6A1B9A; -fx-background-radius: 5PX;" text="Enviar" textFill="WHITE" onAction="#enviarCadastro"/>
+                <Button layoutX="303.0" layoutY="650.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-font-family: 'Noto Sans'; -fx-font-weight: bold; -fx-background-color: #FFFFF; -fx-border-radius: 5PX; -fx-border-color: #6A1B9A;" text="Voltar" textFill="#6a1b9a" onAction="#voltarLogin" />
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>

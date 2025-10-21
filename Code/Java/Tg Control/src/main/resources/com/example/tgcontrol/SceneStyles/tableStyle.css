@@ -1,0 +1,66 @@
+/* ==========================================================================
+   ESTILOS DA TABELA (TableView)
+   ========================================================================== */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: null;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #cccccc transparent;
+    -fx-border-width: 2px;
+    -fx-padding: 14px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 2px;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f3e5f5; /* Roxo bem claro para hover na linha */
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #e1bee7; /* Roxo claro para seleção */
+}
+
+.table-view .table-cell {
+    -fx-padding: 12px;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+    -fx-text-fill: #333333;
+}
+
+/* ==========================================================================
+   ESTILOS DOS COMPONENTES DENTRO DA TABELA
+   ========================================================================== */
+.table-cell .progress-bar > .bar {
+    -fx-background-color: #6A1B9A;
+    -fx-background-insets: 0;
+    -fx-padding: 0.3em;
+}
+
+.action-button {
+    -fx-background-color: #6A1B9A;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-pref-width: 90px;
+}
+
+.action-button:hover {
+    -fx-background-color: #4A148C; /* Roxo mais escuro para hover */
+}

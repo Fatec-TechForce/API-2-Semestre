@@ -17,17 +17,44 @@ import java.util.logging.Logger;
 public final class UIUtils {
 
     private static final Logger LOGGER = Logger.getLogger(UIUtils.class.getName());
-
-    private UIUtils() {
-    }
+    private static final String FXML_BASE_PATH = "/com/example/tgcontrol/Scenes/";
 
     private static double xOffset = 0;
     private static double yOffset = 0;
 
-    public static void loadFxml(String fxmlFilename) {
+    private UIUtils() {
+    }
+
+    public static void loadFxmlInPane(Pane targetPane, String fxmlPath) {
+        if (targetPane == null) {
+            LOGGER.log(Level.WARNING, "Falha ao carregar FXML: Painel de destino é nulo.");
+            return;
+        }
+
+        try {
+            URL fxmlLocation = UIUtils.class.getResource(FXML_BASE_PATH + fxmlPath);
+
+            if (fxmlLocation == null) {
+                throw new IOException("Não foi possível encontrar o arquivo FXML: " + FXML_BASE_PATH + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            targetPane.getChildren().clear();
+            targetPane.getChildren().add(root);
+
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Falha ao carregar o FXML em painel: " + fxmlPath, e);
+            showAlert("Erro de Carregamento FXML", "Não foi possível carregar a página: " + fxmlPath);
+        }
+    }
+
+    public static void loadFxml(String fxmlPath) {
         Stage stage = Launcher.getPrimaryStage();
         if (stage == null || stage.getScene() == null) {
             LOGGER.log(Level.SEVERE, "Falha: Stage principal ou Scene não estão definidos.");
+            showAlert("Erro de Navegação", "A tela principal não está pronta.");
             return;
         }
 
@@ -35,26 +62,11 @@ public final class UIUtils {
 
         if (contentArea == null) {
             LOGGER.log(Level.SEVERE, "Erro: Não foi encontrado o StackPane com fx:id='contentArea' na Scene.");
+            showAlert("Erro de Navegação", "Não foi possível encontrar a área de conteúdo (contentArea) para carregar a página.");
             return;
         }
 
-        try {
-            String caminhoAbsoluto = "/com/example/tgcontrol/" + fxmlFilename;
-            if (!caminhoAbsoluto.endsWith(".fxml")) {
-                caminhoAbsoluto += ".fxml";
-            }
-
-            URL fxmlLocation = UIUtils.class.getResource(caminhoAbsoluto);
-            if (fxmlLocation == null) {
-                throw new IOException("Não foi possível encontrar o arquivo FXML: " + caminhoAbsoluto);
-            }
-
-            Parent fxml = FXMLLoader.load(fxmlLocation);
-            contentArea.getChildren().setAll(fxml);
-
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Falha ao carregar o FXML: " + fxmlFilename, e);
-        }
+        loadFxmlInPane(contentArea, fxmlPath);
     }
 
     public static void showAlert(String title, String message) {
@@ -67,10 +79,10 @@ public final class UIUtils {
 
     public static void loadNewScene(Stage stage, String fxmlPath) {
         try {
-            URL fxmlLocation = Launcher.class.getResource(fxmlPath);
+            URL fxmlLocation = UIUtils.class.getResource(FXML_BASE_PATH + fxmlPath);
 
             if (fxmlLocation == null) {
-                throw new IOException("Não foi possível encontrar o arquivo FXML: " + fxmlPath);
+                throw new IOException("Não foi possível encontrar o arquivo FXML: " + FXML_BASE_PATH + fxmlPath);
             }
 
             Parent root = FXMLLoader.load(fxmlLocation);

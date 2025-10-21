@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="500.0" prefWidth="761.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.andamentoTG_Aluno_C">
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <content>
+                <VBox fx:id="sectionsContainer" alignment="TOP_CENTER" spacing="20.0" style="-fx-background-color: WHITE;">
+                    <children>
+                        <AnchorPane prefHeight="150.0" style="-fx-background-radius: 15px; -fx-background-color: #f5f5f5;">
+                            <children>
+                                <StackPane prefHeight="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Label text="Seção 1" textFill="#030303" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="20.0" />
+                                            </StackPane.margin>
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="50.0" top="40.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="20.0" top="20.0" />
+                                            </StackPane.margin>
+                                            <image>
+                                                <Image url="@../../SceneImages/Task Images/task-icon.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label style="-fx-background-color: #00e100; -fx-background-radius: 5px;" text="Aceito" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+                                            <StackPane.margin>
+                                                <Insets right="15.0" />
+                                            </StackPane.margin>
+                                            <padding>
+                                                <Insets left="5.0" right="5.0" />
+                                            </padding>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </StackPane>
+                                <StackPane prefHeight="60.0" style="-fx-border-color: #a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                    <children>
+                                        <Label text="API 1" textFill="#322c2c" StackPane.alignment="CENTER_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="10.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                        <Button mnemonicParsing="false" onAction="#irsessao_btn" style="-fx-background-color: TRANSPARENT; -fx-border-color: #dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="CENTER_RIGHT">
+                                            <StackPane.margin>
+                                                <Insets right="10.0" />
+                                            </StackPane.margin>
+                                        </Button>
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </AnchorPane>
+                  <AnchorPane layoutX="30.0" layoutY="30.0" prefHeight="150.0" style="-fx-background-radius: 15px; -fx-background-color: #f5f5f5;">
+                     <children>
+                        <StackPane prefHeight="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label text="Seção 2" textFill="#030303" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="50.0" top="20.0" />
+                                 </StackPane.margin>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Última atualização" textFill="#a1a1a1" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="50.0" top="40.0" />
+                                 </StackPane.margin>
+                              </Label>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </StackPane.margin>
+                                 <image>
+                                    <Image url="@../../SceneImages/Task Images/task-icon.png" />
+                                 </image>
+                              </ImageView>
+                              <Label style="-fx-background-color: #00e100; -fx-background-radius: 5px;" text="Aceito" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+                                 <StackPane.margin>
+                                    <Insets right="15.0" />
+                                 </StackPane.margin>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="60.0" style="-fx-border-color: #a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <children>
+                              <Label text="API 2" textFill="#322c2c" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="10.0" />
+                                 </StackPane.margin>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#irsessao_btn" style="-fx-background-color: TRANSPARENT; -fx-border-color: #dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="CENTER_RIGHT">
+                                 <StackPane.margin>
+                                    <Insets right="10.0" />
+                                 </StackPane.margin>
+                              </Button>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
