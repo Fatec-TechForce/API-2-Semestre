@@ -13,6 +13,7 @@ module com.example.tgcontrol {
     requires java.logging;
     requires java.desktop;
     requires java.sql;
+    requires flexmark.html2md.converter;
 
     opens com.example.tgcontrol to javafx.fxml;
     exports com.example.tgcontrol;
