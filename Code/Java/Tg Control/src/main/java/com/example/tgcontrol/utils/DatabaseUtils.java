@@ -1,6 +1,6 @@
 package com.example.tgcontrol.utils;
 
-import com.example.tgcontrol.model.*; // Importa todos os seus models
+import com.example.tgcontrol.model.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class DatabaseUtils {
 
     // ---------------------------------------------------------------------------------
-    // MÉTODO 1: AUTENTICAÇÃO (SIMPLIFICADO COM A VIEW)
+    // MÉTODO 1: AUTENTICAÇÃO
     // ---------------------------------------------------------------------------------
 
     /**
@@ -31,7 +31,6 @@ public class DatabaseUtils {
      */
     public static TipoUsuario autenticarUsuario(String login, String senha) {
 
-        // A query agora é trivial. Nós pedimos o 'tipoUsuario' direto da VIEW.
         String sql = "SELECT tipoUsuario FROM vw_user_login WHERE email = ? AND passwordHASH = ?";
 
         try (Connection conn = DatabaseConnect.getConnection();
