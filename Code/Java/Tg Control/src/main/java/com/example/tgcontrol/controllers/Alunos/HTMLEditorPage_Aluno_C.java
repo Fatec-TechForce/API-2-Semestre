@@ -1,6 +1,6 @@
 package com.example.tgcontrol.controllers.Alunos;
 
-import com.example.tgcontrol.utils.HTMLconversor;
+import com.example.tgcontrol.utils.FileStorageUtils;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,8 +32,7 @@ public class HTMLEditorPage_Aluno_C{
             String diretorio = "Server/TGs_Markdown/";
 
 
-            boolean sucesso = HTMLconversor.converterESalvarMarkdown(htmlContent, nomeArquivoMd, diretorio);
-
+            boolean sucesso = FileStorageUtils.converterESalvarMarkdown(htmlContent, nomeArquivoMd);
 
             if (sucesso) {
                 UIUtils.showAlert("Sucesso", "Seção salva como '" + nomeArquivoMd + "'!");

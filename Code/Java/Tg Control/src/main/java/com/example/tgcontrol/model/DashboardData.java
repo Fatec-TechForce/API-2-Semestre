@@ -15,19 +15,8 @@ public class DashboardData {
         this.trabalhos = trabalhos;
     }
 
-    public int getTotalAlunos() {
-        return totalAlunos;
-    }
-
-    public int getTgsConcluidos() {
-        return tgsConcluidos;
-    }
-
-    public int getPendentes() {
-        return pendentes;
-    }
-
-    public List<TrabalhoPendente> getTrabalhos() {
-        return trabalhos;
-    }
+    public int getTotalAlunos() { return totalAlunos; }
+    public int getTgsConcluidos() { return tgsConcluidos; }
+    public int getPendentes() { return pendentes; }
+    public List<TrabalhoPendente> getTrabalhos() { return trabalhos; }
 }

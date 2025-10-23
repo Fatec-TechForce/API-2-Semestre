@@ -1,282 +1,198 @@
 package com.example.tgcontrol.utils;
 
 import com.example.tgcontrol.model.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Classe utilitária principal para consultas ao banco de dados.
- * Cada método público tenta executar uma consulta SQL real.
- * Se a conexão falhar (SQLException), ele chama um método _Mock privado
- * como fallback, garantindo que a aplicação continue funcionando para demonstração.
+ * Utilitário: Classe principal para consultas ao banco de dados TGControl.
  */
 public class DatabaseUtils {
 
-    // ---------------------------------------------------------------------------------
-    // MÉTODO 1: AUTENTICAÇÃO
-    // ---------------------------------------------------------------------------------
+    private static final Logger LOGGER = Logger.getLogger(DatabaseUtils.class.getName());
 
     /**
-     * Tenta autenticar o usuário contra o banco de dados real.
-     * Esta versão usa a VIEW 'vw_user_login' para simplificar a lógica.
-     * Se o banco falhar, usa a simulação.
+     * Função: Autentica um usuário no sistema.
+     * Necessita: Email (login) e senha.
+     * Retorna: O TipoUsuario correspondente (ALUNO, PROFESSOR, etc.) ou NAO_AUTENTICADO se falhar.
      */
     public static TipoUsuario autenticarUsuario(String login, String senha) {
-
         String sql = "SELECT tipoUsuario FROM vw_user_login WHERE email = ? AND passwordHASH = ?";
-
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setString(1, login);
             stmt.setString(2, senha);
-
-            System.out.println("Autenticação: Conectado ao DB, executando query (via VIEW)...");
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // 1. Pega a string do tipo de usuário (ex: "ALUNO", "PROFESSOR_TG")
                     String tipoUsuarioString = rs.getString("tipoUsuario");
-                    System.out.println("Autenticação: Usuário encontrado no DB. Tipo: " + tipoUsuarioString);
-
-                    // 2. Converte a String do banco para o Enum Java
                     try {
                         return TipoUsuario.valueOf(tipoUsuarioString);
                     } catch (IllegalArgumentException e) {
-                        // Caso a string no DB (ex: 'ADMIN') não exista no Enum Java
-                        System.err.println("Erro: Tipo de usuário no DB inválido: " + tipoUsuarioString);
+                        LOGGER.log(Level.SEVERE, "DB ERRO: Tipo de usuário inválido encontrado: " + tipoUsuarioString, e);
                         return TipoUsuario.NAO_AUTENTICADO;
                     }
-
                 } else {
-                    System.out.println("Autenticação: Usuário/senha inválidos ou inativo.");
-                    return TipoUsuario.NAO_AUTENTICADO; // Falha no login
+                    return TipoUsuario.NAO_AUTENTICADO;
                 }
             }
         } catch (SQLException e) {
-            System.err.println("!!! FALHA DE CONEXÃO COM O BANCO DE DADOS (Autenticação) !!!");
-            System.err.println("Causa: " + e.getMessage());
-            System.err.println("Usando dados de simulação (MOCK) como fallback...");
-            return autenticarUsuario_Mock(login, senha); // FALLBACK
-        }
-    }
-
-    /**
-     * SIMULAÇÃO (Mock) de autenticação
-     */
-    private static TipoUsuario autenticarUsuario_Mock(String login, String senha) {
-        if (!senha.equals("Troca123")) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Autenticação): " + e.getMessage(), e);
+            // Retorna não autenticado em caso de erro de DB
             return TipoUsuario.NAO_AUTENTICADO;
         }
-        switch (login) {
-            case "aluno.escola@fatec.sp.gov.br":
-                return TipoUsuario.ALUNO;
-            case "professor1.escola@fatec.sp.gov.br":
-                return TipoUsuario.PROFESSOR;
-            case "professor2.escola@fatec.sp.gov.br":
-                return TipoUsuario.PROFESSOR;
-            case "professortg.escola@fatec.sp.gov.br":
-                return TipoUsuario.PROFESSOR_TG;
-            default:
-                return TipoUsuario.NAO_AUTENTICADO;
-        }
     }
 
-
-    // ---------------------------------------------------------------------------------
-    // MÉTODO 2: SEÇÕES DO ALUNO (Secoes_Aluno_C)
-    // ---------------------------------------------------------------------------------
-
     /**
-     * Tenta buscar as seções do aluno logado do banco de dados (usando a VIEW vw_secoes_aluno).
-     * Se o banco falhar, usa a simulação.
+     * Função: Busca as seções do TG para um aluno específico.
+     * Necessita: Email do aluno.
+     * Retorna: Uma lista de objetos SecaoAluno com os detalhes de cada seção, ordenada pela sequência, ou lista vazia em caso de erro.
      */
     public static List<SecaoAluno> getSecoesAluno(String emailAluno) {
         List<SecaoAluno> secoes = new ArrayList<>();
-
-        // A VIEW 'vw_secoes_aluno' faz todo o trabalho pesado.
-        String sql = "SELECT taskId, titulo, status, dataEntrega, statusRevisao " +
-                "FROM vw_secoes_aluno " +
-                "WHERE emailAluno = ?";
-
-        try (Connection conn = DatabaseConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, emailAluno);
-            System.out.println("Seções Aluno: Conectado ao DB, buscando seções para " + emailAluno);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    SecaoAluno secao = new SecaoAluno(
-                            rs.getInt("taskId"),
-                            rs.getString("titulo"),
-                            rs.getString("status"),
-                            rs.getObject("dataEntrega", LocalDate.class), // Converte DATE do SQL para LocalDate do Java
-                            rs.getString("statusRevisao")
-                    );
-                    secoes.add(secao);
-                }
-            }
-            System.out.println("Seções Aluno: Encontradas " + secoes.size() + " seções no DB.");
+        String sql = "SELECT emailAluno, taskSequence, titulo, status, dataEntrega, statusRevisao " +
+                "FROM vw_secoes_aluno WHERE emailAluno = ? ORDER BY taskSequence";
             return secoes;
-
-        } catch (SQLException e) {
-            System.err.println("!!! FALHA DE CONEXÃO COM O BANCO DE DADOS (Seções Aluno) !!!");
-            System.err.println("Causa: " + e.getMessage());
-            System.err.println("Usando dados de simulação (MOCK) como fallback...");
-            return getSecoesAluno_Mock(emailAluno); // FALLBACK
-        }
     }
 
     /**
-     * SIMULAÇÃO (Mock) de seções do aluno
-     */
-    private static List<SecaoAluno> getSecoesAluno_Mock(String emailAluno) {
-        List<SecaoAluno> secoes = new ArrayList<>();
-        secoes.add(new SecaoAluno(1, "1. (MOCK) Definição do Tema", "completed", LocalDate.of(2025, 8, 30), "Aprovado"));
-        secoes.add(new SecaoAluno(2, "2. (MOCK) Revisão Bibliográfica", "in_progress", LocalDate.of(2025, 9, 15), "Revisão Solicitada"));
-        secoes.add(new SecaoAluno(3, "3. (MOCK) Metodologia", "in_progress", LocalDate.of(2025, 10, 1), "Pendente"));
-        secoes.add(new SecaoAluno(4, "4. (MOCK) Desenvolvimento", "locked", LocalDate.of(2025, 10, 30), "---"));
-        secoes.add(new SecaoAluno(5, "5. (MOCK) Conclusão", "locked", LocalDate.of(2025, 11, 15), "---"));
-        return secoes;
-    }
-
-
-    // ---------------------------------------------------------------------------------
-    // MÉTODO 3: DASHBOARD PROFESSOR (DashboardData)
-    // ---------------------------------------------------------------------------------
-
-    /**
-     * Tenta buscar os dados do dashboard do professor do banco de dados (usando a VIEW vw_professor_dashboard).
-     * Se o banco falhar, usa a simulação.
+     * Função: Busca os dados para o dashboard do professor orientador.
+     * Necessita: Email do professor orientador.
+     * Retorna: Um objeto DashboardData contendo totais e lista de trabalhos pendentes dos seus orientandos, ou dados zerados em caso de erro.
      */
     public static DashboardData getProfessorDashboardData(String emailProfessor) {
-
-        // Esta VIEW alimenta a tabela de 'TrabalhoPendente'
+        List<TrabalhoPendente> trabalhosPendentes = new ArrayList<>();
+        int totalAlunosOrientados = 0;
+        int tgsConcluidosOrientados = 0;
         String sqlTabela = "SELECT * FROM vw_professor_dashboard WHERE teacher_email = ?";
-
-        List<TrabalhoPendente> trabalhos = new ArrayList<>();
-        int totalAlunos = 0;
-        int tgsConcluidos = 0;
+        String sqlTotalAlunos = "SELECT COUNT(DISTINCT email) AS total FROM student WHERE advisor_email = ?";
+        String sqlTgsConcluidos = "SELECT COUNT(s.email) AS concluidos FROM student s WHERE s.advisor_email = ? AND NOT EXISTS (SELECT 1 FROM task t WHERE t.student_email = s.email AND t.status <> 'completed') AND EXISTS (SELECT 1 FROM task t2 WHERE t2.student_email = s.email);";
 
         try (Connection conn = DatabaseConnect.getConnection()) {
-
-            System.out.println("Dashboard Professor: Conectado ao DB, buscando dados para " + emailProfessor);
-
-            // Query 1: Popula a tabela de trabalhos pendentes
             try (PreparedStatement stmt = conn.prepareStatement(sqlTabela)) {
                 stmt.setString(1, emailProfessor);
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
-                        TrabalhoPendente tp = new TrabalhoPendente(
-                                rs.getDouble("progresso"),
-                                rs.getString("nomeAluno"),
-                                rs.getString("emailAluno"),
-                                rs.getString("turma"),
-                                rs.getString("semestre"),
-                                rs.getString("status")
-                        );
-                        trabalhos.add(tp);
+                        trabalhosPendentes.add(new TrabalhoPendente(
+                                rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
+                                rs.getString("turma"), rs.getString("semestre"), rs.getString("status")
+                        ));
                     }
                 }
             }
-
-            // TODO: Implementar queries para os K-Cards (Total Alunos, TGs Concluídos)
-            // A VIEW é ótima para a tabela, mas ineficiente para os contadores.
-            // Você deve fazer consultas separadas, mais simples, para isso.
-            // Ex: "SELECT COUNT(DISTINCT student.email) FROM student JOIN teacher_class..."
-
-            System.out.println("Dashboard Professor: Encontrados " + trabalhos.size() + " trabalhos pendentes no DB.");
-
-            if (trabalhos.isEmpty()) {
-                // Se o DB não retornou nada, pode ser um professor sem alunos
-                // Vamos usar o mock para ter dados de visualização
-                throw new SQLException("Nenhum dado encontrado no DB, usando mock.");
+            try (PreparedStatement stmt = conn.prepareStatement(sqlTotalAlunos)) {
+                stmt.setString(1, emailProfessor);
+                try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) totalAlunosOrientados = rs.getInt("total"); }
             }
-
-            // Retorna os dados REAIS do banco (com contadores zerados)
-            return new DashboardData(totalAlunos, tgsConcluidos, trabalhos.size(), trabalhos);
-
+            try (PreparedStatement stmt = conn.prepareStatement(sqlTgsConcluidos)) {
+                stmt.setString(1, emailProfessor);
+                try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) tgsConcluidosOrientados = rs.getInt("concluidos"); }
+            }
+            return new DashboardData(totalAlunosOrientados, tgsConcluidosOrientados, trabalhosPendentes.size(), trabalhosPendentes);
         } catch (SQLException e) {
-            System.err.println("!!! FALHA DE CONEXÃO OU QUERY (Dashboard Professor) !!!");
-            System.err.println("Causa: " + e.getMessage());
-            System.err.println("Usando dados de simulação (MOCK) como fallback...");
-            return getProfessorDashboardData_Mock(emailProfessor); // FALLBACK
-        }
-    }
-
-    /**
-     * SIMULAÇÃO (Mock) de dados do dashboard do professor
-     */
-    private static DashboardData getProfessorDashboardData_Mock(String emailProfessor) {
-        if (emailProfessor == null || emailProfessor.isEmpty()) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Dashboard Professor): " + e.getMessage(), e);
+            // Retorna dados zerados em caso de erro de DB
             return new DashboardData(0, 0, 0, Collections.emptyList());
         }
-        if ("professor1.escola@fatec.sp.gov.br".equals(emailProfessor)) {
-            List<TrabalhoPendente> trabalhos = new ArrayList<>();
-            trabalhos.add(new TrabalhoPendente(1.0, "(MOCK) Guilherme", "guilherme.arruda@aluno.fatec.sp.gov.br", "YT_BANCO", "2025", "Pendente"));
-            trabalhos.add(new TrabalhoPendente(0.9, "(MOCK) Maria", "maria.oliveira@aluno.fatec.sp.gov.br", "IA_JOGOS", "2025", "Pendente"));
-            return new DashboardData(90, 15, 3, trabalhos); // Mock com contadores
-        }
-        if ("professor2.escola@fatec.sp.gov.br".equals(emailProfessor)) {
-            return new DashboardData(45, 10, 0, Collections.emptyList());
-        }
-        return new DashboardData(0, 0, 0, Collections.emptyList());
     }
 
-
-    // ---------------------------------------------------------------------------------
-    // MÉTODO 4: DASHBOARD COORDENADOR TG (DashboardTgData)
-    // ---------------------------------------------------------------------------------
-
     /**
-     * Tenta buscar os dados do dashboard do Coordenador de TG do banco de dados.
-     * Se o banco falhar, usa a simulação.
+     * Função: Busca os dados para o dashboard do Coordenador de TG.
+     * Necessita: Email do Professor TG logado.
+     * Retorna: Um objeto DashboardTgData contendo totais gerais, progresso agregado dos alunos das turmas coordenadas e lista geral de pendências, ou dados zerados em caso de erro.
      */
-    public static DashboardTgData getProfessorTGDashboardData() {
+    public static DashboardTgData getProfessorTGDashboardData(String emailProfessorTg) {
+        int totalAlunosGeral = 0; int tgsConcluidosGeral = 0; int totalOrientandosGeral = 0;
+        Map<String, Integer> progressoAlunos = new LinkedHashMap<>(Map.of("Concluído", 0, "Em Dia", 0, "Atrasado", 0, "Não Iniciado", 0));
+        List<TrabalhoPendente> trabalhosPendentesGeral = new ArrayList<>();
+        List<String> turmasCoordenadasFiltro = new ArrayList<>();
+
+        String sqlResumoGeral = "SELECT SUM(numero_alunos) AS total_alunos, SUM(tgs_concluidos) AS tgs_concluidos FROM vw_class_summary";
+        String sqlTotalOrientandos = "SELECT COUNT(DISTINCT advisor_email) AS total FROM student WHERE advisor_email IS NOT NULL";
+        String sqlTurmasCoordenadas = "SELECT DISTINCT CONCAT(\"('\", class_disciplina, \"', \", class_year, \", \", class_semester, \")\") AS turma_tupla FROM tg_coordenacao_turma WHERE teacher_email = ?";
+        String sqlDetalhesTasksBase = "SELECT emailAluno, estagio_aluno, estagio_task, task_status FROM vw_professortg_dashboard_tasks WHERE (turma_disciplina, turma_year, turma_semester) IN ";
+        String sqlPendentesGeral = "SELECT * FROM vw_professor_dashboard";
 
         try (Connection conn = DatabaseConnect.getConnection()) {
-            System.out.println("Dashboard Coordenador: Conectado ao DB...");
+            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlResumoGeral)) { if (rs.next()) { totalAlunosGeral = rs.getInt("total_alunos"); tgsConcluidosGeral = rs.getInt("tgs_concluidos"); } }
+            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlTotalOrientandos)) { if (rs.next()) totalOrientandosGeral = rs.getInt("total"); }
+            try(PreparedStatement stmt = conn.prepareStatement(sqlTurmasCoordenadas)) {
+                stmt.setString(1, emailProfessorTg);
+                try(ResultSet rs = stmt.executeQuery()) { while(rs.next()) turmasCoordenadasFiltro.add(rs.getString("turma_tupla")); }
+            }
 
-            // TODO: IMPLEMENTAR AS CONSULTAS SQL REAIS AQUI
-            // Este é o mais complexo. Requer múltiplas consultas SQL para:
-            // 1. O Map 'progressoAlunos' (4 consultas COUNT diferentes)
-            // 2. A List 'trabalhosPendentes' (pode reusar a vw_professor_dashboard sem filtro de email)
-            // 3. Os K-Cards (totalAlunos, tgsConcluidos, totalOrientandos)
+            if(turmasCoordenadasFiltro.isEmpty()) {
+                // Se o professor não coordena turmas, retorna dados padrão (vazio/zero)
+                return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoAlunos, trabalhosPendentesGeral);
+            }
 
-            // Como as queries não estão prontas, forçamos o fallback
-            throw new SQLException("Queries do Dashboard do Coordenador ainda não implementadas.");
+            String filtroTurmasSql = String.join(",", turmasCoordenadasFiltro);
+            String sqlDetalhesTasksCompleta = sqlDetalhesTasksBase + "(" + filtroTurmasSql + ")";
+            Map<String, String> statusAlunoMap = new HashMap<>(); // email -> Status Agregado
 
+            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlDetalhesTasksCompleta)) {
+                while (rs.next()) {
+                    String emailAluno = rs.getString("emailAluno");
+                    int estagioAluno = rs.getInt("estagio_aluno"); int estagioTask = rs.getInt("estagio_task"); String taskStatus = rs.getString("task_status");
+                    String statusAtualAluno = statusAlunoMap.getOrDefault(emailAluno, "Concluído");
+                    if (!"completed".equals(taskStatus)) {
+                        if (estagioAluno > estagioTask) statusAtualAluno = "Atrasado";
+                        else if (estagioAluno == estagioTask && !"locked".equals(taskStatus)) { if (!"Atrasado".equals(statusAtualAluno)) statusAtualAluno = "Em Dia"; }
+                        else if (estagioAluno < estagioTask || "locked".equals(taskStatus)) { if (!"Atrasado".equals(statusAtualAluno) && !"Em Dia".equals(statusAtualAluno)) statusAtualAluno = "Não Iniciado"; }
+                    }
+                    statusAlunoMap.put(emailAluno, statusAtualAluno);
+                }
+            }
+            // Contabiliza os status agregados dos alunos
+            for (String statusAgregado : statusAlunoMap.values()) {
+                if (progressoAlunos.containsKey(statusAgregado)) { // Garante que a chave existe
+                    progressoAlunos.put(statusAgregado, progressoAlunos.get(statusAgregado) + 1);
+                }
+            }
+
+            // Busca trabalhos pendentes GERAL
+            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlPendentesGeral)) {
+                while (rs.next()) {
+                    trabalhosPendentesGeral.add(new TrabalhoPendente(
+                            rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
+                            rs.getString("turma"), rs.getString("semestre"), rs.getString("status")
+                    ));
+                }
+            }
+            return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoAlunos, trabalhosPendentesGeral);
         } catch (SQLException e) {
-            System.err.println("!!! FALHA DE CONEXÃO OU QUERY (Dashboard Coordenador) !!!");
-            System.err.println("Causa: " + e.getMessage());
-            System.err.println("Usando dados de simulação (MOCK) como fallback...");
-            return getProfessorTGDashboardData_Mock(); // FALLBACK
+            LOGGER.log(Level.SEVERE, "DB FALHA (Dashboard Coordenador): " + e.getMessage(), e);
+            // Retorna dados zerados em caso de erro de DB
+            Map<String, Integer> progressoVazio = new LinkedHashMap<>(Map.of("Concluído", 0, "Em Dia", 0, "Atrasado", 0, "Não Iniciado", 0));
+            return new DashboardTgData(0, 0, 0, progressoVazio, Collections.emptyList());
         }
     }
 
     /**
-     * SIMULAÇÃO (Mock) de dados do dashboard do Coordenador de TG
+     * Função: Busca a URL da foto de perfil para um usuário específico.
+     * Necessita: Email do usuário.
+     * Retorna: A string com o caminho relativo da imagem ou null se não encontrada ou em caso de erro.
      */
-    private static DashboardTgData getProfessorTGDashboardData_Mock() {
-        Map<String, Integer> progressoAlunos = new LinkedHashMap<>();
-        progressoAlunos.put("Concluído", 15);
-        progressoAlunos.put("Em Dia", 45);
-        progressoAlunos.put("Atrasado", 18);
-        progressoAlunos.put("Não Iniciado", 12);
-
-        List<TrabalhoPendente> trabalhosPendentes = new ArrayList<>();
-        trabalhosPendentes.add(new TrabalhoPendente(0.5, "(MOCK) Ana Beatriz", "ana.b@aluno.fatec.sp.gov.br", "ADS", "2025", "Atrasado"));
-        trabalhosPendentes.add(new TrabalhoPendente(0.8, "(MOCK) Carlos Daniel", "carlos.d@aluno.fatec.sp.gov.br", "DSM", "2025", "Correção"));
-        trabalhosPendentes.add(new TrabalhoPendente(0.2, "(MOCK) Juliana Lima", "juliana.l@aluno.fatec.sp.gov.br", "GTI", "2025", "Revisão"));
-
-        return new DashboardTgData(90, 15, 6, progressoAlunos, trabalhosPendentes);
+    public static String getProfilePictureUrl(String email) {
+        String sql = "SELECT profile_picture_url FROM user WHERE email = ?";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Retorna o valor da coluna, que pode ser null se não houver foto definida
+                    return rs.getString("profile_picture_url");
+                } else {
+                    // Usuário não encontrado (pouco provável se já logado, mas por segurança)
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Foto Perfil): " + e.getMessage(), e);
+            // Retorna null em caso de erro de DB
+            return null;
+        }
     }
 }
