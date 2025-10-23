@@ -121,7 +121,7 @@
                                     <Insets left="60.0" top="20.0" />
                                  </StackPane.margin>
                               </Label>
-                              <Button mnemonicParsing="false" style="-fx-background-color: #e10ae1; -fx-background-radius: 5px;" text="Solicitar revisão" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
+                              <Button mnemonicParsing="false" onAction="#enviarSecao" style="-fx-background-color: #e10ae1; -fx-background-radius: 5px;" text="Enviar seção" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
                                  <StackPane.margin>
                                     <Insets right="15.0" top="10.0" />
                                  </StackPane.margin>

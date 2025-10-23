@@ -79,8 +79,10 @@ public class DatabaseUtils {
         switch (login) {
             case "aluno.escola@fatec.sp.gov.br":
                 return TipoUsuario.ALUNO;
+            //Com alunos coordenados
             case "professor1.escola@fatec.sp.gov.br":
                 return TipoUsuario.PROFESSOR;
+            //Sem alunos coordenados
             case "professor2.escola@fatec.sp.gov.br":
                 return TipoUsuario.PROFESSOR;
             case "professortg.escola@fatec.sp.gov.br":

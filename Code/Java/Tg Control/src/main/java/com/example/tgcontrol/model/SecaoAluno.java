@@ -7,7 +7,7 @@ public class SecaoAluno {
     private final int taskId;
     private final String titulo;
     private final String status; // Status da TAREFA: "Concluído", "Em Progresso", "Bloqueado"
-    private final LocalDate dataEntrega;
+    private final LocalDate dataEntrega; //Até os minutos
     private final String statusRevisao; // Status da REVISÃO: "Aprovado", "Revisão Solicitada", "Pendente"
 
     public SecaoAluno(int taskId, String titulo, String status, LocalDate dataEntrega, String statusRevisao) {
