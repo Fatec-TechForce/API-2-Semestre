@@ -1,0 +1,99 @@
+/* ==========================================================================
+   ESTILOS DEDICADOS PARA O HTMLEditor - TG Control
+   ========================================================================== */
+
+/* Corpo principal do editor */
+.html-editor {
+    /* Fundo suave, como o fundo geral do app */
+    -fx-background-color: #f4f6f9;
+
+    /* Borda sutil */
+    -fx-border-color: #d0d0d0; /* Um cinza um pouco mais escuro que o da tabela */
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+
+    /* Sombra suave */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);
+}
+
+/* Área de digitação do texto */
+.html-editor .web-view {
+    -fx-background-color: white; /* Fundo branco para digitação */
+    -fx-padding: 10px; /* Espaçamento interno */
+}
+
+/* Barras de ferramentas (superior e inferior) */
+.html-editor .tool-bar {
+    /* Fundo branco para destacar as ferramentas */
+    -fx-background-color: white;
+
+    /* Cantos arredondados apenas no topo */
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-padding: 5px 8px; /* Mais espaçamento */
+
+    /* Linha de separação inferior */
+    -fx-border-color: transparent transparent #d0d0d0 transparent;
+    -fx-border-width: 1px;
+}
+
+.html-editor .bottom-toolbar {
+    -fx-background-color: white;
+    /* Cantos arredondados apenas na base */
+    -fx-background-radius: 0 0 8px 8px;
+    -fx-padding: 5px 8px;
+    /* Linha de separação superior */
+    -fx-border-color: #d0d0d0 transparent transparent transparent;
+    -fx-border-width: 1px;
+}
+
+/* Botões, ToggleButtons, Menus, ColorPickers na barra */
+.html-editor .tool-bar > .container > .button,
+.html-editor .tool-bar > .container > .toggle-button,
+.html-editor .tool-bar > .container > .menu-button,
+.html-editor .tool-bar > .container > .color-picker {
+    -fx-background-color: transparent; /* Fundo transparente por padrão */
+    -fx-background-radius: 4px; /* Leve arredondamento */
+    -fx-padding: 3px 5px; /* Espaçamento interno menor */
+    -fx-border-color: transparent; /* Sem borda por padrão */
+    -fx-border-width: 1px;
+}
+
+/* Efeito HOVER nos botões */
+.html-editor .tool-bar > .container > .button:hover,
+.html-editor .tool-bar > .container > .toggle-button:hover,
+.html-editor .tool-bar > .container > .menu-button:hover,
+.html-editor .tool-bar > .container > .color-picker:hover {
+    /* Roxo bem claro para indicar seleção */
+    -fx-background-color: #f3e5f5;
+
+    /* Borda roxa sutil ao passar o mouse */
+    -fx-border-color: #e1bee7;
+}
+
+/* Efeito SELECIONADO/ATIVO (ex: Negrito ativo) */
+.html-editor .tool-bar > .container > .toggle-button:selected {
+    /* Fundo roxo claro */
+    -fx-background-color: #e1bee7;
+
+    /* Borda roxa mais forte para destacar */
+    -fx-border-color: #6A1B9A;
+}
+
+/* Separadores entre grupos de botões */
+.html-editor .tool-bar .separator > .line {
+    /* Linha separadora mais sutil */
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 1 0 0; /* Apenas borda direita */
+}
+
+/* Estilo para ComboBoxes (Fonte, Tamanho) */
+.html-editor .tool-bar .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.html-editor .tool-bar .combo-box:hover {
+    -fx-border-color: #6A1B9A;
+}

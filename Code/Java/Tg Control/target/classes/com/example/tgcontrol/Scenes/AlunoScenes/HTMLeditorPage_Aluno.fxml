@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.HTMLEditorPage_Aluno_C">
+   <children>
+      <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="372.0" prefWidth="600.0" stylesheets="@../../SceneStyles/HTMLeditor.css" />
+      <Button fx:id="SalvaArquivo" layoutX="507.0" layoutY="375.0" mnemonicParsing="false" onAction="#SalvaArquivoAction" prefHeight="18.0" prefWidth="78.0" text="Salvar arquivo">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
