@@ -13,10 +13,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import org.zwobble.mammoth.DocumentConverter;
+import org.zwobble.mammoth.Result;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import com.example.tgcontrol.model.*;
 
@@ -73,14 +81,42 @@ public class Secao_Aluno_C {
         return null;
     }
 
-    private void converterArquivoParaHtml(Path arquivo_selecionado) {
+    private void converterArquivoParaHtml(File arquivo_selecionado) throws IOException {
+        Path caminho_arquivo = arquivo_selecionado.toPath();
         //Caso for um arquivo .txt
-        if(arquivo_selecionado.endsWith(".txt")) {
-            String text = Files.readString(arquivo_selecionado);
-            String html = "<html><body><pre>" + text + "</pre></body></html>";
-            Files.writeString(Path.of(arquivo_selecionado), html);
-        } else if(arquivo_selecionado.endsWith(".docx")) {
+        if(caminho_arquivo.endsWith(".txt")) {
+            try {
+                String text = Files.readString(caminho_arquivo);
+                String html = "<html><body><pre>" + text + "</pre></body></html>";
+                Files.writeString(Path.of(caminho_arquivo + ".html"), html);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //Caso for um arquivo .docx
+        else if(caminho_arquivo.endsWith(".docx")) {
+            DocumentConverter conversor = new DocumentConverter();
+            Result<String> resultado = conversor.convertToHtml(arquivo_selecionado);
+            String html = resultado.getValue();
+            //Caso haja algum aviso na conversão
+            Set<String> avisos = resultado.getWarnings();
+        }
+        else if(caminho_arquivo.endsWith(".pdf")) {
+            try (PDDocument document = PDDocument.load(arquivo_selecionado);
+                 //caminho_arquivo.getFileName();
+                 BufferedWriter writer = new BufferedWriter(new FileWriter("arquivo.html"))) {
 
+                PDFTextStripper stripper = new PDFTextStripper();
+                String text = stripper.getText(document);
+
+                writer.write("<html><body><pre>");
+                writer.write(text);
+                writer.write("</pre></body></html>");
+
+                System.out.println("Conversão simples concluída!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

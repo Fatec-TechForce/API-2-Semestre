@@ -13,6 +13,9 @@ module com.example.tgcontrol {
     requires java.logging;
     requires java.desktop;
     requires java.sql;
+    requires org.apache.poi.ooxml;
+    requires mammoth;
+    requires org.apache.pdfbox;
 
     opens com.example.tgcontrol to javafx.fxml;
     exports com.example.tgcontrol;
