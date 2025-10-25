@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
 
+<VBox prefHeight="524.0" prefWidth="889.0" spacing="25.0" style="-fx-background-color: #f4f6f9;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.home_Aluno_C">
+    <padding>
+        <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+    </padding>
+    <children>
+        <Label fx:id="lblBemVindo" text="Bem-vindo(a)!">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" />
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);">
+            <children>
+                <Label text="Progresso Geral do TG">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <ProgressBar fx:id="pbProgressoGeral" prefWidth="800.0" progress="0.0" style="-fx-accent: #6A1B9A;" />
+                <HBox alignment="CENTER_LEFT" spacing="5.0">
+                    <Label fx:id="lblProgressoEtapas" text="Etapa 0 de 0" textFill="#555555">
+                        <font><Font size="14.0" /></font>
+                    </Label>
+                    <Label text="-" textFill="#555555"><font><Font size="14.0" /></font></Label>
+                    <Label fx:id="lblProgressoPorcentagem" text="(0%)" textFill="#555555">
+                        <font><Font size="14.0" /></font>
+                    </Label>
+                </HBox>
+            </children>
+        </VBox>
+
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);">
+            <children>
+                <Label text="Última Seção Ativa">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 8; -fx-padding: 15;">
+                    <children>
+                        <StackPane HBox.hgrow="ALWAYS">
+                            <VBox alignment="CENTER_LEFT" spacing="3.0">
+                                <Label fx:id="lblTituloUltimaSecao" text="Carregando..." style="-fx-font-weight: bold; -fx-font-size: 15px;" />
+                                <Label fx:id="lblStatusUltimaSecao" text="Status: -" textFill="#777777">
+                                    <font><Font size="13.0" /></font>
+                                </Label>
+                            </VBox>
+                        </StackPane>
+                        <Button fx:id="btnVerUltimaSecao" mnemonicParsing="false" onAction="#abrirUltimaSecao" prefHeight="35.0" prefWidth="120.0" text="Ver Seção" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+                <Label fx:id="lblNenhumaSecao" text="Nenhuma seção encontrada." textFill="#888888" visible="false" managed="false">
+                    <font><Font size="14.0" /></font>
+                </Label>
+            </children>
+        </VBox>
+
+    </children>
+</VBox>
