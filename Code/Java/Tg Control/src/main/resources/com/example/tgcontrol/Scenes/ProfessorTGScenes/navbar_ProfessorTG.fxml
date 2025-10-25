@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.shape.Circle?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.navbar_ProfessorTG_C">
     <top>
         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="47.0" prefWidth="889.0" style="-fx-background-color: #E0D6D6;" BorderPane.alignment="BOTTOM_CENTER">
@@ -90,7 +91,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                 </Button>
-                <Button layoutX="664.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sair" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 15px;" textAlignment="CENTER">
+                <Button fx:id="profileMenuButton" layoutX="664.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showProfileMenu" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 15px;" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
@@ -99,6 +100,9 @@
                             <image>
                                 <Image url="@../../SceneImages/Navbar Images/UserSymbol.png" />
                             </image>
+                            <clip>
+                                <javafx.scene.shape.Circle radius="12.5" centerX="12.5" centerY="12.5" />
+                            </clip>
                         </ImageView>
                     </graphic>
                     <HBox.margin>
