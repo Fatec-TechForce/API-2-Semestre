@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -106,6 +107,31 @@ public final class UIUtils {
         } catch (IOException e) {
             Logger.getLogger(UIUtils.class.getName()).log(Level.SEVERE, "Falha ao carregar a nova Scene: " + fxmlPath, e);
             showAlert("Erro de Carregamento", "Ocorreu um erro ao carregar a tela principal.");
+        }
+    }
+
+    public static void openPopupWindow(String fxmlPath, String tituloJanela) {
+        try {
+            URL fxmlLocation = Launcher.class.getResource(fxmlPath);
+
+            if (fxmlLocation == null) {
+                throw new IOException("Não foi possível encontrar o arquivo FXML: " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setScene(new Scene(root));
+            popupStage.setTitle(tituloJanela);
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setResizable(false);
+
+            popupStage.showAndWait();
+
+        } catch (IOException e) {
+            Logger.getLogger(UIUtils.class.getName()).log(Level.SEVERE, "Falha ao abrir popup: " + fxmlPath, e);
+            showAlert("Erro de Carregamento", "Ocorreu um erro ao abrir a janela: " + fxmlPath);
         }
     }
 }
