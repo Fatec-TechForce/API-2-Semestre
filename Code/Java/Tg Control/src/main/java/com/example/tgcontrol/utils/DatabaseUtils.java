@@ -195,4 +195,139 @@ public class DatabaseUtils {
             return null;
         }
     }
+
+    // Dentro da classe DatabaseUtils
+
+    /**
+     * Função: Busca o nome completo de um usuário.
+     * Necessita: Email do usuário.
+     * Retorna: O nome completo ou null se não encontrado ou em caso de erro.
+     */
+    public static String getNomeUsuario(String email) {
+        String sql = "SELECT CONCAT(FirstName, ' ', LastName) AS nomeCompleto FROM user WHERE email = ?";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("nomeCompleto");
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Nome Usuário): " + e.getMessage(), e);
+            return null;
+        }
+    }
+
+    /**
+     * Função: Busca o estágio atual do TG de um aluno e o número máximo de tarefas.
+     * Necessita: Email do aluno.
+     * Retorna: Um Map contendo "estagioAtual" e "maxTasks", ou null em caso de erro.
+     */
+    public static Map<String, Integer> getEstagioEConfigAluno(String emailAluno) {
+        String sql = "SELECT s.estagio_tg_atual, c.max_tasks FROM student s JOIN class c ON s.class_disciplina = c.disciplina AND s.class_year = c.year AND s.class_semester = c.semester WHERE s.email = ?";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, emailAluno);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Map<String, Integer> result = new HashMap<>();
+                    result.put("estagioAtual", rs.getInt("estagio_tg_atual"));
+                    // max_tasks pode ser null no DB, default para 6 se for
+                    result.put("maxTasks", rs.getObject("max_tasks") != null ? rs.getInt("max_tasks") : 6);
+                    return result;
+                } else {
+                    return null; // Aluno não encontrado
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Estágio Aluno): " + e.getMessage(), e);
+            return null;
+        }
+    }
+
+
+    /**
+     * Função: Busca a última seção ativa ou relevante para o aluno.
+     * Prioriza 'in_progress', depois a última 'completed', depois a primeira 'locked'.
+     * Necessita: Email do aluno.
+     * Retorna: Um objeto SecaoAluno com os detalhes da seção, ou null se não houver seções ou em caso de erro.
+     */
+    public static SecaoAluno getUltimaSecaoAtiva(String emailAluno) {
+        String sqlInProgress = "SELECT * FROM vw_secoes_aluno WHERE emailAluno = ? AND status = 'in_progress' ORDER BY taskSequence LIMIT 1";
+        String sqlLastCompleted = "SELECT * FROM vw_secoes_aluno WHERE emailAluno = ? AND status = 'completed' ORDER BY taskSequence DESC LIMIT 1";
+        String sqlFirstLocked = "SELECT * FROM vw_secoes_aluno WHERE emailAluno = ? AND status = 'locked' ORDER BY taskSequence LIMIT 1";
+        String sqlAny = "SELECT * FROM vw_secoes_aluno WHERE emailAluno = ? ORDER BY taskSequence DESC LIMIT 1";
+
+
+        SecaoAluno secao = null;
+
+        try (Connection conn = DatabaseConnect.getConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(sqlInProgress)) {
+                stmt.setString(1, emailAluno);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        secao = mapResultSetToSecaoAluno(rs);
+                    }
+                }
+            }
+
+            if (secao == null) {
+                try (PreparedStatement stmt = conn.prepareStatement(sqlLastCompleted)) {
+                    stmt.setString(1, emailAluno);
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        if (rs.next()) {
+                            secao = mapResultSetToSecaoAluno(rs);
+                        }
+                    }
+                }
+            }
+
+            if (secao == null) {
+                try (PreparedStatement stmt = conn.prepareStatement(sqlFirstLocked)) {
+                    stmt.setString(1, emailAluno);
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        if (rs.next()) {
+                            secao = mapResultSetToSecaoAluno(rs);
+                        }
+                    }
+                }
+            }
+
+            if (secao == null) {
+                try (PreparedStatement stmt = conn.prepareStatement(sqlAny)) {
+                    stmt.setString(1, emailAluno);
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        if (rs.next()) {
+                            secao = mapResultSetToSecaoAluno(rs);
+                        }
+                    }
+                }
+            }
+
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Última Seção Ativa): " + e.getMessage(), e);
+            return null;
+        }
+
+        return secao;
+    }
+
+    private static SecaoAluno mapResultSetToSecaoAluno(ResultSet rs) throws SQLException {
+        java.sql.Date sqlDate = rs.getDate("dataEntrega");
+        LocalDate dataEntrega = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+
+        return new SecaoAluno(
+                rs.getString("emailAluno"),
+                rs.getInt("taskSequence"),
+                rs.getString("titulo"),
+                rs.getString("status"),
+                dataEntrega,
+                rs.getString("statusRevisao")
+        );
+    }
+
 }

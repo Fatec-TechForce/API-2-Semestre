@@ -2,14 +2,19 @@ package com.example.tgcontrol.controllers;
 
 import com.example.tgcontrol.utils.DatabaseUtils;
 import com.example.tgcontrol.utils.SessaoManager;
-import com.example.tgcontrol.utils.UIUtils; // UIUtils is used for FXML loading
+import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -18,11 +23,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Controller: Classe base abstrata para as barras de navegação (Navbars).
- * Gerencia a área de conteúdo principal e funções comuns como sair e notificações.
- * Carrega a imagem de perfil do usuário ao inicializar.
- */
+
 public abstract class BaseNavbarController implements Initializable {
 
     private static final Logger LOGGER = Logger.getLogger(BaseNavbarController.class.getName());
@@ -33,18 +34,15 @@ public abstract class BaseNavbarController implements Initializable {
     @FXML
     protected StackPane contentArea;
 
+    @FXML
+    protected Button profileMenuButton;
+
     private static final String DEFAULT_PROFILE_IMAGE_RESOURCE_PATH = "/com/example/tgcontrol/SceneImages/Navbar Images/UserSymbol.png";
 
-    /**
-     * Função: Método abstrato que define o FXML inicial a ser carregado.
-     * Retorna: String com o caminho relativo do FXML inicial.
-     */
+
     protected abstract String getInitialFxmlPath();
 
-    /**
-     * Função: Inicializa o controller da Navbar. Carrega a view inicial e a foto de perfil.
-     * Necessita: location e resources injetados pelo JavaFX.
-     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (contentArea == null) {
@@ -57,11 +55,10 @@ public abstract class BaseNavbarController implements Initializable {
         }
 
         loadProfileImage();
+        applyCircularClipToProfileImage(); // Apply clip after loading
     }
 
-    /**
-     * Função: Carrega a imagem de perfil do usuário logado ou uma imagem padrão.
-     */
+
     private void loadProfileImage() {
         if (profileImageView == null) {
             LOGGER.log(Level.WARNING,"ImageView com fx:id='profileImageView' não foi injetado.");
@@ -97,9 +94,7 @@ public abstract class BaseNavbarController implements Initializable {
         }
     }
 
-    /**
-     * Função: Carrega a imagem de perfil padrão a partir dos resources.
-     */
+
     private void loadDefaultProfileImage() {
         try {
             URL defaultImageURL = getClass().getResource(DEFAULT_PROFILE_IMAGE_RESOURCE_PATH);
@@ -113,10 +108,39 @@ public abstract class BaseNavbarController implements Initializable {
         }
     }
 
-    /**
-     * Função: Realiza o logout do usuário e redireciona para a tela de login.
-     * Necessita: ActionEvent do botão.
-     */
+    private void applyCircularClipToProfileImage() {
+        if (profileImageView != null) {
+            Circle clip = new Circle(12.5, 12.5, 12.5); // centerX, centerY, radius
+            profileImageView.setClip(clip);
+        }
+    }
+
+
+    @FXML
+    private void showProfileMenu(ActionEvent event) {
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem perfilItem = new MenuItem("Perfil");
+        perfilItem.setOnAction(e -> {
+            UIUtils.loadFxml("GeralScenes/profile_User.fxml");
+        });
+
+        MenuItem historicoItem = new MenuItem("Histórico");
+        historicoItem.setOnAction(e -> {
+            UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
+        });
+
+        MenuItem sairItem = new MenuItem("Sair");
+        sairItem.setOnAction(e -> {
+            sair(event);
+        });
+
+        contextMenu.getItems().addAll(perfilItem, historicoItem, new javafx.scene.control.SeparatorMenuItem(), sairItem);
+
+        contextMenu.show(profileMenuButton, Side.BOTTOM, 0, 5);
+    }
+
+
     @FXML
     public void sair(ActionEvent actionEvent) {
         SessaoManager.getInstance().encerrarSessao();
@@ -124,12 +148,9 @@ public abstract class BaseNavbarController implements Initializable {
         UIUtils.loadNewScene(stage, "GeralScenes/login_User.fxml");
     }
 
-    /**
-     * Função: Navega para a tela de notificações dentro do contentArea.
-     * Necessita: ActionEvent do botão.
-     */
+
     @FXML
     public void notifications(ActionEvent actionEvent) {
-            UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
+        UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
     }
 }
