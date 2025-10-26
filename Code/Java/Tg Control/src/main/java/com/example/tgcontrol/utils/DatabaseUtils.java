@@ -330,4 +330,84 @@ public class DatabaseUtils {
         );
     }
 
+    /**
+     * Função: Lista todas as versões (submissões) de uma seção (task) específica para um aluno.
+     * Necessita: Email do aluno e o número de sequência da tarefa (sequence_order).
+     * Retorna: Uma lista de objetos VersaoTG, ordenada pela data de envio (mais recente primeiro).
+     */
+    public static List<VersaoTG> listarVersoesPorTask(String emailAluno, int sequence_order) {
+        List<VersaoTG> versoes = new ArrayList<>();
+        // Agora buscamos da tabela task_submission
+        String sql = "SELECT attempt_number, submission_title, submission_timestamp, file_path " +
+                "FROM task_submission " +
+                "WHERE student_email = ? AND sequence_order = ? " +
+                "ORDER BY submission_timestamp DESC";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequence_order);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    versoes.add(new VersaoTG(
+                            rs.getInt("attempt_number"), //
+                            rs.getString("submission_title"),
+                            rs.getTimestamp("submission_timestamp").toLocalDateTime(),
+                            rs.getString("file_path")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Listar Versões por Task): " + e.getMessage(), e);
+            return Collections.emptyList();
+        }
+        return versoes;
+    }
+
+    /**
+     * Função: Realiza o upload de uma nova versão (submissão) de uma tarefa.
+     * Necessita: Email do aluno, número de sequência da tarefa, nome do arquivo e caminho de armazenamento.
+     * Retorna: O número da nova tentativa (versão) criada.
+     */
+    public static int uploadNovaVersao(String emailAluno, int sequence_order, String nomeArquivo, String caminhoArquivo) {
+        int proximoNumeroVersao = 1;
+
+        String sqlMaxVersao = "SELECT MAX(attempt_number) AS max_attempt FROM task_submission " +
+                "WHERE student_email = ? AND sequence_order = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtMax = conn.prepareStatement(sqlMaxVersao)) {
+
+            stmtMax.setString(1, emailAluno);
+            stmtMax.setInt(2, sequence_order);
+
+            try (ResultSet rs = stmtMax.executeQuery()) {
+                if (rs.next() && rs.getObject("max_attempt") != null) {
+                    proximoNumeroVersao = rs.getInt("max_attempt") + 1;
+                }
+            }
+
+            // Inserir nova submissão na tabela task_submission
+            String sqlInsert = "INSERT INTO task_submission " +
+                    "(student_email, sequence_order, submission_timestamp, file_path, submission_title, attempt_number) " +
+                    "VALUES (?, ?, NOW(), ?, ?, ?)";
+
+            try (PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert)) {
+                stmtInsert.setString(1, emailAluno);
+                stmtInsert.setInt(2, sequence_order);
+                stmtInsert.setString(3, caminhoArquivo);
+                stmtInsert.setString(4, nomeArquivo);
+                stmtInsert.setInt(5, proximoNumeroVersao);
+                stmtInsert.executeUpdate();
+            }
+
+            return proximoNumeroVersao;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Upload Nova Versão): " + e.getMessage(), e);
+            return -1;
+        }
+    }
 }

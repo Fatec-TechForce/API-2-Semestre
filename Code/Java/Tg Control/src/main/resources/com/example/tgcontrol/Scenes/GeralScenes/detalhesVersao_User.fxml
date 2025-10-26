@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="298.0" prefWidth="497.0" style="-fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.DetalhesVersoes_User_C">
+
+    <Label layoutX="49.0" layoutY="17.0" text="Seção:" />
+    <Label fx:id="lblNomeArquivo" layoutX="199.0" layoutY="16.0" prefHeight="18.0" prefWidth="54.0" text="Versão:" />
+    <TextArea fx:id="txtComentario1" editable="false" layoutX="51.0" layoutY="195.0" prefHeight="39.0" prefWidth="406.0" />
+
+    <Button layoutX="376.0" layoutY="365.0" onAction="#fecharPopup" style="-fx-background-color: #6A1B9A; -fx-text-fill: white; -fx-font-weight: bold;" text="Fechar" />
+    <TextArea fx:id="txtComentario11" editable="false" layoutX="51.0" layoutY="262.0" prefHeight="83.0" prefWidth="405.0" />
+    <Label layoutX="51.0" layoutY="177.0" text="Titulo" />
+    <Label layoutX="54.0" layoutY="244.0" text="Feedback Orientador" />
+</AnchorPane>
