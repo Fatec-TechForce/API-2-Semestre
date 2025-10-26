@@ -5,7 +5,7 @@ import com.example.tgcontrol.model.TipoUsuario;
 public class SessaoManager {
     private static SessaoManager instance;
     private TipoUsuario tipoUsuario;
-    private String emailUsuario;
+    private static String emailUsuario;
 
     private SessaoManager() {
         this.tipoUsuario = TipoUsuario.NAO_AUTENTICADO;
@@ -32,7 +32,7 @@ public class SessaoManager {
         return tipoUsuario;
     }
 
-    public String getEmailUsuario() {
+    public static String getEmailUsuario() {
         return emailUsuario;
     }
 

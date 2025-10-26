@@ -1,5 +1,7 @@
 package com.example.tgcontrol.controllers.Alunos;
 
+import com.example.tgcontrol.utils.DatabaseUtils;
+import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -24,6 +26,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Secao_Aluno_C {
+    // Variáveis de contexto (simuladas, pois não estão no código-fonte)
+    private String professorEmail = "professor@tgcontrol.com"; // Simulação: deve ser carregado
+    private int taskSequenceOrder = 1; // Simulação: deve ser carregado
+    private String nomeAluno = "Aluno Teste"; // Simulação: deve ser carregado
+    private String tituloSecao = "Introdução"; // Simulação: deve ser carregado
+
     @FXML Button btn_Arquivo;
     @FXML Label lblMensagemSucesso;
 
@@ -61,6 +69,13 @@ public class Secao_Aluno_C {
                 Runnable atraso = () -> lblMensagemSucesso.setVisible(false);
                 executor.schedule(atraso, 4, TimeUnit.SECONDS);
                 executor.shutdown();
+
+                // --- INTEGRAÇÃO DE NOTIFICAÇÃO (Requisito) ---
+                // Ao aluno enviar nova versão -> chamar DatabaseUtils.enviarNotificacao(professorEmail, "O aluno X enviou uma nova versão da seção Y.", "PROFESSOR")
+                String emailAluno = SessaoManager.getEmailUsuario();
+                String mensagem = String.format("O aluno %s enviou uma nova versão da seção %s.", nomeAluno, tituloSecao);
+                DatabaseUtils.enviarNotificacao(professorEmail, mensagem, emailAluno, taskSequenceOrder);
+                // ----------------------------------------------
 
             } catch (IOException e) {
                 e.printStackTrace();

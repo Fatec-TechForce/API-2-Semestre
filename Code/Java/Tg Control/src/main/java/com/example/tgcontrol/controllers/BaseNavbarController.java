@@ -127,7 +127,7 @@ public abstract class BaseNavbarController implements Initializable {
 
         MenuItem historicoItem = new MenuItem("Histórico");
         historicoItem.setOnAction(e -> {
-            UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
+            UIUtils.loadFxml("GeralScenes/notificacoes_User.fxml");
         });
 
         MenuItem sairItem = new MenuItem("Sair");
@@ -151,6 +151,6 @@ public abstract class BaseNavbarController implements Initializable {
 
     @FXML
     public void notifications(ActionEvent actionEvent) {
-        UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
+        UIUtils.loadFxml("GeralScenes/notificacoes_User.fxml");
     }
 }

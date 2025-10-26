@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="524.0" prefWidth="889.0" stylesheets="@../../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.Notificacoes_User_C">
+          <TableView fx:id="tvNotificacoes" layoutX="4.0" layoutY="42.0" prefHeight="479.0" prefWidth="882.0" BorderPane.alignment="CENTER">
+            <columns>
+              <TableColumn fx:id="colStatus" prefWidth="184.00000286102295" text="Status" />
+              <TableColumn fx:id="colConteudo" prefWidth="486.40000915527344" text="Conteúdo" />
+                <TableColumn fx:id="colData" prefWidth="192.7999267578125" text="Data/Hora" />
+            </columns>
+             <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+             </columnResizePolicy>
+             <BorderPane.margin>
+                <Insets left="20.0" right="20.0" />
+             </BorderPane.margin>
+          </TableView>
+          <Label fx:id="lblContadorNaoLidas" layoutX="14.0" layoutY="20.0" text="Você tem X notificações não lidas.">
+             <font>
+                <Font size="14.0" />
+             </font>
+          </Label>
+          <Button fx:id="btnMarcarTodas" layoutX="719.0" layoutY="17.0" mnemonicParsing="false" onAction="#marcarTodasComoLidas" style="-fx-background-color: #9119B3;" text="Marcar todas como lidas" textFill="WHITE" />
+</AnchorPane>
