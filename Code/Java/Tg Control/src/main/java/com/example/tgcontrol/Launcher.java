@@ -13,7 +13,8 @@ public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Launcher.primaryStage = stage;
-        UIUtils.loadNewScene(stage, "GeralScenes/login_User.fxml");
+        //"GeralScenes/login_User.fxml"
+        UIUtils.loadNewScene(stage, "AlunoScenes/secao_Aluno.fxml");
     }
 
     public static Stage getPrimaryStage() {

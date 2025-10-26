@@ -3,6 +3,7 @@ package com.example.tgcontrol.utils;
 import com.example.tgcontrol.model.*;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +41,6 @@ public class DatabaseUtils {
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Autenticação): " + e.getMessage(), e);
-            // Retorna não autenticado em caso de erro de DB
             return TipoUsuario.NAO_AUTENTICADO;
         }
     }
@@ -52,9 +52,24 @@ public class DatabaseUtils {
      */
     public static List<SecaoAluno> getSecoesAluno(String emailAluno) {
         List<SecaoAluno> secoes = new ArrayList<>();
-        String sql = "SELECT emailAluno, taskSequence, titulo, status, dataEntrega, statusRevisao " +
+        String sql = "SELECT emailAluno, taskSequence, titulo, status, dataEntrega, statusRevisao, dataUltimaRevisao " +
                 "FROM vw_secoes_aluno WHERE emailAluno = ? ORDER BY taskSequence";
-            return secoes;
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    secoes.add(mapResultSetToSecaoAluno(rs));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getSecoesAluno): Falha ao buscar seções para o aluno " + emailAluno, e);
+            return Collections.emptyList();
+        }
+        return secoes;
     }
 
     /**
@@ -93,7 +108,6 @@ public class DatabaseUtils {
             return new DashboardData(totalAlunosOrientados, tgsConcluidosOrientados, trabalhosPendentes.size(), trabalhosPendentes);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Dashboard Professor): " + e.getMessage(), e);
-            // Retorna dados zerados em caso de erro de DB
             return new DashboardData(0, 0, 0, Collections.emptyList());
         }
     }
@@ -124,13 +138,12 @@ public class DatabaseUtils {
             }
 
             if(turmasCoordenadasFiltro.isEmpty()) {
-                // Se o professor não coordena turmas, retorna dados padrão (vazio/zero)
                 return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoAlunos, trabalhosPendentesGeral);
             }
 
             String filtroTurmasSql = String.join(",", turmasCoordenadasFiltro);
             String sqlDetalhesTasksCompleta = sqlDetalhesTasksBase + "(" + filtroTurmasSql + ")";
-            Map<String, String> statusAlunoMap = new HashMap<>(); // email -> Status Agregado
+            Map<String, String> statusAlunoMap = new HashMap<>();
 
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlDetalhesTasksCompleta)) {
                 while (rs.next()) {
@@ -145,14 +158,11 @@ public class DatabaseUtils {
                     statusAlunoMap.put(emailAluno, statusAtualAluno);
                 }
             }
-            // Contabiliza os status agregados dos alunos
             for (String statusAgregado : statusAlunoMap.values()) {
-                if (progressoAlunos.containsKey(statusAgregado)) { // Garante que a chave existe
+                if (progressoAlunos.containsKey(statusAgregado)) {
                     progressoAlunos.put(statusAgregado, progressoAlunos.get(statusAgregado) + 1);
                 }
             }
-
-            // Busca trabalhos pendentes GERAL
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlPendentesGeral)) {
                 while (rs.next()) {
                     trabalhosPendentesGeral.add(new TrabalhoPendente(
@@ -164,7 +174,6 @@ public class DatabaseUtils {
             return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoAlunos, trabalhosPendentesGeral);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Dashboard Coordenador): " + e.getMessage(), e);
-            // Retorna dados zerados em caso de erro de DB
             Map<String, Integer> progressoVazio = new LinkedHashMap<>(Map.of("Concluído", 0, "Em Dia", 0, "Atrasado", 0, "Não Iniciado", 0));
             return new DashboardTgData(0, 0, 0, progressoVazio, Collections.emptyList());
         }
@@ -182,21 +191,16 @@ public class DatabaseUtils {
             stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // Retorna o valor da coluna, que pode ser null se não houver foto definida
                     return rs.getString("profile_picture_url");
                 } else {
-                    // Usuário não encontrado (pouco provável se já logado, mas por segurança)
                     return null;
                 }
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Foto Perfil): " + e.getMessage(), e);
-            // Retorna null em caso de erro de DB
             return null;
         }
     }
-
-    // Dentro da classe DatabaseUtils
 
     /**
      * Função: Busca o nome completo de um usuário.
@@ -235,11 +239,10 @@ public class DatabaseUtils {
                 if (rs.next()) {
                     Map<String, Integer> result = new HashMap<>();
                     result.put("estagioAtual", rs.getInt("estagio_tg_atual"));
-                    // max_tasks pode ser null no DB, default para 6 se for
                     result.put("maxTasks", rs.getObject("max_tasks") != null ? rs.getInt("max_tasks") : 6);
                     return result;
                 } else {
-                    return null; // Aluno não encontrado
+                    return null;
                 }
             }
         } catch (SQLException e) {
@@ -260,7 +263,6 @@ public class DatabaseUtils {
         String sqlLastCompleted = "SELECT * FROM vw_secoes_aluno WHERE emailAluno = ? AND status = 'completed' ORDER BY taskSequence DESC LIMIT 1";
         String sqlFirstLocked = "SELECT * FROM vw_secoes_aluno WHERE emailAluno = ? AND status = 'locked' ORDER BY taskSequence LIMIT 1";
         String sqlAny = "SELECT * FROM vw_secoes_aluno WHERE emailAluno = ? ORDER BY taskSequence DESC LIMIT 1";
-
 
         SecaoAluno secao = null;
 
@@ -307,7 +309,6 @@ public class DatabaseUtils {
                 }
             }
 
-
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Última Seção Ativa): " + e.getMessage(), e);
             return null;
@@ -316,9 +317,18 @@ public class DatabaseUtils {
         return secao;
     }
 
+    /**
+     * Função auxiliar: Mapeia uma linha do ResultSet para um objeto SecaoAluno.
+     * Necessita: ResultSet posicionado na linha desejada.
+     * Retorna: Um objeto SecaoAluno populado.
+     * Lança: SQLException se ocorrer erro ao acessar colunas.
+     */
     private static SecaoAluno mapResultSetToSecaoAluno(ResultSet rs) throws SQLException {
         java.sql.Date sqlDate = rs.getDate("dataEntrega");
         LocalDate dataEntrega = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+
+        java.sql.Timestamp sqlTimestamp = rs.getTimestamp("dataUltimaRevisao");
+        LocalDateTime dataUltimaRevisao = (sqlTimestamp != null) ? sqlTimestamp.toLocalDateTime() : null;
 
         return new SecaoAluno(
                 rs.getString("emailAluno"),
@@ -326,7 +336,8 @@ public class DatabaseUtils {
                 rs.getString("titulo"),
                 rs.getString("status"),
                 dataEntrega,
-                rs.getString("statusRevisao")
+                rs.getString("statusRevisao"),
+                dataUltimaRevisao
         );
     }
 
@@ -337,7 +348,6 @@ public class DatabaseUtils {
      */
     public static List<VersaoTG> listarVersoesPorTask(String emailAluno, int sequence_order) {
         List<VersaoTG> versoes = new ArrayList<>();
-        // Agora buscamos da tabela task_submission
         String sql = "SELECT attempt_number, submission_title, submission_timestamp, file_path " +
                 "FROM task_submission " +
                 "WHERE student_email = ? AND sequence_order = ? " +
@@ -352,7 +362,7 @@ public class DatabaseUtils {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     versoes.add(new VersaoTG(
-                            rs.getInt("attempt_number"), //
+                            rs.getInt("attempt_number"),
                             rs.getString("submission_title"),
                             rs.getTimestamp("submission_timestamp").toLocalDateTime(),
                             rs.getString("file_path")
@@ -369,7 +379,7 @@ public class DatabaseUtils {
     /**
      * Função: Realiza o upload de uma nova versão (submissão) de uma tarefa.
      * Necessita: Email do aluno, número de sequência da tarefa, nome do arquivo e caminho de armazenamento.
-     * Retorna: O número da nova tentativa (versão) criada.
+     * Retorna: O número da nova tentativa (versão) criada ou -1 em caso de erro.
      */
     public static int uploadNovaVersao(String emailAluno, int sequence_order, String nomeArquivo, String caminhoArquivo) {
         int proximoNumeroVersao = 1;
@@ -389,7 +399,6 @@ public class DatabaseUtils {
                 }
             }
 
-            // Inserir nova submissão na tabela task_submission
             String sqlInsert = "INSERT INTO task_submission " +
                     "(student_email, sequence_order, submission_timestamp, file_path, submission_title, attempt_number) " +
                     "VALUES (?, ?, NOW(), ?, ?, ?)";

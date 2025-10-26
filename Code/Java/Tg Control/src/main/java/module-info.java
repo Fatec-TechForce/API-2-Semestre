@@ -14,6 +14,8 @@ module com.example.tgcontrol {
     requires java.desktop;
     requires java.sql;
     requires flexmark.html2md.converter;
+    requires mammoth;
+    requires org.apache.pdfbox;
 
     opens com.example.tgcontrol to javafx.fxml;
     exports com.example.tgcontrol;
