@@ -71,7 +71,7 @@ public class Secao_Aluno_C {
                 Runnable atraso = () -> lblMensagemSucesso.setVisible(false);
                 executor.schedule(atraso, 4, TimeUnit.SECONDS);
                 executor.shutdown();
-                return arquivo_selecionado;
+                converterArquivoParaHtml(arquivo_selecionado);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -81,7 +81,6 @@ public class Secao_Aluno_C {
             lblMensagemSucesso.setText("Nenhum Arquivo Selecionado!");
             lblMensagemSucesso.setVisible(true);
         }
-        return null;
     }
 
     private void converterArquivoParaHtml(File arquivo_selecionado) throws IOException {
@@ -122,6 +121,7 @@ public class Secao_Aluno_C {
             }
         }
     }
+
     @FXML
     public void visualizarHist(ActionEvent event){
         String fxmlParaCarregar = "GeralScenes/historicoVers_User.fxml";
