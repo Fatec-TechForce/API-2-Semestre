@@ -121,7 +121,18 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.30</version> </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-html2md-converter</artifactId>
+            <version>0.64.8</version>
+        </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>

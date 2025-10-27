@@ -1,6 +1,7 @@
 package com.example.tgcontrol.controllers.Professor;
 
 import com.example.tgcontrol.controllers.BaseNavbarController;
+import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -13,11 +14,11 @@ public class navbar_Professor_C extends BaseNavbarController {
 
     @FXML
     public void home(ActionEvent actionEvent) {
-        navigateTo("ProfessorScenes/home_Professor.fxml");
+        UIUtils.loadFxml("ProfessorScenes/home_Professor.fxml");
     }
 
     @FXML
     public void coordinations(ActionEvent actionEvent) {
-        navigateTo("ProfessorScenes/coordinations_Professor.fxml");
+        UIUtils.loadFxml("ProfessorScenes/coordinations_Professor.fxml");
     }
 }

@@ -1,8 +1,10 @@
 package com.example.tgcontrol.controllers.Alunos;
 
+import com.example.tgcontrol.utils.UIUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -11,6 +13,7 @@ import javafx.scene.text.*;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -43,7 +46,7 @@ public class Secao_Aluno_C {
     }
 
     @FXML
-    public File adicionarArquivo() {
+    public void adicionarArquivo() {
         FileChooser fc = new FileChooser();
         fc.setTitle("Adicionar Arquivo");
         fc.getExtensionFilters().addAll(
@@ -119,10 +122,10 @@ public class Secao_Aluno_C {
             }
         }
     }
-
-    //Parte de envio de seção
     @FXML
-    public void enviarSecao() {
-        //SecaoAluno = new SecaoAluno();
-    };
+    public void visualizarHist(ActionEvent event){
+        String fxmlParaCarregar = "GeralScenes/historicoVers_User.fxml";
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        UIUtils.loadFxml(fxmlParaCarregar);
+    }
 }
