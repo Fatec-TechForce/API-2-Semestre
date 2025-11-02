@@ -1,6 +1,6 @@
 # TechForce - TG Control
 
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/adb62b93-78c0-4436-8ff7-2d5fe202f5f4" />
+<img width="1217" height="235" alt="image" src="https://github.com/user-attachments/assets/5aeed30e-9e5e-46f3-8f84-40e77ce31705" />
 
 ## Tópicos
 
