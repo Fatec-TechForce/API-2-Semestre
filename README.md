@@ -3,8 +3,11 @@
 <img width="1217" height="235" alt="image" src="https://github.com/user-attachments/assets/5aeed30e-9e5e-46f3-8f84-40e77ce31705" />
 
 ## Tópicos
+<div align="center">
+  
+[📄 Descrição do Projeto](#descrição) | [💻 Tecnologias Utilizadas](#tecnologias-utilizadas) | [📋 Backlog do Produto](#backlog-do-produto) | [📅 Cronograma das Sprints](#cronograma-das-sprints) | [📖 Manual de Instalação](#-manual-de-instalação) | [📝 Documentação do Projeto](#-documentação-do-projeto) | [👥 Equipe](#equipe)
 
-[[Descrição do projeto](./DESCRICAO.md) | [Tecnologias Utilizadas](./TECNOLOGIAS.md) | [Funcionalidades](./FUNCIONALIDADES.md) | [Backlog do Produto](./BACKLOG_PRODUTO.md) | [Backlog da Sprint](./BACKLOG_SPRINT.md) | [User Stories](./USER_STORIES.md) | [Sprints](./SPRINTS.md) | [Documentação](./documentacao/) | [Código](./codigo/) | [Equipe](./EQUIPE.md)
+</div>
 
 ## Descrição
 
