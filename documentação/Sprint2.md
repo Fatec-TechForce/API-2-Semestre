@@ -136,7 +136,9 @@ Como aluno, quero gerar automaticamente meu TG consolidado em formato **Markdown
 # 📈 Metas para Sprint
 
 O foco da Sprint 2 é desenvolver o núcleo operacional do sistema TG Control, implementando as funcionalidades essenciais para a comunicação entre alunos e orientadores durante o desenvolvimento do Trabalho de Graduação. Nesta sprint, o objetivo principal é centralizar o envio de seções, estabelecer a infraestrutura para feedback estruturado, e garantir o registro completo do histórico de versões e interações ao longo do processo de orientação.
+
 O sistema deve permitir que alunos enviem suas seções de forma organizada, com suporte aos formatos .docx, .pdf e .md, garantindo validação de tamanho e registro automático de data e hora. Cada envio deve exigir a identificação clara da seção correspondente, proporcionando confirmação visual ao usuário e listagem imediata dos arquivos submetidos. A interface foi projetada para ser intuitiva, com campos claros que facilitam o fluxo de trabalho tanto para alunos quanto para orientadores.
+
 ---
 # ✅ Definition of Done (DoD)
 
