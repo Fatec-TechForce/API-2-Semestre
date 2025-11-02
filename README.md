@@ -19,6 +19,9 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 ## Tecnologias Utilizadas
 
 [![Java](https://img.shields.io/badge/Java-007396?logo=java&logoColor=white)](https://www.java.com/)  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/) [![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white)](https://www.figma.com/) [![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)](https://www.atlassian.com/software/jira) [![Scene Builder](https://img.shields.io/badge/Scene%20Builder-0091EA?logo=java&logoColor=white)](https://gluonhq.com/products/scene-builder/) [![JavaFX](https://img.shields.io/badge/JavaFX-FF0000?logo=openjdk&logoColor=white)](https://openjfx.io/)
+
+---
+
 ## Backlog do produto
 
 | Rank | Prioridade | User Story | Estimativa | Sprint |
@@ -30,9 +33,8 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 | 5 | **Alta** | Como aluno, quero ver o status de cada seção (pendente, revisada, aceita) para saber meu progresso no TG.<br>Como professor, quero atualizar o status das seções corrigidas para indicar a evolução ao aluno. | 3 | 2 |
 | 6 | **Média** | Como aluno, quero que minhas seções, versões e correções fiquem salvas, para não perder meu histórico e acompanhar minha evolução no trabalho.<br>Como professor, quero acessar facilmente os envios e versões dos alunos, para acompanhar o progresso de cada TG e manter registrado todo o processo de orientação. | 12 | 2 |
 | 7 | **Média** | Como aluno, quero gerar automaticamente meu TG consolidado em formato MD para entregar de acordo com o padrão exigido. | 8 | 2 |
-| 8| **Baixa** | Como professor de TG, quero ter estatísticas sobre tempo médio de correção e interações para melhorar a gestão acadêmica. | 5 | 3 |
-| 9| **Baixa** | Como professor de TG, quero visualizar quais alunos já concluíram todas as seções. | 3 | 3 |
-| 10 | **Baixa** | Como administrador, quero gerenciar cadastros de professores para garantir acesso controlado ao sistema. | 4 | 3 |
+| 8| **Baixa** | Como professor de TG, quero agendar as defesas dos alunos que concluíram o Trabalho de Graduação, para organizar as apresentações e facilitar o acompanhamento das etapas finais do processo. | 5 | 3 |
+| 9| **Baixa** |Como professor de TG,quero revisar e aprovar os cadastros realizados por alunos e outros professores no sistema,para garantir que apenas usuários autorizados tenham acesso e evitar cadastros indevidos. | 3 | 3 |
 
 ---
 
