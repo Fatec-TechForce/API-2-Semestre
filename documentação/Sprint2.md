@@ -184,3 +184,4 @@ Esta sprint cobre as funcionalidades principais do sistema **TG Control**, inclu
 ---
 
 # 📊 Burndown da Sprint
+![Screenshot_2025-11-02-22-18-22-805_com android chrome-edit](https://github.com/user-attachments/assets/96f7cc52-b766-4df0-b9e8-198bbf6892b4)
