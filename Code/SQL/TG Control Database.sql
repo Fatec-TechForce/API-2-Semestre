@@ -137,14 +137,25 @@ CREATE TABLE IF NOT EXISTS `tg_coordenacao_turma` (
 -- VIEW: Mostra o status atual de cada seção para um aluno.
 CREATE OR REPLACE VIEW `vw_secoes_aluno` AS
 WITH LatestSubmission AS (
-    SELECT ts.`student_email`, ts.`sequence_order`, ts.`submission_timestamp`, ROW_NUMBER() OVER(PARTITION BY ts.`student_email`, ts.`sequence_order` ORDER BY ts.`submission_timestamp` DESC) as rn FROM `task_submission` ts
+    SELECT ts.`student_email`, ts.`sequence_order`, ts.`submission_timestamp`, ROW_NUMBER() OVER(PARTITION BY ts.`student_email`, ts.`sequence_order` ORDER BY ts.`submission_timestamp` DESC) as rn
+    FROM `task_submission` ts
 ),
 LatestReview AS (
-    SELECT tr.`student_email`, tr.`sequence_order`, tr.`submission_timestamp`, tr.`status`, ROW_NUMBER() OVER(PARTITION BY tr.`student_email`, tr.`sequence_order`, tr.`submission_timestamp` ORDER BY tr.`review_timestamp` DESC) as rn FROM `task_review` tr
+    SELECT tr.`student_email`, tr.`sequence_order`, tr.`submission_timestamp`, tr.`status`, tr.`review_timestamp`, ROW_NUMBER() OVER(PARTITION BY tr.`student_email`, tr.`sequence_order`, tr.`submission_timestamp` ORDER BY tr.`review_timestamp` DESC) as rn
+    FROM `task_review` tr
 )
 SELECT
-    t.student_email AS emailAluno, t.sequence_order AS taskSequence, t.title AS titulo, t.status AS status, t.due_date AS dataEntrega,
-    CASE WHEN t.status = 'completed' THEN 'Aprovado' WHEN lr.status IS NOT NULL THEN lr.status WHEN ls.submission_timestamp IS NOT NULL THEN 'Pendente' ELSE '---' END AS statusRevisao
+    t.student_email AS emailAluno,
+    t.sequence_order AS taskSequence,
+    t.title AS titulo,
+    t.status AS status,
+    t.due_date AS dataEntrega,
+    CASE WHEN t.status = 'completed' THEN 'Aprovado'
+         WHEN lr.status IS NOT NULL THEN lr.status
+         WHEN ls.submission_timestamp IS NOT NULL THEN 'Pendente'
+         ELSE '---'
+        END AS statusRevisao,
+    lr.review_timestamp AS dataUltimaRevisao
 FROM `task` t
          LEFT JOIN LatestSubmission ls ON t.student_email = ls.student_email AND t.sequence_order = ls.sequence_order AND ls.rn = 1
          LEFT JOIN LatestReview lr ON ls.student_email = lr.student_email AND ls.sequence_order = lr.sequence_order AND ls.submission_timestamp = lr.submission_timestamp AND lr.rn = 1
