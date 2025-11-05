@@ -13,11 +13,11 @@ public class DatabaseConnect {
 
     // O endereço do seu servidor MySQL
     private static final String HOST = "localhost"; // ou "127.0.0.1"
-    private static final String PORT = "3306";
+    private static final String PORT = "3307";
 
     // Suas credenciais do MySQL
     private static final String USER = "root"; // Usuário padrão do MySQL
-    private static final String PASSWORD = ""; // A senha que você definiu
+    private static final String PASSWORD = "Fatec@2025"; // A senha que você definiu
 
     // --- FIM DA CONFIGURAÇÃO ---
 

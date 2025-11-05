@@ -83,6 +83,7 @@
                                     <Insets left="200.0" />
                                  </StackPane.margin>
                               </Label>
+                              <Button fx:id="btn_Arquivo1" layoutX="419.0" layoutY="20.0" maxHeight="25.0" maxWidth="110.0" mnemonicParsing="false" onAction="#SalvaArquivoAction" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #e10ae1; -fx-background-radius: 5px;" text="Salvar Arquivo" textFill="WHITE" wrapText="true" />
                            </children>
                         </StackPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: a7a7a7; -fx-border-radius: 10px;">
@@ -90,7 +91,7 @@
                               <Insets left="15.0" right="15.0" />
                            </VBox.margin>
                            <children>
-                              <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="5.0" layoutY="2.0" prefHeight="200.0" prefWidth="631.0" style="-fx-border-radius: 20;" />
+                              <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="5.0" layoutY="2.0" prefHeight="260.0" prefWidth="631.0" style="-fx-border-radius: 20;" stylesheets="@../../SceneStyles/HTMLeditor.css" />
                            </children>
                         </AnchorPane>
                      </children>

@@ -27,7 +27,6 @@ public class HTMLEditorPage_Aluno_C{
         if (htmlContent != null && !htmlContent.isBlank()) {
 
 
-            // Nome do diretório onde será gerado o arquivo -->
             String nomeArquivoMd = "secao_editada_" + System.currentTimeMillis() + ".md";
             String diretorio = "Server/TGs_Markdown/";
 
