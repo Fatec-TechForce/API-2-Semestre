@@ -17,24 +17,16 @@ public class DatabaseConnect {
 
     // Suas credenciais do MySQL
     private static final String USER = "root"; // Usuário padrão do MySQL
-    private static final String PASSWORD = "sua_senha_aqui"; // A senha que você definiu
+    private static final String PASSWORD = "Soulindo0205@"; // A senha que você definiu
 
     // --- FIM DA CONFIGURAÇÃO ---
 
 
-    // String de conexão JDBC completa
     private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_NAME +
             "?useTimezone=true&serverTimezone=UTC";
 
-    /**
-     * Obtém uma nova conexão com o banco de dados.
-     *
-     * @return um objeto Connection com a conexão estabelecida.
-     * @throws SQLException se a conexão falhar.
-     */
     public static Connection getConnection() throws SQLException {
         try {
-            // Garante que o driver JDBC do MySQL seja carregado
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.err.println("Erro: Driver JDBC do MySQL não encontrado.");

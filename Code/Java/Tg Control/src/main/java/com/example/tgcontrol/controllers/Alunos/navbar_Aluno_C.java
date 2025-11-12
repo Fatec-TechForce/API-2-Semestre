@@ -14,10 +14,10 @@ public class navbar_Aluno_C extends BaseNavbarController {
 
     @FXML
     public void home(ActionEvent actionEvent) {
-        navigateTo("AlunoScenes/home_Aluno.fxml");
+        UIUtils.loadFxml("AlunoScenes/home_Aluno.fxml");
     }
 
     @FXML
     public void andamentoTG(ActionEvent actionEvent) {
-        navigateTo("AlunoScenes/secoes_Aluno.fxml");    }
+        UIUtils.loadFxml("AlunoScenes/secoes_Aluno.fxml");    }
 }

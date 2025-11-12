@@ -11,8 +11,17 @@ public class SecaoAluno {
     private final LocalDate dataEntrega;
     private final String statusRevisao;
     private final LocalDateTime dataUltimaRevisao;
+    private final String status; // Status da TAREFA: "Concluído", "Em Progresso", "Bloqueado"
+    private final LocalDate dataEntrega; //Até os minutos
+    private final String statusRevisao; // Status da REVISÃO: "Aprovado", "Revisão Solicitada", "Pendente"
+    //private final String status;
+    //private final LocalDate dataEntrega;
+    //private final String statusRevisao;
 
     public SecaoAluno(String emailAluno, int taskSequence, String titulo, String status, LocalDate dataEntrega, String statusRevisao, LocalDateTime dataUltimaRevisao) {
+        this.emailAluno = emailAluno;
+        this.taskSequence = taskSequence;
+    public SecaoAluno(String emailAluno, int taskSequence, String titulo, String status, LocalDate dataEntrega, String statusRevisao) {
         this.emailAluno = emailAluno;
         this.taskSequence = taskSequence;
         this.titulo = titulo;
@@ -29,4 +38,12 @@ public class SecaoAluno {
     public LocalDate getDataEntrega() { return dataEntrega; }
     public String getStatusRevisao() { return statusRevisao; }
     public LocalDateTime getDataUltimaRevisao() { return dataUltimaRevisao; }
+    }
+
+    public String getEmailAluno() { return emailAluno; }
+    public int getTaskSequence() { return taskSequence; }
+    public String getTitulo() { return titulo; }
+    public String getStatus() { return status; }
+    public LocalDate getDataEntrega() { return dataEntrega; }
+    public String getStatusRevisao() { return statusRevisao; }
 }

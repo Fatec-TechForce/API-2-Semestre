@@ -13,7 +13,7 @@ module com.example.tgcontrol {
     requires java.logging;
     requires java.desktop;
     requires java.sql;
-    requires org.apache.poi.ooxml;
+    requires flexmark.html2md.converter;
     requires mammoth;
     requires org.apache.pdfbox;
 
