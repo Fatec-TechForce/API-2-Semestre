@@ -72,7 +72,7 @@ public class home_Aluno_C implements Initializable {
             if (statusGeral.equals("completed") && etapaAtual == maxTasks) {
                 progresso = 1.0;
             } else if (statusGeral.equals("in_progress")) {
-                progresso = (double) etapaAtual / maxTasks;
+                progresso = (double) (etapaAtual - 1) / maxTasks;
             } else if (statusGeral.equals("completed")) {
                 progresso = (double) etapaAtual / maxTasks; // Se completou, conta como progresso da etapa
             } else {
@@ -81,7 +81,7 @@ public class home_Aluno_C implements Initializable {
 
 
             pbProgressoGeral.setProgress(progresso);
-            lblProgressoEtapas.setText("Etapa " + etapaAtual + " de " + maxTasks);
+            lblProgressoEtapas.setText("Etapa " + (etapaAtual-1) + " de " + maxTasks);
             lblProgressoPorcentagem.setText(String.format("(%.0f%%)", progresso * 100));
 
             lblTituloUltimaSecao.setText(ultimaSecao.getTitulo());
