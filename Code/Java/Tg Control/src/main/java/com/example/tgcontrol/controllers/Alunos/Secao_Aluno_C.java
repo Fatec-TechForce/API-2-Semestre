@@ -123,6 +123,6 @@ public class Secao_Aluno_C {
     //Parte de envio de seção
     @FXML
     public void enviarSecao() {
-        //SecaoAluno = new SecaoAluno();
+        SecaoAluno secao = new SecaoAluno();
     };
 }
