@@ -845,4 +845,39 @@ public class DatabaseUtils {
         }
     }
 
+    /**
+     * Função: Busca uma lista de turmas que um Professor TG específico coordena.
+     * Necessita: Email do Professor TG.
+     * Retorna: Uma lista de objetos Turma que o professor coordena.
+     */
+    public static List<Turma> getListaTurmasCoordenadas(String emailProfessorTg) {
+        List<Turma> turmas = new ArrayList<>();
+        String sql = "SELECT DISTINCT c.disciplina, c.year, c.semester " +
+                "FROM class c " +
+                "JOIN tg_coordenacao_turma coord ON c.disciplina = coord.class_disciplina " +
+                "  AND c.year = coord.class_year " +
+                "  AND c.semester = coord.class_semester " +
+                "WHERE coord.teacher_email = ? " +
+                "ORDER BY c.year DESC, c.semester DESC, c.disciplina";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailProfessorTg);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    turmas.add(new Turma(
+                            rs.getString("disciplina"),
+                            rs.getInt("year"),
+                            rs.getInt("semester")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getListaTurmasCoordenadas): " + e.getMessage(), e);
+        }
+        return turmas;
+    }
+
 }

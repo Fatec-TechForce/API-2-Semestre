@@ -13,14 +13,17 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.navbar_Aluno_C">
     <top>
-        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="47.0" style="-fx-background-color: #E0D6D6;" spacing="10.0" BorderPane.alignment="BOTTOM_CENTER">
+        <HBox alignment="CENTER_LEFT" prefHeight="47.0" style="-fx-background-color: #E0D6D6;" spacing="10.0" BorderPane.alignment="BOTTOM_CENTER">
             <children>
                 <ImageView fitHeight="37.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../SceneImages/Navbar Images/TgControlSymbol.png" />
                     </image>
                 </ImageView>
-                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="27.0" prefWidth="71.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Início" textAlignment="CENTER">
+
+                <Button mnemonicParsing="false" onAction="#home"
+                        prefHeight="27.0" prefWidth="71.0" minHeight="27.0" minWidth="71.0"
+                        style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Início" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
@@ -32,7 +35,10 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#andamentoTG" prefHeight="27.0" prefWidth="161.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Andamento do TG" textAlignment="CENTER">
+
+                <Button mnemonicParsing="false" onAction="#andamentoTG"
+                        prefHeight="27.0" prefWidth="161.0" minHeight="27.0" minWidth="161.0"
+                        style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Andamento do TG" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
@@ -47,7 +53,9 @@
 
                 <Region HBox.hgrow="ALWAYS" />
 
-                <Button fx:id="profileMenuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showProfileMenu" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 15px;" textAlignment="CENTER">
+                <Button fx:id="profileMenuButton" mnemonicParsing="false" onAction="#showProfileMenu"
+                        prefHeight="27.0" prefWidth="33.0" minHeight="27.0" minWidth="33.0"
+                        style="-fx-border-radius: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 15px;" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
@@ -62,7 +70,10 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#notifications" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" textAlignment="CENTER">
+
+                <Button mnemonicParsing="false" onAction="#notifications"
+                        prefHeight="27.0" prefWidth="33.0" minHeight="27.0" minWidth="33.0"
+                        style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
