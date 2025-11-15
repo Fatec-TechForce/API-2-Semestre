@@ -49,11 +49,13 @@ public class turmas_ProfessorTG_C implements Initializable {
 
             {
                 btn.getStyleClass().add("action-button");
-
-                btn.setMaxWidth(Double.MAX_VALUE);
+                btn.setPrefWidth(120);
 
                 btn.setOnAction(event -> {
                     Turma turma = getTableView().getItems().get(getIndex());
+
+                    SessaoManager.getInstance().setTurmaSelecionada(turma);
+
                     UIUtils.loadFxml("ProfessorScenes/coordinations_Professor.fxml");
                 });
             }

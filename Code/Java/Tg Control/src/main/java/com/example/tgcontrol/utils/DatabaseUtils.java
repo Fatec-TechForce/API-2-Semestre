@@ -880,4 +880,68 @@ public class DatabaseUtils {
         return turmas;
     }
 
+    /**
+     * Função: Busca uma lista de alunos orientados por um professor para exibição.
+     * Necessita: Email do Professor.
+     * Retorna: Uma lista de Mapas contendo nomeCompleto, email, turma_descricao e profile_picture_url.
+     */
+    public static List<Map<String, String>> getAdviseesDisplayInfo(String emailProfessor) {
+        List<Map<String, String>> students = new ArrayList<>();
+        String sql = "SELECT nomeCompleto, email, turma_descricao, profile_picture_url " +
+                "FROM vw_student_details WHERE advisor_email = ? ORDER BY nomeCompleto";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailProfessor);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, String> student = new HashMap<>();
+                    student.put("email", rs.getString("email"));
+                    student.put("nomeCompleto", rs.getString("nomeCompleto"));
+                    student.put("turma_descricao", rs.getString("turma_descricao"));
+                    student.put("profile_picture_url", rs.getString("profile_picture_url"));
+                    students.add(student);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getAdviseesDisplayInfo): " + e.getMessage(), e);
+        }
+        return students;
+    }
+
+    /**
+     * Função: Busca uma lista de alunos de uma turma específica para exibição.
+     * Necessita: Disciplina, ano e semestre da turma.
+     * Retorna: Uma lista de Mapas contendo nomeCompleto, email, turma_descricao e profile_picture_url.
+     */
+    public static List<Map<String, String>> getStudentsByClass(String disciplina, int year, int semester) {
+        List<Map<String, String>> students = new ArrayList<>();
+        String sql = "SELECT nomeCompleto, email, turma_descricao, profile_picture_url " +
+                "FROM vw_student_details WHERE class_disciplina = ? AND class_year = ? AND class_semester = ? ORDER BY nomeCompleto";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, disciplina);
+            stmt.setInt(2, year);
+            stmt.setInt(3, semester);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, String> student = new HashMap<>();
+                    student.put("email", rs.getString("email"));
+                    student.put("nomeCompleto", rs.getString("nomeCompleto"));
+                    student.put("turma_descricao", rs.getString("turma_descricao"));
+                    student.put("profile_picture_url", rs.getString("profile_picture_url"));
+                    students.add(student);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getStudentsByClass): " + e.getMessage(), e);
+        }
+        return students;
+    }
+
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Cordinations_Professor_C">
+<BorderPane style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Cordinations_Professor_C">
     <left>
         <VBox prefWidth="200.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0 1 0 0;">
             <Label text="Alunos">
@@ -43,12 +43,12 @@
                     <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
                 </image>
             </ImageView>
-            <Label fx:id="studentNameLabel" text="Gabriel Valente">
+            <Label fx:id="studentNameLabel" text="[Selecione um Aluno]">
                 <font>
                     <Font name="System Bold" size="16.0" />
                 </font>
             </Label>
-            <Label fx:id="courseLabel" text="Banco de Dados" textFill="#949494" />
+            <Label fx:id="courseLabel" text=" " textFill="#949494" />
             <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #9119B3; -fx-background-radius: 5px;" text="Ver perfil" textFill="WHITE" />
             <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Buscar conversas" />
             <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Imagens enviadas" />
