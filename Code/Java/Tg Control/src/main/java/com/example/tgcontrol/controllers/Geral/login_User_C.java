@@ -45,7 +45,7 @@ public class login_User_C {
                     break;
                 case PERFIL_INCOMPLETO:
                     UIUtils.showAlert("Perfil Incompleto", "Olá! Parece que é seu primeiro acesso. Por favor, complete seu perfil.");
-                    fxmlParaCarregar = "AlunoScenes/forms_Aluno.fxml";
+                    fxmlParaCarregar = "GeralScenes/escolha_Perfil.fxml";
                     break;
                 default:
                     break;

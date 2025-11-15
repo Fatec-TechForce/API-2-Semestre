@@ -1,6 +1,8 @@
 package com.example.tgcontrol.utils;
 
 import com.example.tgcontrol.model.*;
+
+import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,7 +26,6 @@ public class DatabaseUtils {
      * Retorna: O TipoUsuario correspondente.
      */
     public static TipoUsuario autenticarUsuario(String login, String senha) {
-        // Etapa 1: Validar credenciais básicas na tabela 'user'
         String sqlUser = "SELECT passwordHASH FROM user WHERE email = ? AND status = 'Active'";
         String userPasswordHash = null;
 
@@ -36,7 +37,6 @@ public class DatabaseUtils {
                 if (rs.next()) {
                     userPasswordHash = rs.getString("passwordHASH");
                 } else {
-                    // Usuário não encontrado
                     LOGGER.log(Level.WARNING, "Falha no login: Usuário não encontrado - " + login);
                     return TipoUsuario.NAO_AUTENTICADO;
                 }
@@ -46,28 +46,22 @@ public class DatabaseUtils {
             return TipoUsuario.NAO_AUTENTICADO;
         }
 
-        // Verificar a senha
-        // NOTA: No seu código, a senha está em texto puro. O ideal seria usar um hash.
         if (userPasswordHash == null || !userPasswordHash.equals(senha)) {
             LOGGER.log(Level.WARNING, "Falha no login: Senha incorreta para - " + login);
             return TipoUsuario.NAO_AUTENTICADO;
         }
 
-        // Etapa 2: Se a senha está correta, verificar o tipo (Professor, Aluno ou Incompleto)
         try (Connection conn = DatabaseConnect.getConnection()) {
-            // É Professor?
             String sqlTeacher = "SELECT is_coordinator FROM teacher WHERE email = ?";
             try (PreparedStatement stmtTeacher = conn.prepareStatement(sqlTeacher)) {
                 stmtTeacher.setString(1, login);
                 try (ResultSet rs = stmtTeacher.executeQuery()) {
                     if (rs.next()) {
-                        // É professor, verificar se é Coordenador TG
                         return rs.getBoolean("is_coordinator") ? TipoUsuario.PROFESSOR_TG : TipoUsuario.PROFESSOR;
                     }
                 }
             }
 
-            // Não é professor. É Aluno?
             String sqlStudent = "SELECT email FROM student WHERE email = ?";
             try (PreparedStatement stmtStudent = conn.prepareStatement(sqlStudent)) {
                 stmtStudent.setString(1, login);
@@ -78,8 +72,6 @@ public class DatabaseUtils {
                 }
             }
 
-            // Se não é nenhum dos dois, o perfil está incompleto
-            LOGGER.log(Level.INFO, "Login OK, mas perfil incompleto: " + login);
             return TipoUsuario.PERFIL_INCOMPLETO;
 
         } catch (SQLException e) {
@@ -535,4 +527,151 @@ public class DatabaseUtils {
             throw e;
         }
     }
+
+    /**
+     * Função: Busca uma lista de nomes e emails de professores para ComboBoxes.
+     * Retorna: Uma lista de strings no formato "Nome Sobrenome (email@exemplo.com)".
+     */
+    public static List<String> getListaProfessores() {
+        List<String> professores = new ArrayList<>();
+        String sql = "SELECT nomeCompleto, email FROM vw_teacher_details ORDER BY nomeCompleto";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                professores.add(String.format("%s (%s)", rs.getString("nomeCompleto"), rs.getString("email")));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getListaProfessores): " + e.getMessage(), e);
+        }
+        return professores;
+    }
+
+    /**
+     * Função: Busca uma lista de turmas (classes) disponíveis.
+     * Retorna: Uma lista de strings no formato "Disciplina (Ano/Semestre)".
+     */
+    public static List<String> getListaTurmas() {
+        List<String> turmas = new ArrayList<>();
+        String sql = "SELECT disciplina, year, semester FROM class ORDER BY year DESC, semester DESC, disciplina";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                turmas.add(String.format("%s (%d/%d)", rs.getString("disciplina"), rs.getInt("year"), rs.getInt("semester")));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getListaTurmas): " + e.getMessage(), e);
+        }
+        return turmas;
+    }
+
+    /**
+     * Função: Conclui o cadastro de um novo aluno, inserindo-o na tabela 'student'
+     * e criando suas 6 seções padrão.
+     * Isso é uma transação: ou tudo funciona, ou nada é salvo.
+     */
+    public static boolean completarCadastroAluno(String emailAluno, Map<String, String> dadosCadastro, File fotoPerfil, File arquivoAcordo) {
+        Connection conn = null;
+        String urlFotoPerfil = null;
+        String urlAcordo = null;
+
+        if (fotoPerfil != null) {
+            urlFotoPerfil = FileStorageUtils.salvarFotoPerfil(fotoPerfil, emailAluno);
+            if (urlFotoPerfil == null) {
+                UIUtils.showAlert("Erro de Arquivo", "Não foi possível salvar a foto de perfil.");
+                return false;
+            }
+        }
+
+        if (arquivoAcordo != null) {
+            urlAcordo = FileStorageUtils.salvarAcordoOrientacao(arquivoAcordo, emailAluno);
+            if (urlAcordo == null) {
+                return false;
+            }
+        } else {
+            LOGGER.log(Level.WARNING, "completarCadastroAluno foi chamado sem um arquivoAcordo, embora seja obrigatório.");
+            UIUtils.showAlert("Erro Interno", "O arquivo de acordo não foi recebido pelo servidor.");
+            return false;
+        }
+
+        String problemaResolvido = dadosCadastro.getOrDefault("problema", "");
+        String descricaoTask1 = "Apresentação Pessoal e Acadêmica.\n" +
+                "E-mail Pessoal: " + dadosCadastro.get("emailPessoal") + "\n" +
+                "Tipo de TG: " + dadosCadastro.get("tipoTG") + "\n" +
+                "Problema a Resolver: " + (problemaResolvido.isEmpty() ? "N/A" : problemaResolvido);
+
+        try {
+            conn = DatabaseConnect.getConnection();
+            conn.setAutoCommit(false);
+
+            if (urlFotoPerfil != null) {
+                String sqlUpdateUser = "UPDATE user SET profile_picture_url = ? WHERE email = ?";
+                try (PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateUser)) {
+                    stmtUpdate.setString(1, urlFotoPerfil);
+                    stmtUpdate.setString(2, emailAluno);
+                    stmtUpdate.executeUpdate();
+                }
+            }
+
+            String sqlInsertStudent = "INSERT INTO student (email, personal_email, advisor_email, agreement_document_url, class_disciplina, class_year, class_semester, estagio_tg_atual) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
+            try (PreparedStatement stmtStudent = conn.prepareStatement(sqlInsertStudent)) {
+                stmtStudent.setString(1, emailAluno);
+                stmtStudent.setString(2, dadosCadastro.get("emailPessoal"));
+                stmtStudent.setString(3, dadosCadastro.get("emailOrientador"));
+                stmtStudent.setString(4, urlAcordo);
+                stmtStudent.setString(5, dadosCadastro.get("disciplina"));
+                stmtStudent.setInt(6, Integer.parseInt(dadosCadastro.get("ano")));
+                stmtStudent.setInt(7, Integer.parseInt(dadosCadastro.get("semestre")));
+                stmtStudent.executeUpdate();
+            }
+
+            String sqlInsertTask = "INSERT INTO task (student_email, sequence_order, title, description, due_date, status, estagio_task) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            String[] titulos = {
+                    "Apresentação Pessoal e Acadêmica",
+                    "Relatório PIM II", "Relatório PIM III", "Relatório PIM IV",
+                    "Relatório PIM V", "Relatório PIM VI"
+            };
+            String[] descricoes = {
+                    descricaoTask1,
+                    "Relatório referente ao PIM II", "Relatório referente ao PIM III", "Relatório referente ao PIM IV",
+                    "Relatório referente ao PIM V", "Relatório referente ao PIM VI"
+            };
+            int[] estagios = {1, 1, 1, 1, 2, 2};
+            LocalDate dataBase = LocalDate.now();
+
+            try (PreparedStatement stmtTask = conn.prepareStatement(sqlInsertTask)) {
+                for (int i = 0; i < 6; i++) {
+                    stmtTask.setString(1, emailAluno);
+                    stmtTask.setInt(2, i + 1);
+                    stmtTask.setString(3, titulos[i]);
+                    stmtTask.setString(4, descricoes[i]);
+                    stmtTask.setDate(5, java.sql.Date.valueOf(dataBase.plusMonths(i + 1)));
+                    stmtTask.setString(6, (i == 0) ? "in_progress" : "locked");
+                    stmtTask.setInt(7, estagios[i]);
+                    stmtTask.addBatch();
+                }
+                stmtTask.executeBatch();
+            }
+
+            conn.commit();
+            return true;
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Completar Cadastro Aluno - Transação): " + e.getMessage(), e);
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ex) { LOGGER.log(Level.SEVERE, "DB FALHA (Rollback): " + ex.getMessage(), ex); }
+            }
+            UIUtils.showAlert("Erro de Cadastro", "Não foi possível salvar os dados no banco: " + e.getMessage());
+            return false;
+        } finally {
+            if (conn != null) {
+                try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+        }
+    }
+
 }

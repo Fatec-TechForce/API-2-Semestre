@@ -81,7 +81,12 @@ public class home_Aluno_C implements Initializable {
 
 
             pbProgressoGeral.setProgress(progresso);
-            lblProgressoEtapas.setText("Etapa " + (etapaAtual-1) + " de " + maxTasks);
+            if (statusGeral.equals("completed")) {
+                lblProgressoEtapas.setText("Etapa " + (etapaAtual) + " de " + maxTasks);
+            }
+            else {
+                lblProgressoEtapas.setText("Etapa " + (etapaAtual - 1) + " de " + maxTasks);
+            }
             lblProgressoPorcentagem.setText(String.format("(%.0f%%)", progresso * 100));
 
             lblTituloUltimaSecao.setText(ultimaSecao.getTitulo());
