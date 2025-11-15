@@ -16,5 +16,7 @@ public class Escolha_Perfil_C {
 
     @FXML
     void irParaCadastroProfessor(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        UIUtils.loadNewScene(stage, "ProfessorScenes/forms_Professor.fxml");
     }
 }
