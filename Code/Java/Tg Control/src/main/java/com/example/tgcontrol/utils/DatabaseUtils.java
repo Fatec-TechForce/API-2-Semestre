@@ -17,31 +17,74 @@ public class DatabaseUtils {
 
     /**
      * Função: Autentica um usuário no sistema.
+     * 1. Verifica se o email e senha correspondem na tabela 'user'.
+     * 2. Se sim, verifica o tipo (Professor, Aluno).
+     * 3. Se não for Professor nem Aluno, retorna PERFIL_INCOMPLETO.
      * Necessita: Email (login) e senha.
-     * Retorna: O TipoUsuario correspondente (ALUNO, PROFESSOR, etc.) ou NAO_AUTENTICADO se falhar.
+     * Retorna: O TipoUsuario correspondente.
      */
     public static TipoUsuario autenticarUsuario(String login, String senha) {
-        String sql = "SELECT tipoUsuario FROM vw_user_login WHERE email = ? AND passwordHASH = ?";
+        // Etapa 1: Validar credenciais básicas na tabela 'user'
+        String sqlUser = "SELECT passwordHASH FROM user WHERE email = ? AND status = 'Active'";
+        String userPasswordHash = null;
+
         try (Connection conn = DatabaseConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, login);
-            stmt.setString(2, senha);
-            try (ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmtUser = conn.prepareStatement(sqlUser)) {
+
+            stmtUser.setString(1, login);
+            try (ResultSet rs = stmtUser.executeQuery()) {
                 if (rs.next()) {
-                    String tipoUsuarioString = rs.getString("tipoUsuario");
-                    try {
-                        return TipoUsuario.valueOf(tipoUsuarioString);
-                    } catch (IllegalArgumentException e) {
-                        LOGGER.log(Level.SEVERE, "DB ERRO: Tipo de usuário inválido encontrado: " + tipoUsuarioString, e);
-                        return TipoUsuario.NAO_AUTENTICADO;
-                    }
+                    userPasswordHash = rs.getString("passwordHASH");
                 } else {
+                    // Usuário não encontrado
+                    LOGGER.log(Level.WARNING, "Falha no login: Usuário não encontrado - " + login);
                     return TipoUsuario.NAO_AUTENTICADO;
                 }
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "DB FALHA (Autenticação): " + e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, "DB FALHA (Autenticação - Etapa 1): " + e.getMessage(), e);
             return TipoUsuario.NAO_AUTENTICADO;
+        }
+
+        // Verificar a senha
+        // NOTA: No seu código, a senha está em texto puro. O ideal seria usar um hash.
+        if (userPasswordHash == null || !userPasswordHash.equals(senha)) {
+            LOGGER.log(Level.WARNING, "Falha no login: Senha incorreta para - " + login);
+            return TipoUsuario.NAO_AUTENTICADO;
+        }
+
+        // Etapa 2: Se a senha está correta, verificar o tipo (Professor, Aluno ou Incompleto)
+        try (Connection conn = DatabaseConnect.getConnection()) {
+            // É Professor?
+            String sqlTeacher = "SELECT is_coordinator FROM teacher WHERE email = ?";
+            try (PreparedStatement stmtTeacher = conn.prepareStatement(sqlTeacher)) {
+                stmtTeacher.setString(1, login);
+                try (ResultSet rs = stmtTeacher.executeQuery()) {
+                    if (rs.next()) {
+                        // É professor, verificar se é Coordenador TG
+                        return rs.getBoolean("is_coordinator") ? TipoUsuario.PROFESSOR_TG : TipoUsuario.PROFESSOR;
+                    }
+                }
+            }
+
+            // Não é professor. É Aluno?
+            String sqlStudent = "SELECT email FROM student WHERE email = ?";
+            try (PreparedStatement stmtStudent = conn.prepareStatement(sqlStudent)) {
+                stmtStudent.setString(1, login);
+                try (ResultSet rs = stmtStudent.executeQuery()) {
+                    if (rs.next()) {
+                        return TipoUsuario.ALUNO;
+                    }
+                }
+            }
+
+            // Se não é nenhum dos dois, o perfil está incompleto
+            LOGGER.log(Level.INFO, "Login OK, mas perfil incompleto: " + login);
+            return TipoUsuario.PERFIL_INCOMPLETO;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Autenticação - Etapa 2): " + e.getMessage(), e);
+            return TipoUsuario.NAO_AUTENTICADO; // Retorna não autenticado em caso de erro na 2ª etapa
         }
     }
 
@@ -417,6 +460,79 @@ public class DatabaseUtils {
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Upload Nova Versão): " + e.getMessage(), e);
             return -1;
+        }
+    }
+
+    /**
+     * Função: Redefine a senha de um usuário no banco de dados.
+     * Necessita: O email do usuário e a nova senha.
+     * Retorna: true se a senha foi atualizada (usuário encontrado), false caso contrário (usuário não encontrado ou erro).
+     */
+    public static boolean redefinirSenha(String email, String novaSenha) {
+        String sql = "UPDATE user SET passwordHASH = ? WHERE email = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, novaSenha);
+            stmt.setString(2, email);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                LOGGER.log(Level.INFO, "Senha redefinida com sucesso para o usuário: " + email);
+                return true;
+            } else {
+                LOGGER.log(Level.WARNING, "Tentativa de redefinir senha falhou: Usuário não encontrado - " + email);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Redefinir Senha): " + e.getMessage(), e);
+            return false;
+        }
+
+    }
+
+    /**
+     * Função: Registra um novo usuário na tabela 'user'.
+     * Necessita: Email, Nome, Sobrenome e Senha.
+     * Retorna: true se o registro for bem-sucedido.
+     * Retorna: false se o usuário já existir.
+     * Lança: SQLException em caso de erro no banco de dados.
+     */
+    public static boolean registrarUsuario(String email, String firstName, String lastName, String password) throws SQLException {
+        String sqlCheck = "SELECT COUNT(*) FROM user WHERE email = ?";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtCheck = conn.prepareStatement(sqlCheck)) {
+
+            stmtCheck.setString(1, email);
+            try (ResultSet rs = stmtCheck.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    LOGGER.log(Level.WARNING, "Falha no registro: Email já cadastrado - " + email);
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Registrar Usuário - Verificação): " + e.getMessage(), e);
+            throw e;
+        }
+
+        String sqlInsert = "INSERT INTO user (email, FirstName, LastName, passwordHASH, status) VALUES (?, ?, ?, ?, 'Active')";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert)) {
+
+            stmtInsert.setString(1, email);
+            stmtInsert.setString(2, firstName);
+            stmtInsert.setString(3, lastName);
+            stmtInsert.setString(4, password); // A senha em texto (como está no seu login)
+
+            int rowsAffected = stmtInsert.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Registrar Usuário - Inserção): " + e.getMessage(), e);
+            throw e;
         }
     }
 }
