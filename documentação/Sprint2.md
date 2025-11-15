@@ -182,8 +182,12 @@ Esta sprint cobre as funcionalidades principais do sistema **TG Control**, inclu
 - Ícones e cores de status estão aplicados conforme padrão visual (ex.: Pendente, Em Revisão, Aceito).  
 
 ---
-# Vídeo
-https://github.com/user-attachments/assets/341156ee-4ed4-4eb6-9c90-8fc0216c65b7
----
+
 # 📊 Burndown da Sprint
 ![Screenshot_2025-11-02-22-18-22-805_com android chrome-edit](https://github.com/user-attachments/assets/96f7cc52-b766-4df0-b9e8-198bbf6892b4)
+
+---
+# 🎥 Vídeo
+
+https://github.com/user-attachments/assets/e7961680-ed46-48be-959a-8b75328a47a9
+
