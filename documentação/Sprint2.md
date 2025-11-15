@@ -189,5 +189,5 @@ Esta sprint cobre as funcionalidades principais do sistema **TG Control**, inclu
 ---
 # 🎥 Vídeo
 
-https://github.com/user-attachments/assets/e7961680-ed46-48be-959a-8b75328a47a9
+https://github.com/user-attachments/assets/0367bc06-c711-4c11-85cb-cc0cfe78aabb
 
