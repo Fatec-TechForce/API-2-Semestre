@@ -943,5 +943,146 @@ public class DatabaseUtils {
         }
         return students;
     }
+    // --- Métodos de Notificação ---
 
+    /**
+     * Função: Grava uma nova notificação no banco de dados.
+     * Necessita: Email do usuário, conteúdo da mensagem, e opcionalmente, detalhes da tarefa relacionada.
+     * Retorna: true se a notificação foi gravada com sucesso, false caso contrário.
+     */
+    public static boolean enviarNotificacao(String userEmail, String content, String relatedTaskStudentEmail, int relatedTaskSequenceOrder) {
+        String sql = "INSERT INTO notification (user_email, content, related_task_student_email, related_task_sequence_order) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userEmail);
+            stmt.setString(2, content);
+            // Os campos de tarefa relacionada podem ser NULL
+            if (relatedTaskStudentEmail != null && !relatedTaskStudentEmail.trim().isEmpty()) {
+                stmt.setString(3, relatedTaskStudentEmail);
+            } else {
+                stmt.setNull(3, java.sql.Types.VARCHAR);
+            }
+            if (relatedTaskSequenceOrder > 0) {
+                stmt.setInt(4, relatedTaskSequenceOrder);
+            } else {
+                stmt.setNull(4, java.sql.Types.INTEGER);
+            }
+
+            stmt.executeUpdate();
+            // Envio opcional por e-mail (simulação)
+            enviarEmailOpcional(userEmail, "Nova Notificação no TGControl", content);
+
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (enviarNotificacao): " + e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * Função: Lista todas as notificações para um usuário, ordenadas da mais recente para a mais antiga.
+     * Necessita: Email do usuário.
+     * Retorna: Uma lista de objetos Notification.
+     */
+    public static List<Notification> listarNotificacoes(String userEmail) {
+        List<Notification> notificacoes = new ArrayList<>();
+        String sql = "SELECT notification_id, user_email, timestamp, content, related_task_student_email, related_task_sequence_order, is_read " +
+                "FROM notification WHERE user_email = ? ORDER BY timestamp DESC";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userEmail);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("notification_id");
+                    String email = rs.getString("user_email");
+                    // O timestamp é um DATETIME no MySQL, que mapeia para Timestamp no JDBC
+                    Timestamp ts = rs.getTimestamp("timestamp");
+                    LocalDateTime timestamp = ts != null ? ts.toLocalDateTime() : null;
+                    String content = rs.getString("content");
+                    String relatedStudentEmail = rs.getString("related_task_student_email");
+                    // O getInt retorna 0 se o valor for NULL, o que pode ser problemático.
+                    // Usaremos o wrapper para verificar se é NULL.
+                    int relatedSequence = rs.getObject("related_task_sequence_order") != null ? rs.getInt("related_task_sequence_order") : 0;
+                    boolean isRead = rs.getBoolean("is_read");
+
+                    notificacoes.add(new Notification(
+                            id, email, timestamp, content, relatedStudentEmail, relatedSequence, isRead
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (listarNotificacoes): " + e.getMessage(), e);
+        }
+        return notificacoes;
+    }
+
+    /**
+     * Função: Marca uma notificação específica como lida.
+     * Necessita: ID da notificação.
+     * Retorna: true se a atualização foi bem-sucedida, false caso contrário.
+     */
+    public static boolean marcarComoLida(int notificationId) {
+        String sql = "UPDATE notification SET is_read = TRUE WHERE notification_id = ?";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, notificationId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (marcarComoLida): " + e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * Função: Marca todas as notificações de um usuário como lidas.
+     * Necessita: Email do usuário.
+     * Retorna: true se a atualização foi bem-sucedida, false caso contrário.
+     */
+    public static boolean marcarTodasComoLidas(String userEmail) {
+        String sql = "UPDATE notification SET is_read = TRUE WHERE user_email = ? AND is_read = FALSE";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userEmail);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (marcarTodasComoLidas): " + e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * Função: Conta o número de notificações não lidas para um usuário.
+     * Necessita: Email do usuário.
+     * Retorna: O número de notificações não lidas.
+     */
+    public static int contarNotificacoesNaoLidas(String userEmail) {
+        String sql = "SELECT COUNT(*) AS total FROM notification WHERE user_email = ? AND is_read = FALSE";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userEmail);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (contarNotificacoesNaoLidas): " + e.getMessage(), e);
+        }
+        return 0;
+    }
+    /**
+     * Função: Estrutura o envio opcional de e-mail (método dummy).
+     * Necessita: Email do destinatário, assunto e corpo do e-mail.
+     * Retorna: true (simulando sucesso).
+     */
+    public static boolean enviarEmailOpcional(String destinatario, String assunto, String corpo) {
+        // Log para simular o envio de e-mail, conforme requisito
+        LOGGER.log(Level.INFO, "SIMULAÇÃO DE E-MAIL ENVIADO para: " + destinatario +
+                " | Assunto: " + assunto +
+                " | Corpo: " + corpo.substring(0, Math.min(corpo.length(), 50)) + "...");
+        return true;
+    }
 }
