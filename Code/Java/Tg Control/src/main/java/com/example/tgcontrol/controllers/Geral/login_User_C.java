@@ -57,6 +57,7 @@ public class login_User_C {
             UIUtils.loadNewScene(stage, fxmlParaCarregar);
         } else {
             UIUtils.showAlert("Erro de Login", "Usuário ou senha inválidos.");
+            System.out.println(login + " " + tipo);
         }
     }
 

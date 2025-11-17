@@ -17,7 +17,8 @@ public class DatabaseConnect {
 
     // Suas credenciais do MySQL
     private static final String USER = "root"; // Usuário padrão do MySQL
-    private static final String PASSWORD = ""; // A senha que você definiu
+    //Por favor, se eu esquecer mude a senha
+    private static final String PASSWORD = "M.Amon.L.17"; // A senha que você definiu
 
     // --- FIM DA CONFIGURAÇÃO ---
 
