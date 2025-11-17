@@ -9,7 +9,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import javafx.scene.image.Image;
+import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -101,8 +102,11 @@ public final class UIUtils {
 
             stage.setScene(scene);
             stage.setTitle("TgControl");
-            stage.resizableProperty().setValue(false);
+            //stage.resizableProperty().setValue(false);
+            stage.setHeight(524.0);
+            stage.setWidth(889.0);
             stage.show();
+            setStageIcon(stage);
 
         } catch (IOException e) {
             Logger.getLogger(UIUtils.class.getName()).log(Level.SEVERE, "Falha ao carregar a nova Scene: " + fxmlPath, e);
@@ -122,6 +126,7 @@ public final class UIUtils {
             Parent root = loader.load();
 
             Stage popupStage = new Stage();
+            setStageIcon(popupStage);
             popupStage.setScene(new Scene(root));
             popupStage.setTitle(tituloJanela);
             popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -132,6 +137,22 @@ public final class UIUtils {
         } catch (IOException e) {
             Logger.getLogger(UIUtils.class.getName()).log(Level.SEVERE, "Falha ao abrir popup: " + fxmlPath, e);
             showAlert("Erro de Carregamento", "Ocorreu um erro ao abrir a janela: " + fxmlPath);
+        }
+    }
+
+    public static void setStageIcon(Stage stage) {
+        String iconPath = "/com/example/tgcontrol/SceneImages/TgIcon.png";
+        try {
+            InputStream iconStream = UIUtils.class.getResourceAsStream(iconPath);
+
+            if (iconStream != null) {
+                Image icon = new Image(iconStream);
+                stage.getIcons().add(icon);
+            } else {
+                LOGGER.log(Level.WARNING, "Ícone não encontrado no caminho: " + iconPath);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Erro ao carregar o ícone: " + iconPath, e);
         }
     }
 }

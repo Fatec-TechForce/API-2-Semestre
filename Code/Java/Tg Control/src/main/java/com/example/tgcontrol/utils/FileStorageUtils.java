@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Utilitário: Classe para manipulação e salvamento de arquivos locais (Markdown, Imagens).
+ * Utilitário: Classe para manipulação e salvamento de arquivos locais (Markdown, Imagens, Acordos).
  */
 public final class FileStorageUtils {
 
@@ -21,9 +21,9 @@ public final class FileStorageUtils {
     private static final String SERVER_BASE_DIR = "Server";
     private static final String PROFILE_PICS_DIR = SERVER_BASE_DIR + File.separator + "profiles";
     private static final String MARKDOWN_TGS_DIR = SERVER_BASE_DIR + File.separator + "TGs_Markdown";
+    private static final String AGREEMENTS_DIR = SERVER_BASE_DIR + File.separator + "agreements";
 
     private FileStorageUtils() {
-        // Construtor privado para classe utilitária
     }
 
     /**
@@ -71,6 +71,61 @@ public final class FileStorageUtils {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Erro inesperado ao salvar foto de perfil.", e);
             UIUtils.showAlert("Erro Inesperado", "Ocorreu um erro ao salvar a foto de perfil: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Função: Salva um documento de acordo de orientação (PDF, DOCX) para um usuário.
+     * Necessita: O arquivo do acordo e o login (email) do usuário.
+     * Retorna: O caminho relativo do arquivo salvo (ex: "Server/agreements/usuario_at_email.com_agreement.pdf") ou null se ocorrer erro.
+     */
+    public static String salvarAcordoOrientacao(File acordoArquivo, String login) {
+        if (acordoArquivo == null || !acordoArquivo.exists() || !acordoArquivo.isFile()) {
+            LOGGER.log(Level.WARNING, "Salvar Acordo: Arquivo inválido ou não encontrado.");
+            return null;
+        }
+        if (login == null || login.isBlank()) {
+            LOGGER.log(Level.WARNING, "Salvar Acordo: Login (email) do usuário inválido.");
+            return null;
+        }
+
+        String nomeOriginal = acordoArquivo.getName();
+        String extensao = "";
+        int lastDotIndex = nomeOriginal.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < nomeOriginal.length() - 1) {
+            extensao = nomeOriginal.substring(lastDotIndex);
+        } else {
+            LOGGER.log(Level.WARNING, "Salvar Acordo: Não foi possível determinar a extensão do arquivo: " + nomeOriginal);
+            return null;
+        }
+
+        if (!extensao.equalsIgnoreCase(".pdf") && !extensao.equalsIgnoreCase(".docx")) {
+            LOGGER.log(Level.WARNING, "Salvar Acordo: Tipo de arquivo não permitido: " + extensao);
+            UIUtils.showAlert("Erro de Arquivo", "Tipo de arquivo não permitido. Envie apenas PDF ou DOCX.");
+            return null;
+        }
+
+        String nomeArquivoDestino = login.replace("@", "_at_") + "_agreement" + extensao;
+        Path diretorioDestinoPath = Paths.get(AGREEMENTS_DIR);
+        Path arquivoDestinoPath = diretorioDestinoPath.resolve(nomeArquivoDestino);
+        String caminhoRelativo = AGREEMENTS_DIR + File.separator + nomeArquivoDestino;
+
+        try {
+            if (!Files.exists(diretorioDestinoPath)) {
+                Files.createDirectories(diretorioDestinoPath);
+            }
+            Files.copy(acordoArquivo.toPath(), arquivoDestinoPath, StandardCopyOption.REPLACE_EXISTING);
+            LOGGER.log(Level.INFO, "Acordo de orientação salvo com sucesso em: " + caminhoRelativo);
+            return caminhoRelativo;
+
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao salvar acordo para " + login + " em " + caminhoRelativo, e);
+            UIUtils.showAlert("Erro ao Salvar Arquivo", "Não foi possível salvar o acordo de orientação: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Erro inesperado ao salvar acordo.", e);
+            UIUtils.showAlert("Erro Inesperado", "Ocorreu um erro ao salvar o acordo: " + e.getMessage());
             return null;
         }
     }

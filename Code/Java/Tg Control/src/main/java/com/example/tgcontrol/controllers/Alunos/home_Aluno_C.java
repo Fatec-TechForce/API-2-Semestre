@@ -66,50 +66,69 @@ public class home_Aluno_C implements Initializable {
         if (configAluno != null && ultimaSecao != null) {
             int maxTasks = configAluno.getOrDefault("maxTasks", 6);
             int etapaAtual = ultimaSecao.getTaskSequence();
-            double progresso = (double) (etapaAtual - 1) / maxTasks;
+            double progresso;
+            String statusGeral = ultimaSecao.getStatus() != null ? ultimaSecao.getStatus().toLowerCase() : "locked";
 
-            if ("completed".equalsIgnoreCase(ultimaSecao.getStatus()) && etapaAtual == maxTasks) {
+            if (statusGeral.equals("completed") && etapaAtual == maxTasks) {
                 progresso = 1.0;
-                etapaAtual = maxTasks;
-            } else if (!"locked".equalsIgnoreCase(ultimaSecao.getStatus())) {
-                progresso = (double) etapaAtual / maxTasks;
+            } else if (statusGeral.equals("in_progress")) {
+                progresso = (double) (etapaAtual - 1) / maxTasks;
+            } else if (statusGeral.equals("completed")) {
+                progresso = (double) etapaAtual / maxTasks; // Se completou, conta como progresso da etapa
             } else {
                 progresso = (double) (etapaAtual - 1) / maxTasks;
             }
 
 
             pbProgressoGeral.setProgress(progresso);
-            lblProgressoEtapas.setText("Etapa " + etapaAtual + " de " + maxTasks);
+            if (statusGeral.equals("completed")) {
+                lblProgressoEtapas.setText("Etapa " + (etapaAtual) + " de " + maxTasks);
+            }
+            else {
+                lblProgressoEtapas.setText("Etapa " + (etapaAtual - 1) + " de " + maxTasks);
+            }
             lblProgressoPorcentagem.setText(String.format("(%.0f%%)", progresso * 100));
 
             lblTituloUltimaSecao.setText(ultimaSecao.getTitulo());
-            String statusRevisao = ultimaSecao.getStatusRevisao() != null ? ultimaSecao.getStatusRevisao() : "---";
 
-            // Definir texto e estilo do botão baseado no status da REVISÃO
-            String statusStyle = "-fx-background-radius: 5px; -fx-border-radius: 5px;"; // Estilo base
-            switch (statusRevisao.toLowerCase()) {
+            String statusRevisao = ultimaSecao.getStatusRevisao() != null ? ultimaSecao.getStatusRevisao().toLowerCase() : "---";
+            String textoStatus = "Status Desconhecido";
+            String styleStatusButton = "-fx-background-radius: 5px; -fx-border-radius: 5px;";
+
+            switch (statusRevisao) {
+                case "approved":
                 case "aprovado":
-                    lblStatusUltimaSecao.setText("Status: Aprovado");
-                    statusStyle += "-fx-background-color: #4CAF50;";
+                    textoStatus = "Status: Aprovado";
+                    styleStatusButton += "-fx-background-color: #4CAF50;"; // Verde
                     break;
                 case "revision_requested":
-                    lblStatusUltimaSecao.setText("Status: Revisão Solicitada");
-                    statusStyle += "-fx-background-color: #FF9800;";
+                    textoStatus = "Status: Revisão Solicitada";
+                    styleStatusButton += "-fx-background-color: #FF9800;"; // Laranja
                     break;
                 case "pendente":
-                    lblStatusUltimaSecao.setText("Status: Aguardando Revisão");
-                    statusStyle += "-fx-background-color: #FFC107;";
+                    textoStatus = "Status: Aguardando Revisão";
+                    styleStatusButton += "-fx-background-color: #FFC107;"; // Amarelo
                     break;
-                case "---": // Caso de 'locked' ou sem submissão ainda
-                    lblStatusUltimaSecao.setText("Status: Não Enviado");
-                    statusStyle += "-fx-background-color: #9E9E9E;";
-                    break;
+                case "---":
                 default:
-                    lblStatusUltimaSecao.setText("Status: " + statusRevisao);
-                    statusStyle += "-fx-background-color: #6A1B9A;";
+                    if (statusGeral.equals("in_progress")) {
+                        textoStatus = "Status: Em Andamento";
+                        styleStatusButton += "-fx-background-color: #2196F3;"; // Azul
+                    } else if (statusGeral.equals("locked")) {
+                        textoStatus = "Status: Bloqueado";
+                        styleStatusButton += "-fx-background-color: #9E9E9E;"; // Cinza
+                    } else if (statusGeral.equals("completed") && statusRevisao.equals("---")) {
+                        textoStatus = "Status: Concluído";
+                        styleStatusButton += "-fx-background-color: #4CAF50;"; // Verde
+                    } else {
+                        textoStatus = "Status: Não Enviado";
+                        styleStatusButton += "-fx-background-color: #9E9E9E;"; // Cinza
+                    }
                     break;
             }
-            btnVerUltimaSecao.setStyle(statusStyle);
+
+            lblStatusUltimaSecao.setText(textoStatus);
+            btnVerUltimaSecao.setStyle(styleStatusButton);
             mostrarUltimaSecao();
 
         } else {

@@ -1,23 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.login_User_C">
-    <children>
-        <ImageView fitHeight="81.0" fitWidth="229.0" layoutX="330.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../SceneImages/Navbar Images/TgControlSymbol.png" />
-            </image>
-        </ImageView>
-        <TextField fx:id="tbx_Login" layoutX="343.0" layoutY="188.0" prefHeight="25.0" prefWidth="204.0" promptText="Login" />
-        <PasswordField fx:id="tbx_Senha" layoutX="343.0" layoutY="237.0" prefHeight="25.0" prefWidth="204.0" promptText="Senha" />
-        <Button fx:id="btn_Login" layoutX="378.0" layoutY="285.0" mnemonicParsing="false" onAction="#Login" prefHeight="25.0" prefWidth="134.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Logar" textFill="WHITE" />
-        <Hyperlink layoutX="407.0" layoutY="318.0" style="-fx-underline: true;" text="Cadastrar-se" textFill="#6a1b9a" onAction="#irParaCadastro" />
-    </children>
-</AnchorPane>
+<BorderPane prefHeight="524.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.login_User_C">
+
+    <center>
+        <StackPane BorderPane.alignment="CENTER">
+            <children>
+                <VBox alignment="CENTER" maxWidth="300.0" spacing="15.0">
+                    <children>
+                        <ImageView fitHeight="81.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../SceneImages/Navbar Images/TgControlSymbol.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ImageView>
+
+                        <TextField fx:id="tbx_Login" prefHeight="35.0" promptText="Login" />
+
+                        <PasswordField fx:id="tbx_Senha" prefHeight="35.0" promptText="Senha" />
+
+                        <StackPane>
+                            <children>
+                                <Hyperlink onAction="#irParaEsqueceuSenha" style="-fx-underline: true;" text="Esqueceu a senha?" textFill="#6a1b9a" StackPane.alignment="CENTER_RIGHT" />
+                            </children>
+                        </StackPane>
+
+                        <Button fx:id="btn_Login" maxWidth="Infinity" mnemonicParsing="false" onAction="#Login" prefHeight="35.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Logar" textFill="WHITE">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </Button>
+
+                        <Hyperlink onAction="#irParaCadastro" style="-fx-underline: true;" text="Cadastrar-se" textFill="#6a1b9a" />
+                    </children>
+                    <padding>
+                        <Insets top="20.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #D9D9D9;" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Ao continuar, você concorda com os nossos.">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label text="Termos de Serviço e Política de Privacidade">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets bottom="15.0" top="15.0" />
+            </padding>
+        </VBox>
+    </bottom>
+</BorderPane>
