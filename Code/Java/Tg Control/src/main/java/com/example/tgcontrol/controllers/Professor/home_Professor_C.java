@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,7 +31,6 @@ public class home_Professor_C implements Initializable {
     @FXML private TableColumn<TrabalhoPendente, Double> colProgresso;
     @FXML private TableColumn<TrabalhoPendente, String> colAluno;
     @FXML private TableColumn<TrabalhoPendente, String> colTurma;
-    @FXML private TableColumn<TrabalhoPendente, String> colSemestre;
     @FXML private TableColumn<TrabalhoPendente, Void> colAcao;
 
     @Override
@@ -42,7 +42,6 @@ public class home_Professor_C implements Initializable {
     private void configurarTabela() {
         colAluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
         colTurma.setCellValueFactory(new PropertyValueFactory<>("turma"));
-        colSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
 
         colProgresso.setCellValueFactory(new PropertyValueFactory<>("progresso"));
         colProgresso.setCellFactory(column -> new TableCell<>() {
@@ -58,6 +57,7 @@ public class home_Professor_C implements Initializable {
                     setText(percentageText);
                     setGraphic(null);
                 }
+                this.setAlignment(Pos.CENTER);
             }
         });
 
@@ -65,6 +65,9 @@ public class home_Professor_C implements Initializable {
             private final Button btn = new Button("Pendente");
             {
                 btn.getStyleClass().add("action-button");
+
+                btn.setMaxWidth(Double.MAX_VALUE);
+
                 btn.setOnAction(event -> {
                     TrabalhoPendente trabalho = getTableView().getItems().get(getIndex());
                     try {
@@ -88,8 +91,12 @@ public class home_Professor_C implements Initializable {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) setGraphic(null);
-                else setGraphic(btn);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    this.setAlignment(Pos.CENTER);
+                    setGraphic(btn);
+                }
             }
         });
 

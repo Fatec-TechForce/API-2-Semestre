@@ -7,15 +7,12 @@ public class SecaoAluno {
     private final String emailAluno;
     private final int taskSequence;
     private final String titulo;
+    private final String status;
+    private final LocalDate dataEntrega;
+    private final String statusRevisao;
     private final LocalDateTime dataUltimaRevisao;
-    private final String status; // Status da TAREFA: "Concluído", "Em Progresso", "Bloqueado"
-    private final LocalDate dataEntrega; //Até os minutos
-    private final String statusRevisao; // Status da REVISÃO: "Aprovado", "Revisão Solicitada", "Pendente"
 
-    public SecaoAluno(
-            String emailAluno, int taskSequence, String titulo, String status,
-            LocalDate dataEntrega, String statusRevisao, LocalDateTime dataUltimaRevisao
-    ) {
+    public SecaoAluno(String emailAluno, int taskSequence, String titulo, String status, LocalDate dataEntrega, String statusRevisao, LocalDateTime dataUltimaRevisao) {
         this.emailAluno = emailAluno;
         this.taskSequence = taskSequence;
         this.titulo = titulo;

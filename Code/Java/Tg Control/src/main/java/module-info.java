@@ -13,6 +13,8 @@ module com.example.tgcontrol {
     requires java.logging;
     requires java.desktop;
     requires java.sql;
+    requires mammoth;
+    requires org.apache.pdfbox;
     requires flexmark.html2md.converter;
     requires mammoth;
     requires org.apache.pdfbox;

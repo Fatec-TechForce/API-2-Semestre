@@ -43,6 +43,10 @@ public class login_User_C {
                 case PROFESSOR_TG:
                     fxmlParaCarregar = "ProfessorTGScenes/navbar_ProfessorTG.fxml";
                     break;
+                case PERFIL_INCOMPLETO:
+                    UIUtils.showAlert("Perfil Incompleto", "Olá! Parece que é seu primeiro acesso. Por favor, complete seu perfil.");
+                    fxmlParaCarregar = "GeralScenes/escolha_Perfil.fxml";
+                    break;
                 default:
                     break;
             }
@@ -58,8 +62,15 @@ public class login_User_C {
 
     @FXML
     public void irParaCadastro(ActionEvent event) throws IOException {
-        String fxmlParaCarregar = "AlunoScenes/forms_Aluno.fxml";
+        String fxmlParaCarregar = "GeralScenes/registration_User.fxml";
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        UIUtils.loadNewScene(stage, fxmlParaCarregar);
+    }
+
+    public void irParaEsqueceuSenha(ActionEvent actionEvent)
+    {
+        String fxmlParaCarregar = "GeralScenes/passwordReset_User.fxml";
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         UIUtils.loadNewScene(stage, fxmlParaCarregar);
     }
 }
