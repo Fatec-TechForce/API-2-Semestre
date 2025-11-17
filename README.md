@@ -1,13 +1,10 @@
 # TechForce - TG Control
 
-<img width="1217" height="235" alt="image" src="https://github.com/user-attachments/assets/5aeed30e-9e5e-46f3-8f84-40e77ce31705" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/adb62b93-78c0-4436-8ff7-2d5fe202f5f4" />
 
 ## Tópicos
-<div align="center">
-  
-[📄 Descrição do Projeto](#descrição) | [💻 Tecnologias Utilizadas](#tecnologias-utilizadas) | [📋 Backlog do Produto](#backlog-do-produto) | [📅 Cronograma das Sprints](#cronograma-das-sprints) | [📖 Manual de Instalação](#-manual-de-instalação) | [📝 Documentação do Projeto](#-documentação-do-projeto) | [👥 Equipe](#equipe)
 
-</div>
+[[Descrição do projeto](./DESCRICAO.md) | [Tecnologias Utilizadas](./TECNOLOGIAS.md) | [Funcionalidades](./FUNCIONALIDADES.md) | [Backlog do Produto](./BACKLOG_PRODUTO.md) | [Backlog da Sprint](./BACKLOG_SPRINT.md) | [User Stories](./USER_STORIES.md) | [Sprints](./SPRINTS.md) | [Documentação](./documentacao/) | [Código](./codigo/) | [Equipe](./EQUIPE.md)
 
 ## Descrição
 
@@ -19,9 +16,6 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 ## Tecnologias Utilizadas
 
 [![Java](https://img.shields.io/badge/Java-007396?logo=java&logoColor=white)](https://www.java.com/)  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/) [![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white)](https://www.figma.com/) [![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)](https://www.atlassian.com/software/jira) [![Scene Builder](https://img.shields.io/badge/Scene%20Builder-0091EA?logo=java&logoColor=white)](https://gluonhq.com/products/scene-builder/) [![JavaFX](https://img.shields.io/badge/JavaFX-FF0000?logo=openjdk&logoColor=white)](https://openjfx.io/)
-
----
-
 ## Backlog do produto
 
 | Rank | Prioridade | User Story | Estimativa | Sprint |
@@ -33,8 +27,9 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 | 5 | **Alta** | Como aluno, quero ver o status de cada seção (pendente, revisada, aceita) para saber meu progresso no TG.<br>Como professor, quero atualizar o status das seções corrigidas para indicar a evolução ao aluno. | 3 | 2 |
 | 6 | **Média** | Como aluno, quero que minhas seções, versões e correções fiquem salvas, para não perder meu histórico e acompanhar minha evolução no trabalho.<br>Como professor, quero acessar facilmente os envios e versões dos alunos, para acompanhar o progresso de cada TG e manter registrado todo o processo de orientação. | 12 | 2 |
 | 7 | **Média** | Como aluno, quero gerar automaticamente meu TG consolidado em formato MD para entregar de acordo com o padrão exigido. | 8 | 2 |
-| 8| **Baixa** | Como professor de TG, quero agendar as defesas dos alunos que concluíram o Trabalho de Graduação, para organizar as apresentações e facilitar o acompanhamento das etapas finais do processo. | 5 | 3 |
-| 9| **Baixa** |Como professor de TG,quero revisar e aprovar os cadastros realizados por alunos e outros professores no sistema,para garantir que apenas usuários autorizados tenham acesso e evitar cadastros indevidos. | 3 | 3 |
+| 8| **Baixa** | Como professor de TG, quero ter estatísticas sobre tempo médio de correção e interações para melhorar a gestão acadêmica. | 5 | 3 |
+| 9| **Baixa** | Como professor de TG, quero visualizar quais alunos já concluíram todas as seções. | 3 | 3 |
+| 10 | **Baixa** | Como administrador, quero gerenciar cadastros de professores para garantir acesso controlado ao sistema. | 4 | 3 |
 
 ---
 
@@ -50,98 +45,6 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 ---
 
 ## 📖 Manual de Instalação
-
-### Pré-requisitos
-
-Antes de iniciar, certifique-se de ter os seguintes programas instalados:
-
-* Git 
-* Java 18+ 
-* Maven 
-* IntelliJ IDEA 
-* MySQL Workbench 
-
----
-
-### Git
-
-O Git é um sistema de controle de versão distribuído, usado para gerenciar projetos de software.
-
-**Instalação:**
-
-1. Acesse o site oficial: **[Download Git](https://git-scm.com/downloads)**
-2. Escolha a versão compatível com seu sistema operacional (Windows, macOS, Linux).
-3. Execute o instalador e siga as instruções padrão.
-4. Para verificar se foi instalado corretamente, abra o terminal e digite:
-```bash
-git --version
-```
-
----
-
-### Java (JDK)
-
-O Java é necessário para rodar o backend e algumas ferramentas como o Maven.
-
-**Instalação:**
-
-1. Acesse: **[Download Java JDK](https://www.oracle.com/java/technologies/javase-downloads.html)**
-2. Baixe a versão Java SE Development Kit (18 ou superior).
-3. Instale o pacote e configure a variável de ambiente `JAVA_HOME`.
-4. Para verificar a instalação:
-```bash
-java -version
-```
-
----
-
-###  Maven
-
-O Maven é uma ferramenta de automação e gerenciamento de dependências para projetos Java.
-
-**Instalação:**
-
-1. Baixe em: **[Download Maven](https://maven.apache.org/download.cgi)**
-2. Extraia o arquivo `.zip` em uma pasta (ex: `C:\apache-maven`).
-3. Configure a variável de ambiente:
-   * Adicione `C:\apache-maven\bin` ao `PATH`.
-4. Verifique a instalação:
-```bash
-mvn -version
-```
-
----
-
-### IntelliJ IDEA
-
-O IntelliJ IDEA é a IDE recomendada para trabalhar com projetos Java.
-
-**Instalação:**
-
-1. Baixe em: **[Download IntelliJ IDEA](https://www.jetbrains.com/idea/download/)**
-2. Escolha entre a versão **Community** (gratuita) ou **Ultimate** (paga, com mais recursos).
-3. Instale normalmente no Windows/macOS/Linux.
-4. Recomendado instalar plugins:
-   * Maven Helper
-   * Database Navigator
-   * GitToolBox
-
----
-
-### MySQL Workbench
-
-O MySQL Workbench é uma interface gráfica para gerenciar o banco de dados MySQL.
-
-**Instalação:**
-
-1. Baixe em: **[Download MySQL Workbench](https://dev.mysql.com/downloads/workbench/)**
-2. Escolha a versão compatível com seu sistema.
-3. Instale normalmente.
-4. Configure uma conexão com seu servidor MySQL.
-5. Teste acessando o banco com:
-```sql
-SELECT VERSION();
-```
 
 ---
 
@@ -163,6 +66,7 @@ Toda a documentação do projeto está disponível na pasta [`documentação`](.
  |Scrum Master | Leonardo Amon Sumiyoshi Hashimoto        |   [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Leonardo1022) |
  |Product Owner| Maria Eduarda Teixeira Miller de Oliveira|  [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/maria-oliveira)|
  |Team Member  | Gabriel Valente Belarmino                |  [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/gabrielvalentesjc)|
+ |Team Member  | Guilherme Almeida de Arruda              |   [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/guiggaaz)|
  |Team Member  | Natália Pereira da Silva                 |  [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/nataliapersis)|
  |Team Member  | Niuan Spolidorio da Rocha Souza          |  [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NiuanSouza)|
  |Team Member  | Vitor Samuel Ribeiro de Souza            |   [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/VitorRibeiro09)|

@@ -7,7 +7,6 @@ import com.example.tgcontrol.utils.DatabaseUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -39,6 +38,7 @@ public class home_ProfessorTG_C implements Initializable {
     @FXML private TableColumn<TrabalhoPendente, Double> colProgresso;
     @FXML private TableColumn<TrabalhoPendente, String> colAluno;
     @FXML private TableColumn<TrabalhoPendente, String> colTurma;
+    @FXML private TableColumn<TrabalhoPendente, String> colSemestre;
     @FXML private TableColumn<TrabalhoPendente, Void> colAcao;
 
     private static final Logger LOGGER = Logger.getLogger(home_ProfessorTG_C.class.getName());
@@ -52,6 +52,7 @@ public class home_ProfessorTG_C implements Initializable {
     private void configurarTabela() {
         colAluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
         colTurma.setCellValueFactory(new PropertyValueFactory<>("turma"));
+        colSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
 
         colProgresso.setCellValueFactory(new PropertyValueFactory<>("progresso"));
         colProgresso.setCellFactory(column -> new TableCell<>() {
@@ -60,10 +61,8 @@ public class home_ProfessorTG_C implements Initializable {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null); setGraphic(null);
-                    this.setAlignment(Pos.CENTER);
                 } else {
                     setText(String.format("%.0f%%", item * 100)); setGraphic(null);
-                    this.setAlignment(Pos.CENTER);
                 }
             }
         });
@@ -72,22 +71,16 @@ public class home_ProfessorTG_C implements Initializable {
             private final Button btn = new Button("Ver Aluno");
             {
                 btn.getStyleClass().add("action-button");
-                btn.setMaxWidth(Double.MAX_VALUE);
-
                 btn.setOnAction(event -> {
                     TrabalhoPendente trabalho = getTableView().getItems().get(getIndex());
+                    // Adicionar lógica de navegação aqui se necessário
                 });
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    this.setAlignment(Pos.CENTER);
-                    setGraphic(btn);
-                }
+                setGraphic(empty ? null : btn);
             }
         });
 

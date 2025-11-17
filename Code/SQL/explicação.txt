@@ -1,7 +1,3 @@
-Aqui está o arquivo de explicação, atualizado para refletir as mudanças no script `Inserts.sql` (novas colunas, cenários de alunos atualizados e o template de tarefas padrão).
-
----
-
 # Explicação dos Dados Inseridos no Banco TGControl (`inserts.sql`)
 
 Este documento descreve a estrutura e os cenários representados pelos dados de exemplo inseridos no banco de dados `TGControl`. Todos os usuários criados possuem a senha `Troca123`.
@@ -20,66 +16,53 @@ Foram criados:
     * Os 7 membros da equipe original + 23 alunos genéricos (`alunoXX.gen`).
     * Distribuídos entre as 3 turmas.
     * Com orientadores variados (alguns `NULL`).
-    * Em diferentes estágios do TG (`estagio_tg_atual` 1 = TG1/5º Sem., 2 = TG2/6º Sem.).
-* **Tarefas (`task`):** 180 tarefas (6 para cada um dos 30 alunos). O template padrão é:
-    1.  `Apresentação Pessoal e Acadêmica`
-    2.  `Relatório PIM II`
-    3.  `Relatório PIM III`
-    4.  `Relatório PIM IV`
-    5.  `Relatório PIM V`
-    6.  `Relatório PIM VI`
+    * Em diferentes estágios do TG (`estagio_tg_atual`, representando 5º ou 6º semestre).
+* **Tarefas (`task`):** 6 seções para cada um dos 30 alunos, com status variados representando diferentes progressos. Cada tarefa está associada a um estágio (`estagio_task` 1 ou 2).
 * **Submissões (`task_submission`) e Revisões (`task_review`):** Exemplos para alguns alunos/tarefas, mostrando o fluxo de envio, pedido de revisão e aprovação.
 * **Notificações (`notification`):** Exemplos para alguns eventos de submissão/revisão, algumas marcadas como lidas (`is_read=1`) e outras não (`is_read=0`).
 * **Coordenação (`tg_coordenacao_turma`):** Atribuição de responsabilidade de etapa para os Coordenadores TG em cada turma.
-* **Defesa (`defesa_tg`):** A tabela está vazia por padrão, a ser preenchida quando um professor agendar a defesa de um aluno concluído.
 
 ## 2. Perfis Principais e Cenários
 
 ### Professores
 
 * **Orientadores (Silva, Costa, Lima)**: Professores padrão que orientam alunos (`advisor_email` na tabela `student`). Podem revisar e aprovar/solicitar revisão das submissões (`task_review`).
-* **Coordenador Alves (`coord.alves@...`)**: Professor de TG (`is_coordinator=1`). Responsável pela **Etapa 1** (Tarefas 1-4) das turmas de BD 2025/1 e ADS 2025/1.
-* **Coordenador Borges (`coord.borges@...`)**: Professor de TG (`is_coordinator=1`). Responsável pela **Etapa 2** (Tarefas 5-6) das turmas de BD 2025/1 e ADS 2025/1. Também é responsável por **ambas as etapas (1 e 2)** da turma de EA 2024/2.
+* **Coordenador Alves (`coord.alves@...`)**: Professor de TG (`is_coordinator=1`). Responsável pela **Etapa 1** (Seções 1-4) das turmas de BD 2025/1 e ADS 2025/1.
+* **Coordenador Borges (`coord.borges@...`)**: Professor de TG (`is_coordinator=1`). Responsável pela **Etapa 2** (Seções 5-6) das turmas de BD 2025/1 e ADS 2025/1. Também é responsável por **ambas as etapas (1 e 2)** da turma de EA 2024/2.
 
 ### Alunos (Exemplos Notáveis)
 
-* **Leonardo Hashimoto (Cenário 1):** Aluno Iniciante (TG1).
-    * **Status:** `estagio_tg_atual = 1`. `task 1` ('Apresentação') está `in_progress`. Todas as outras (`2` a `6`) estão `locked`.
-    * **Histórico:** Nenhuma submissão realizada.
-
-* **Maria Oliveira (Cenário 2):** Aluna em Andamento (Meio TG1).
-    * **Status:** `estagio_tg_atual = 1`. `task 1` e `2` estão `completed`. `task 3` ('PIM III') está `in_progress`. Demais estão `locked`.
-    * **Histórico:** Task 1 aprovada. Task 2 precisou de revisão. Task 3 foi submetida e aguarda revisão.
-    * **Notificações:** Possui notificações lidas e não lidas sobre o processo da Task 2.
-
-* **Gabriel Belarmino (Cenário 3):** Aluno em Andamento (Fim TG1).
-    * **Status:** `estagio_tg_atual = 1`. `task 1-3` estão `completed`. `task 4` ('PIM IV') está `in_progress`. Demais `locked`.
-
-* **Guilherme Arruda (Cenário 4):** Aluno em Início (TG2).
-    * **Status:** `estagio_tg_atual = 2`. `task 1-4` (TG1) estão `completed`. `task 5` ('PIM V') está `in_progress`. `task 6` está `locked`.
-
-* **Natalia Silva (Cenário 5):** Aluna em Andamento (Fim TG2).
-    * **Status:** `estagio_tg_atual = 2`. `task 1-5` estão `completed`. `task 6` ('PIM VI') está `in_progress`.
-
-* **Niuan Souza (Cenário 6):** Aluno com Pendência (Início TG1).
-    * **Status:** `estagio_tg_atual = 1`. `task 1` ('Apresentação') está `in_progress`.
+* **Niuan Souza (`niuan.souza@...`) - Turma BD 2025/1:**
+    * **Cenário:** Aluno Iniciante (Etapa 1).
+    * **Status:** `estagio_tg_atual = 1`. `task 1` está `in_progress`, as demais (`2` a `6`) estão `locked`.
     * **Histórico:** Fez a primeira submissão da `task 1`, aguardando revisão do `orientador.lima`.
     * **Notificações:** O `orientador.lima` tem uma notificação não lida sobre esta submissão.
 
-* **Vitor Souza (Cenário 7):** Aluno Concluído.
+* **Maria Oliveira (`maria.oliveira@...`) - Turma BD 2025/1:**
+    * **Cenário:** Aluna Avançada na Etapa 1.
+    * **Status:** `estagio_tg_atual = 1`. `task 1` e `task 2` estão `completed`. `task 3` está `in_progress`. `task 4, 5, 6` estão `locked`.
+    * **Histórico:** Task 1 aprovada na 1ª tentativa. Task 2 precisou de 1 revisão (`revision_requested`) e foi aprovada na 2ª tentativa. Task 3 foi submetida, aguardando revisão do `orientador.silva`.
+    * **Notificações:** Tem notificações sobre as revisões da Task 2 (uma lida, uma não lida). `orientador.silva` tem notificação sobre a submissão da v2 da Task 2.
+
+* **Guilherme Arruda (`guilherme.arruda@...`) - Turma BD 2025/1:**
+    * **Cenário:** Aluno em Transição / Avançado.
+    * **Status:** `estagio_tg_atual = 2`. Tasks 1 a 4 estão `completed`. `task 5` está `in_progress` (desbloqueada pelo trigger). `task 6` está `locked`.
+    * **Histórico:** Implícito que as tasks 1-4 foram aprovadas.
+
+* **Vitor Souza (`vitor.souza@...`) - Turma BD 2025/1:**
+    * **Cenário:** Aluno Concluído.
     * **Status:** `estagio_tg_atual = 2`. Todas as 6 tasks estão `completed`.
-    * **Histórico:** Implícito que todas as seções foram aprovadas. Pronto para agendamento de defesa.
+    * **Histórico:** Implícito que todas as seções foram aprovadas.
 
 * **Aluno Genérico (`aluno10.gen@...`) - Turma BD 2025/1:**
     * **Cenário:** Aluno sem orientador definido (`advisor_email` é `NULL`).
     * **Status:** `estagio_tg_atual = 1`. Task 1 `in_progress`, demais `locked`.
 
 * **Alunos de Ed. Ambiental (`aluno21.gen@...` a `aluno30.gen@...`) - Turma EA 2024/2:**
-    * **Cenário:** Alunos em TG2.
-    * **Status:** Todos estão `estagio_tg_atual = 2`. O script define suas tasks 1-4 como `completed`, `task 5` ('PIM V') como `in_progress` e `task 6` como `locked`.
+    * **Cenário:** Alunos mais avançados no curso.
+    * **Status:** Todos estão `estagio_tg_atual = 2`. O script de geração cria 6 tasks para eles, mas o status inicial pode precisar de ajuste manual dependendo do progresso desejado (o script genérico define task 1 `in_progress`, demais `locked`).
 
-## 3. Senha e Colunas Adicionais
+## 3. Senha e Fotos
 
-* **Senha:** Todos os usuários (`user`) têm a senha definida como `Troca123`.
-* **Fotos:** A coluna `profile_picture_url` foi preenchida com um caminho relativo padrão, ex: `Server/profiles/nome.sobrenome_at_fatec.sp.gov.br_profilePhoto.png`.
-* **Novas Colunas Student:** As colunas `personal_email` e `agreement_document_url` foram adicionadas à tabela `student` e estão definidas como `NULL` para todos os alunos neste script de inserção, pois devem ser preenchidas no formulário de conclusão de cadastro.
+* Todos os usuários (`user`) têm a senha definida como `Troca123`.
+* A coluna `profile_picture_url` foi preenchida com um caminho relativo padrão, ex: `Server/profiles/nome.sobrenome_at_fatec.sp.gov.br_profilePhoto.png`. Arquivos de imagem reais precisam existir nesses locais.

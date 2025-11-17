@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="571.0" prefWidth="889.0" spacing="10.0" style="-fx-background-color: #f4f6f9; -fx-font-family: 'Segoe UI', Arial, sans-serif;" stylesheets="@../../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.home_ProfessorTG_C">
+<VBox prefHeight="571.0" prefWidth="889.0" spacing="15.0" style="-fx-background-color: #f4f6f9; -fx-font-family: 'Segoe UI', Arial, sans-serif;" stylesheets="@../../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.home_ProfessorTG_C">
     <padding>
         <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
     </padding>
     <children>
-        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
+        <HBox alignment="CENTER" prefHeight="90.0" spacing="20.0">
             <children>
-                <VBox alignment="CENTER" prefWidth="260.0" style="-fx-padding: 15px; -fx-background-color: white; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 15, 0, 0, 5);">
+                <VBox alignment="CENTER" style="-fx-padding: 15px; -fx-background-color: white; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
                     <children>
                         <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #555;" text="Total de Alunos" />
                         <Label fx:id="lblTotalAlunos" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #6A1B9A;" text="-">
@@ -31,7 +31,7 @@
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" prefWidth="260.0" style="-fx-padding: 15px; -fx-background-color: white; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 15, 0, 0, 5);">
+                <VBox alignment="CENTER" style="-fx-padding: 15px; -fx-background-color: white; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
                     <children>
                         <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #555;" text="TGs Concluídos" />
                         <Label fx:id="lblTgsConcluidos" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #6A1B9A;" text="-">
@@ -41,7 +41,7 @@
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" prefWidth="260.0" style="-fx-padding: 15px; -fx-background-color: white; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 15, 0, 0, 5);">
+                <VBox alignment="CENTER" style="-fx-padding: 15px; -fx-background-color: white; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
                     <children>
                         <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #555;" text="Total de Orientandos" />
                         <Label fx:id="lblTotalOrientandos" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #6A1B9A;" text="-">
@@ -53,8 +53,7 @@
                 </VBox>
             </children>
         </HBox>
-
-        <HBox prefHeight="180.0" spacing="20.0">
+        <HBox prefHeight="220.0" spacing="20.0">
             <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
@@ -124,8 +123,7 @@
                 </VBox>
             </children>
         </HBox>
-
-        <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+        <VBox spacing="10.0" VBox.vgrow="ALWAYS">
             <children>
                 <Label text="Aguardando Correção">
                     <font>
@@ -146,15 +144,11 @@
                         </VBox>
                         <TableView fx:id="tabelaPendentes">
                             <columns>
-                                <TableColumn fx:id="colProgresso" minWidth="150.0" prefWidth="150.0" maxWidth="150.0" text="Progresso" />
-
+                                <TableColumn fx:id="colProgresso" prefWidth="150.0" text="Progresso" />
                                 <TableColumn fx:id="colAluno" prefWidth="211.0" text="Aluno" />
-
-                                <TableColumn fx:id="colTurma" prefWidth="240.0" text="Matéria">
-                                    <style>-fx-alignment: CENTER;</style>
-                                </TableColumn>
-
-                                <TableColumn fx:id="colAcao" minWidth="120.0" prefWidth="120.0" maxWidth="120.0" text="Ação" />
+                                <TableColumn fx:id="colTurma" prefWidth="119.0" text="Turma" />
+                                <TableColumn fx:id="colSemestre" prefWidth="120.0" text="Semestre" />
+                                <TableColumn fx:id="colAcao" prefWidth="120.0" text="Ação" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

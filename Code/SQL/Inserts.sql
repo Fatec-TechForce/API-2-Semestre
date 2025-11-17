@@ -1,11 +1,9 @@
 USE TGControl;
 SET FOREIGN_KEY_CHECKS = 0;
--- Limpa as tabelas na ordem correta para evitar conflitos de FK
 DELETE FROM notification;
 DELETE FROM task_review;
 DELETE FROM task_submission;
 DELETE FROM task;
-DELETE FROM defesa_tg;
 DELETE FROM tg_coordenacao_turma;
 DELETE FROM student;
 DELETE FROM class;
@@ -15,9 +13,6 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 USE TGControl;
 
--- ========================================================================== --
--- Tabela: user
--- ========================================================================== --
 INSERT INTO `user` (`email`, `FirstName`, `LastName`, `passwordHASH`, `profile_picture_url`, `status`) VALUES
 ('orientador.silva@fatec.sp.gov.br', 'Ana', 'Silva', 'Troca123', 'Server/profiles/orientador.silva_at_fatec.sp.gov.br_profilePhoto.png', 'Active'),
 ('orientador.costa@fatec.sp.gov.br', 'Bruno', 'Costa', 'Troca123', 'Server/profiles/orientador.costa_at_fatec.sp.gov.br_profilePhoto.png', 'Active'),
@@ -55,9 +50,6 @@ INSERT INTO `user` (`email`, `FirstName`, `LastName`, `passwordHASH`, `profile_p
 ('aluno29.gen@fatec.sp.gov.br', 'Erica', 'Neves', 'Troca123', 'Server/profiles/aluno29.gen_at_fatec.sp.gov.br_profilePhoto.png', 'Active'),
 ('aluno30.gen@fatec.sp.gov.br', 'Fabio', 'Oliveira', 'Troca123', 'Server/profiles/aluno30.gen_at_fatec.sp.gov.br_profilePhoto.png', 'Active');
 
--- ========================================================================== --
--- Tabela: teacher
--- ========================================================================== --
 INSERT INTO `teacher` (`email`, `is_coordinator`) VALUES
 ('orientador.silva@fatec.sp.gov.br', 0),
 ('orientador.costa@fatec.sp.gov.br', 0),
@@ -65,308 +57,94 @@ INSERT INTO `teacher` (`email`, `is_coordinator`) VALUES
 ('coord.alves@fatec.sp.gov.br', 1),
 ('coord.borges@fatec.sp.gov.br', 1);
 
--- ========================================================================== --
--- Tabela: class
--- ========================================================================== --
 INSERT INTO `class` (`disciplina`, `year`, `semester`, `min_tasks`, `max_tasks`) VALUES
 ('Banco de Dados', 2025, 1, 1, 6),
 ('Analise e Desenvolvimento de Sistemas', 2025, 1, 1, 6),
-('Educacao Ambiental', 2024, 2, 1, 6);
+('Educacao Ambiental', 2024, 2, 1, 6); -- Corrigido para 6 tasks
 
--- ========================================================================== --
--- Tabela: student
--- ========================================================================== --
-INSERT INTO `student` (`email`, `advisor_email`, `personal_email`, `agreement_document_url`, `class_disciplina`, `class_year`, `class_semester`, `estagio_tg_atual`) VALUES
--- Cenário 1: Início TG1 (Apenas Seção 1 liberada)
-('leonardo.hashimoto@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 1),
--- Cenário 2: Meio TG1 (Seção 3 em andamento)
-('maria.oliveira@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'maria.personal@email.com', NULL, 'Banco de Dados', 2025, 1, 1),
--- Cenário 3: Fim TG1 (Seção 4 em andamento)
-('gabriel.belarmino@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 1),
--- Cenário 4: Início TG2 (Seção 5 liberada)
-('guilherme.arruda@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 2),
--- Cenário 5: Fim TG2 (Seção 6 em andamento)
-('natalia.silva@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 2),
--- Cenário 6: Meio TG1 (Seção 1 em andamento, mas para submissão)
-('niuan.souza@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 1),
--- Cenário 7: TG Concluído (Todas as seções completas)
-('vitor.souza@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 2),
+INSERT INTO `student` (`email`, `advisor_email`, `class_disciplina`, `class_year`, `class_semester`, `estagio_tg_atual`) VALUES
+('leonardo.hashimoto@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
+('maria.oliveira@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
+('gabriel.belarmino@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
+('guilherme.arruda@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 2),
+('natalia.silva@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
+('niuan.souza@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
+('vitor.souza@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 2),
+('aluno08.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
+('aluno09.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
+('aluno10.gen@fatec.sp.gov.br', NULL, 'Banco de Dados', 2025, 1, 1),
+('aluno11.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno12.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno13.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno14.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno15.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno16.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno17.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno18.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno19.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno20.gen@fatec.sp.gov.br', NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
+('aluno21.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno22.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno23.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno24.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno25.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno26.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno27.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno28.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno29.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', 'Educacao Ambiental', 2024, 2, 2),
+('aluno30.gen@fatec.sp.gov.br', NULL, 'Educacao Ambiental', 2024, 2, 2);
 
--- Alunos Genéricos
-('aluno08.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 1),
-('aluno09.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Banco de Dados', 2025, 1, 1),
-('aluno10.gen@fatec.sp.gov.br', NULL, NULL, NULL, 'Banco de Dados', 2025, 1, 1),
-('aluno11.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno12.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno13.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno14.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno15.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno16.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno17.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno18.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno19.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno20.gen@fatec.sp.gov.br', NULL, NULL, NULL, 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),
-('aluno21.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno22.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno23.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno24.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno25.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno26.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno27.gen@fatec.sp.gov.br', 'orientador.silva@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno28.gen@fatec.sp.gov.br', 'orientador.costa@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno29.gen@fatec.sp.gov.br', 'orientador.lima@fatec.sp.gov.br', NULL, NULL, 'Educacao Ambiental', 2024, 2, 2),
-('aluno30.gen@fatec.sp.gov.br', NULL, NULL, NULL, 'Educacao Ambiental', 2024, 2, 2);
-
--- ========================================================================== --
--- Tabela: task
--- ========================================================================== --
--- Insere as 6 tarefas padrão para TODOS os 30 alunos, com status variados para o grupo principal
 INSERT INTO `task` (`student_email`, `sequence_order`, `title`, `description`, `due_date`, `status`, `estagio_task`) VALUES
--- Cenário 1: Leonardo (Início TG1)
-('leonardo.hashimoto@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('leonardo.hashimoto@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('leonardo.hashimoto@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('leonardo.hashimoto@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('leonardo.hashimoto@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('leonardo.hashimoto@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
--- Cenário 2: Maria (Meio TG1)
-('maria.oliveira@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('maria.oliveira@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('maria.oliveira@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'in_progress', 1),
-('maria.oliveira@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('maria.oliveira@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('maria.oliveira@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
--- Cenário 3: Gabriel (Fim TG1)
-('gabriel.belarmino@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('gabriel.belarmino@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('gabriel.belarmino@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('gabriel.belarmino@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'in_progress', 1),
-('gabriel.belarmino@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('gabriel.belarmino@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
--- Cenário 4: Guilherme (Início TG2) - Conforme original
-('guilherme.arruda@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('guilherme.arruda@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('guilherme.arruda@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('guilherme.arruda@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('guilherme.arruda@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('guilherme.arruda@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
--- Cenário 5: Natalia (Fim TG2)
-('natalia.silva@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('natalia.silva@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('natalia.silva@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('natalia.silva@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('natalia.silva@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'completed', 2),
-('natalia.silva@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'in_progress', 2),
--- Cenário 6: Niuan (Início TG1 - Aguardando 1ª revisão)
-('niuan.souza@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('niuan.souza@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('niuan.souza@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('niuan.souza@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('niuan.souza@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('niuan.souza@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
--- Cenário 7: Vitor (TG Concluído)
-('vitor.souza@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('vitor.souza@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('vitor.souza@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('vitor.souza@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('vitor.souza@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'completed', 2),
-('vitor.souza@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'completed', 2),
+('niuan.souza@fatec.sp.gov.br', 1, 'Seção 1: Introdução', 'Definir tema e problema.', '2025-09-15', 'in_progress', 1),
+('niuan.souza@fatec.sp.gov.br', 2, 'Seção 2: Revisão Bibliográfica', 'Pesquisar artigos relacionados.', '2025-10-01', 'locked', 1),
+('niuan.souza@fatec.sp.gov.br', 3, 'Seção 3: Metodologia', 'Descrever métodos.', '2025-10-15', 'locked', 1),
+('niuan.souza@fatec.sp.gov.br', 4, 'Seção 4: Desenvolvimento Inicial', 'Primeira parte prática.', '2025-11-01', 'locked', 1),
+('niuan.souza@fatec.sp.gov.br', 5, 'Seção 5: Desenvolvimento Final', 'Segunda parte prática.', '2026-03-15', 'locked', 2),
+('niuan.souza@fatec.sp.gov.br', 6, 'Seção 6: Conclusão e Apresentação', 'Finalizar trabalho.', '2026-04-15', 'locked', 2),
+('maria.oliveira@fatec.sp.gov.br', 1, 'Seção 1: Introdução', 'Definir tema e problema.', '2025-09-15', 'completed', 1),
+('maria.oliveira@fatec.sp.gov.br', 2, 'Seção 2: Revisão Bibliográfica', 'Pesquisar artigos relacionados.', '2025-10-01', 'completed', 1),
+('maria.oliveira@fatec.sp.gov.br', 3, 'Seção 3: Metodologia', 'Descrever métodos.', '2025-10-15', 'in_progress', 1),
+('maria.oliveira@fatec.sp.gov.br', 4, 'Seção 4: Desenvolvimento Inicial', 'Primeira parte prática.', '2025-11-01', 'locked', 1),
+('maria.oliveira@fatec.sp.gov.br', 5, 'Seção 5: Desenvolvimento Final', 'Segunda parte prática.', '2026-03-15', 'locked', 2),
+('maria.oliveira@fatec.sp.gov.br', 6, 'Seção 6: Conclusão e Apresentação', 'Finalizar trabalho.', '2026-04-15', 'locked', 2),
+('guilherme.arruda@fatec.sp.gov.br', 1, 'Seção 1: Introdução', '...', '2025-09-15', 'completed', 1),
+('guilherme.arruda@fatec.sp.gov.br', 2, 'Seção 2: Revisão Bibliográfica', '...', '2025-10-01', 'completed', 1),
+('guilherme.arruda@fatec.sp.gov.br', 3, 'Seção 3: Metodologia', '...', '2025-10-15', 'completed', 1),
+('guilherme.arruda@fatec.sp.gov.br', 4, 'Seção 4: Desenvolvimento Inicial', '...', '2025-11-01', 'completed', 1),
+('guilherme.arruda@fatec.sp.gov.br', 5, 'Seção 5: Desenvolvimento Final', '...', '2026-03-15', 'in_progress', 2),
+('guilherme.arruda@fatec.sp.gov.br', 6, 'Seção 6: Conclusão e Apresentação', '...', '2026-04-15', 'locked', 2),
+('vitor.souza@fatec.sp.gov.br', 1, 'Seção 1', '...', '2025-09-15', 'completed', 1),
+('vitor.souza@fatec.sp.gov.br', 2, 'Seção 2', '...', '2025-10-01', 'completed', 1),
+('vitor.souza@fatec.sp.gov.br', 3, 'Seção 3', '...', '2025-10-15', 'completed', 1),
+('vitor.souza@fatec.sp.gov.br', 4, 'Seção 4', '...', '2025-11-01', 'completed', 1),
+('vitor.souza@fatec.sp.gov.br', 5, 'Seção 5', '...', '2026-03-15', 'completed', 2),
+('vitor.souza@fatec.sp.gov.br', 6, 'Seção 6', '...', '2026-04-15', 'completed', 2);
 
--- Alunos Genéricos (Turma BD - 2025/1)
-('aluno08.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno08.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno08.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno08.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno08.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno08.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno09.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno09.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno09.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno09.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno09.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno09.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno10.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno10.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno10.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno10.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno10.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno10.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
+-- Geração de tasks iniciais para os demais alunos (task 1 in_progress, resto locked)
+-- Certifique-se que as datas 'due_date' façam sentido (exemplo usa CURDATE() + meses)
+INSERT INTO `task` (`student_email`, `sequence_order`, `title`, `description`, `due_date`, `status`, `estagio_task`)
+SELECT email, seq, CONCAT('Seção ', seq), '', DATE_ADD(CURDATE(), INTERVAL seq MONTH), IF(seq=1, 'in_progress', 'locked'), IF(seq<=4, 1, 2)
+FROM student, (SELECT 1 as seq UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6) as sequences
+WHERE email NOT IN ('niuan.souza@fatec.sp.gov.br', 'maria.oliveira@fatec.sp.gov.br', 'guilherme.arruda@fatec.sp.gov.br', 'vitor.souza@fatec.sp.gov.br'); -- Aplica a todos os outros
 
--- Alunos Genéricos (Turma ADS - 2025/1)
-('aluno11.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno11.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno11.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno11.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno11.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno11.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno12.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno12.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno12.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno12.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno12.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno12.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno13.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno13.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno13.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno13.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno13.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno13.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno14.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno14.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno14.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno14.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno14.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno14.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno15.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno15.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno15.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno15.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno15.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno15.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno16.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno16.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno16.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno16.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno16.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno16.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno17.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno17.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno17.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno17.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno17.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno17.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno18.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno18.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno18.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno18.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno18.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno18.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno19.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno19.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno19.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno19.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno19.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno19.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno20.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'in_progress', 1),
-('aluno20.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'locked', 1),
-('aluno20.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'locked', 1),
-('aluno20.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'locked', 1),
-('aluno20.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'locked', 2),
-('aluno20.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
+INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `attempt_number`) VALUES ('maria.oliveira@fatec.sp.gov.br', 1, NOW() - INTERVAL 20 DAY, 'Server/submissions/maria_t1_v1.pdf', 1);
+INSERT INTO `task_review` (`student_email`, `sequence_order`, `submission_timestamp`, `reviewer_email`, `review_timestamp`, `status`, `review_comment`) SELECT student_email, sequence_order, submission_timestamp, 'orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 19 DAY, 'approved', 'Ótima introdução!' FROM task_submission WHERE student_email='maria.oliveira@fatec.sp.gov.br' AND sequence_order=1;
 
--- Alunos Genéricos (Turma EA - 2024/2) - Já estão no estágio 2
-('aluno21.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno21.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno21.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno21.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno21.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno21.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno22.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno22.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno22.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno22.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno22.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno22.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno23.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno23.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno23.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno23.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno23.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno23.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno24.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno24.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno24.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno24.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno24.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno24.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno25.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno25.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno25.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno25.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno25.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno25.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno26.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno26.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno26.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno26.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno26.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno26.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno27.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno27.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno27.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno27.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno27.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno27.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno28.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno28.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno28.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno28.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno28.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno28.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno29.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno29.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno29.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno29.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno29.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno29.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2),
-('aluno30.gen@fatec.sp.gov.br', 1, 'Apresentação Pessoal e Acadêmica', 'Dados pessoais e acadêmicos do aluno.', CURDATE() + INTERVAL 1 MONTH, 'completed', 1),
-('aluno30.gen@fatec.sp.gov.br', 2, 'Relatório PIM II', 'Relatório referente ao PIM II.', CURDATE() + INTERVAL 2 MONTH, 'completed', 1),
-('aluno30.gen@fatec.sp.gov.br', 3, 'Relatório PIM III', 'Relatório referente ao PIM III.', CURDATE() + INTERVAL 3 MONTH, 'completed', 1),
-('aluno30.gen@fatec.sp.gov.br', 4, 'Relatório PIM IV', 'Relatório referente ao PIM IV.', CURDATE() + INTERVAL 4 MONTH, 'completed', 1),
-('aluno30.gen@fatec.sp.gov.br', 5, 'Relatório PIM V', 'Relatório referente ao PIM V.', CURDATE() + INTERVAL 5 MONTH, 'in_progress', 2),
-('aluno30.gen@fatec.sp.gov.br', 6, 'Relatório PIM VI', 'Relatório referente ao PIM VI.', CURDATE() + INTERVAL 6 MONTH, 'locked', 2);
+INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `attempt_number`) VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 15 DAY, 'Server/submissions/maria_t2_v1.pdf', 1);
+INSERT INTO `task_review` (`student_email`, `sequence_order`, `submission_timestamp`, `reviewer_email`, `review_timestamp`, `status`, `review_comment`) SELECT student_email, sequence_order, submission_timestamp, 'orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 14 DAY, 'revision_requested', 'Faltou citar autor X.' FROM task_submission WHERE student_email='maria.oliveira@fatec.sp.gov.br' AND sequence_order=2 AND attempt_number=1;
+INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `attempt_number`) VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 10 DAY, 'Server/submissions/maria_t2_v2.pdf', 2);
+INSERT INTO `task_review` (`student_email`, `sequence_order`, `submission_timestamp`, `reviewer_email`, `review_timestamp`, `status`, `review_comment`) SELECT student_email, sequence_order, submission_timestamp, 'orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 9 DAY, 'approved', 'Agora sim, perfeito.' FROM task_submission WHERE student_email='maria.oliveira@fatec.sp.gov.br' AND sequence_order=2 AND attempt_number=2;
 
--- ========================================================================== --
--- Tabela: task_submission
--- ========================================================================== --
--- Submissões da Maria (Cenário 2)
-INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 1, NOW() - INTERVAL 20 DAY, 'Server/submissions/maria_t1_v1.pdf', 'Entrega Apresentação (v1)', 1);
+INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `attempt_number`) VALUES ('maria.oliveira@fatec.sp.gov.br', 3, NOW() - INTERVAL 2 DAY, 'Server/submissions/maria_t3_v1.pdf', 1);
 
-INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 15 DAY, 'Server/submissions/maria_t2_v1.pdf', 'Entrega PIM II (v1)', 1);
+INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `attempt_number`) VALUES ('niuan.souza@fatec.sp.gov.br', 1, NOW() - INTERVAL 1 DAY, 'Server/submissions/niuan_t1_v1.docx', 1);
 
-INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 10 DAY, 'Server/submissions/maria_t2_v2.pdf', 'Correção PIM II (v2)', 2);
-
-INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 3, NOW() - INTERVAL 2 DAY, 'Server/submissions/maria_t3_v1.pdf', 'Entrega PIM III (v1)', 1);
-
--- Submissão do Niuan (Cenário 6)
-INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('niuan.souza@fatec.sp.gov.br', 1, NOW() - INTERVAL 1 DAY, 'Server/submissions/niuan_t1_v1.docx', 'Apresentação Pessoal e Acadêmica', 1);
-
--- ========================================================================== --
--- Tabela: task_review
--- ========================================================================== --
--- Reviews da Maria
-INSERT INTO `task_review` (`student_email`, `sequence_order`, `submission_timestamp`, `reviewer_email`, `review_timestamp`, `status`, `review_comment`) 
-SELECT student_email, sequence_order, submission_timestamp, 'orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 19 DAY, 'approved', 'Ótima apresentação!' 
-FROM task_submission 
-WHERE student_email='maria.oliveira@fatec.sp.gov.br' AND sequence_order=1 AND attempt_number=1;
-
-INSERT INTO `task_review` (`student_email`, `sequence_order`, `submission_timestamp`, `reviewer_email`, `review_timestamp`, `status`, `review_comment`) 
-SELECT student_email, sequence_order, submission_timestamp, 'orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 14 DAY, 'revision_requested', 'Faltou citar autor X no PIM II.' 
-FROM task_submission 
-WHERE student_email='maria.oliveira@fatec.sp.gov.br' AND sequence_order=2 AND attempt_number=1;
-
-INSERT INTO `task_review` (`student_email`, `sequence_order`, `submission_timestamp`, `reviewer_email`, `review_timestamp`, `status`, `review_comment`) 
-SELECT student_email, sequence_order, submission_timestamp, 'orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 9 DAY, 'approved', 'Agora sim, PIM II perfeito.' 
-FROM task_submission 
-WHERE student_email='maria.oliveira@fatec.sp.gov.br' AND sequence_order=2 AND attempt_number=2;
-
--- ========================================================================== --
--- Tabela: notification
--- ========================================================================== --
 INSERT INTO `notification` (`user_email`, `timestamp`, `content`, `related_task_student_email`, `related_task_sequence_order`, `is_read`) VALUES
-('maria.oliveira@fatec.sp.gov.br', NOW() - INTERVAL 14 DAY, 'Sua seção "Relatório PIM II" foi revisada por Ana Silva e marcada para revisão.', 'maria.oliveira@fatec.sp.gov.br', 2, 1),
-('orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 10 DAY, 'A aluna Maria Eduarda Teixeira Miller de Oliveira enviou a tentativa 2 para "Relatório PIM II".', 'maria.oliveira@fatec.sp.gov.br', 2, 1),
-('maria.oliveira@fatec.sp.gov.br', NOW() - INTERVAL 9 DAY, 'Sua seção "Relatório PIM II" foi revisada por Ana Silva e aprovada.', 'maria.oliveira@fatec.sp.gov.br', 2, 0),
-('orientador.lima@fatec.sp.gov.br', NOW() - INTERVAL 1 DAY, 'O aluno Niuan Spolidorio da Rocha Souza enviou a tentativa 1 para "Apresentação Pessoal e Acadêmica".', 'niuan.souza@fatec.sp.gov.br', 1, 0);
+('maria.oliveira@fatec.sp.gov.br', NOW() - INTERVAL 14 DAY, 'Sua seção "Seção 2: Revisão Bibliográfica" foi revisada por Ana Silva e marcada para revisão.', 'maria.oliveira@fatec.sp.gov.br', 2, 1),
+('orientador.silva@fatec.sp.gov.br', NOW() - INTERVAL 10 DAY, 'A aluna Maria Eduarda Teixeira Miller de Oliveira enviou a tentativa 2 para "Seção 2: Revisão Bibliográfica".', 'maria.oliveira@fatec.sp.gov.br', 2, 1),
+('maria.oliveira@fatec.sp.gov.br', NOW() - INTERVAL 9 DAY, 'Sua seção "Seção 2: Revisão Bibliográfica" foi revisada por Ana Silva e aprovada.', 'maria.oliveira@fatec.sp.gov.br', 2, 0),
+('orientador.lima@fatec.sp.gov.br', NOW() - INTERVAL 1 DAY, 'O aluno Niuan Spolidorio da Rocha Souza enviou a tentativa 1 para "Seção 1: Introdução".', 'niuan.souza@fatec.sp.gov.br', 1, 0);
 
--- ========================================================================== --
--- Tabela: tg_coordenacao_turma
--- ========================================================================== --
 INSERT INTO `tg_coordenacao_turma` (`teacher_email`, `class_disciplina`, `class_year`, `class_semester`, `etapa_supervisionada`) VALUES
 ('coord.alves@fatec.sp.gov.br', 'Banco de Dados', 2025, 1, 1),
 ('coord.alves@fatec.sp.gov.br', 'Analise e Desenvolvimento de Sistemas', 2025, 1, 1),

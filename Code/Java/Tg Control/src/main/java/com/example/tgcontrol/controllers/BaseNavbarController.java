@@ -1,6 +1,5 @@
 package com.example.tgcontrol.controllers;
 
-import com.example.tgcontrol.model.TipoUsuario;
 import com.example.tgcontrol.utils.DatabaseUtils;
 import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.utils.UIUtils;
@@ -12,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem; // Import SeparatorMenuItem
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -57,7 +55,7 @@ public abstract class BaseNavbarController implements Initializable {
         }
 
         loadProfileImage();
-        applyCircularClipToProfileImage();
+        applyCircularClipToProfileImage(); // Apply clip after loading
     }
 
 
@@ -121,31 +119,23 @@ public abstract class BaseNavbarController implements Initializable {
     @FXML
     private void showProfileMenu(ActionEvent event) {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem historicoItem = null; // Declare outside the if
 
         MenuItem perfilItem = new MenuItem("Perfil");
         perfilItem.setOnAction(e -> {
             UIUtils.loadFxml("GeralScenes/profile_User.fxml");
         });
 
-        if (SessaoManager.getInstance().getTipoUsuario() == TipoUsuario.ALUNO) {
-            historicoItem = new MenuItem("Histórico");
-            historicoItem.setOnAction(e -> {
-                UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
-            });
-        }
+        MenuItem historicoItem = new MenuItem("Histórico");
+        historicoItem.setOnAction(e -> {
+            UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
+        });
 
         MenuItem sairItem = new MenuItem("Sair");
         sairItem.setOnAction(e -> {
             sair(event);
         });
 
-        contextMenu.getItems().add(perfilItem);
-        if (historicoItem != null) {
-            contextMenu.getItems().add(historicoItem);
-        }
-        contextMenu.getItems().addAll(new SeparatorMenuItem(), sairItem);
-
+        contextMenu.getItems().addAll(perfilItem, historicoItem, new javafx.scene.control.SeparatorMenuItem(), sairItem);
 
         contextMenu.show(profileMenuButton, Side.BOTTOM, 0, 5);
     }
@@ -161,7 +151,6 @@ public abstract class BaseNavbarController implements Initializable {
 
     @FXML
     public void notifications(ActionEvent actionEvent) {
-
         UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
     }
 }

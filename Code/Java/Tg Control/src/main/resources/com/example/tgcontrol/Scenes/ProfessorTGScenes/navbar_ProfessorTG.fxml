@@ -8,19 +8,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.navbar_ProfessorTG_C">
+<?import javafx.scene.shape.Circle?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.navbar_ProfessorTG_C">
     <top>
-        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="47.0" style="-fx-background-color: #E0D6D6;" spacing="10.0" BorderPane.alignment="BOTTOM_CENTER">
+        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="47.0" prefWidth="889.0" style="-fx-background-color: #E0D6D6;" BorderPane.alignment="BOTTOM_CENTER">
             <children>
-                <ImageView fitHeight="37.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="117.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../SceneImages/Navbar Images/TgControlSymbol.png" />
                     </image>
                 </ImageView>
                 <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="27.0" prefWidth="71.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Início" textAlignment="CENTER">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
@@ -32,10 +35,13 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#coordinations" prefHeight="27.0" prefWidth="148.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Coordenados" textAlignment="CENTER">
+                <Button layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#coordinations" prefHeight="27.0" prefWidth="148.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Coordenados" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -48,6 +54,9 @@
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -59,7 +68,30 @@
 
                 <Region HBox.hgrow="ALWAYS" />
 
-                <Button fx:id="profileMenuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showProfileMenu" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 15px;" textAlignment="CENTER">
+                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="42.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="..." textAlignment="CENTER">
+                    <font>
+                        <Font name="DejaVu Sans Mono Bold" size="13.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
+                </Button>
+                <Button layoutX="150.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="101.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" text="Pesquisar" textAlignment="CENTER">
+                    <font>
+                        <Font name="Lato Bold" size="13.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../SceneImages/Navbar Images/searchSymbol.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="profileMenuButton" layoutX="664.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showProfileMenu" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 15px; -fx-background-color: #FFFFFF; -fx-background-radius: 15px;" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
@@ -69,15 +101,21 @@
                                 <Image url="@../../SceneImages/Navbar Images/UserSymbol.png" />
                             </image>
                             <clip>
-                                <Circle centerX="12.5" centerY="12.5" radius="12.5" />
+                                <javafx.scene.shape.Circle radius="12.5" centerX="12.5" centerY="12.5" />
                             </clip>
                         </ImageView>
                     </graphic>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
                 </Button>
-                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#notifications" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" textAlignment="CENTER">
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#notifications" prefHeight="27.0" prefWidth="33.0" style="-fx-border-radius: 25px; -fx-background-color: #FFFFFF;" textAlignment="CENTER">
                     <font>
                         <Font name="Lato Bold" size="13.0" />
                     </font>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -87,12 +125,9 @@
                     </graphic>
                 </Button>
             </children>
-            <padding>
-                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-            </padding>
         </HBox>
     </top>
     <center>
-        <StackPane fx:id="contentArea" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="contentArea" prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: #FFFCFC;" BorderPane.alignment="CENTER" />
     </center>
 </BorderPane>

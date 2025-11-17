@@ -1,154 +1,44 @@
 package com.example.tgcontrol.controllers.Alunos;
 
-import com.example.tgcontrol.model.TipoUsuario;
-import com.example.tgcontrol.model.Turma;
-import com.example.tgcontrol.utils.DatabaseUtils;
-import com.example.tgcontrol.utils.FileStorageUtils;
-import com.example.tgcontrol.utils.SessaoManager;
-import com.example.tgcontrol.utils.UIUtils;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
 
 public class Forms_Aluno_C {
 
-    @FXML private ImageView imgFotoPerfil;
-    @FXML private Button btnCarregarFoto;
-    @FXML private TextField txtEmailPessoal;
-    @FXML private ComboBox<Turma> cbTurma;
-    @FXML private ComboBox<String> cbOrientador;
-    @FXML private ChoiceBox<String> cbTipoTG;
-    @FXML private VBox vboxProblema;
-    @FXML private TextField txtProblema;
-    @FXML private Button btnCarregarAcordo;
-    @FXML private Label lblNomeArquivoAcordo;
-    @FXML private Button btnSalvar;
-
-    private File fotoPerfilFile;
-    private File acordoFile;
-
-    private static final Pattern PROF_PATTERN = Pattern.compile("\\(([^)]+)\\)");
-
     @FXML
-    public void initialize() {
-        try {
-            Image placeholder = new Image(getClass().getResourceAsStream("/com/example/tgcontrol/SceneImages/Task Images/fotoPerfil2Symbol.png"));
-            imgFotoPerfil.setImage(placeholder);
-        } catch (Exception e) { e.printStackTrace(); }
+    public void enviarCadastro(ActionEvent event) throws IOException {
+        // Mostra alerta
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Cadastro realizado");
+        alert.setHeaderText(null);
+        alert.setContentText("As informações de primeiro acesso foram encaminhadas por e-mail.");
+        alert.showAndWait();
 
-        cbTurma.setItems(FXCollections.observableArrayList(DatabaseUtils.getListaTurmas()));
+        // Volta para tela de login
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/Scenes/GeralScenes/login_User.fxml"));
+        Scene loginScene = new Scene(fxmlLoader.load());
 
-        cbOrientador.setItems(FXCollections.observableArrayList(DatabaseUtils.getListaProfessores()));
-
-        cbTipoTG.setItems(FXCollections.observableArrayList("Artigo Tecnológico", "Relatório Técnico", "Outro"));
-        cbTipoTG.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            boolean isArtigo = "Artigo Tecnológico".equals(newVal);
-            vboxProblema.setVisible(isArtigo);
-            vboxProblema.setManaged(isArtigo);
-        });
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(loginScene);
+        stage.setTitle("TgControl - Login");
+        stage.show();
     }
-
     @FXML
-    void handleCarregarFoto(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Selecionar Foto de Perfil");
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg"));
-        File selectedFile = fc.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
-        if (selectedFile != null) {
-            fotoPerfilFile = selectedFile;
-            try {
-                imgFotoPerfil.setImage(new Image(selectedFile.toURI().toString()));
-            } catch (Exception e) { UIUtils.showAlert("Erro", "Não foi possível carregar a imagem."); fotoPerfilFile = null; }
-        }
-    }
+    public void voltarLogin(ActionEvent event) throws IOException {
+        // Depois de "cadastrar", redireciona para tela de login
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tgcontrol/Scenes/GeralScenes/login_User.fxml"));
+        Scene loginScene = new Scene(fxmlLoader.load());
 
-    @FXML
-    void handleAnexarAcordo(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Anexar Acordo de Orientação");
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Documentos", "*.pdf", "*.docx"));
-        File selectedFile = fc.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
-        if (selectedFile != null) {
-            acordoFile = selectedFile;
-            lblNomeArquivoAcordo.setText(selectedFile.getName());
-        } else {
-            acordoFile = null; lblNomeArquivoAcordo.setText("Nenhum arquivo selecionado");
-        }
-    }
-
-
-    @FXML
-    void handleSalvar(ActionEvent event) {
-        String emailAluno = SessaoManager.getInstance().getEmailUsuario();
-        if (emailAluno == null) {
-            UIUtils.showAlert("Erro Crítico", "Sessão expirada. Faça login novamente.");
-            return;
-        }
-
-        String orientadorStr = extrairEmail(cbOrientador.getValue(), PROF_PATTERN);
-        Turma turmaSelecionada = cbTurma.getValue();
-
-        if (txtEmailPessoal.getText().isBlank() || cbTipoTG.getValue() == null || orientadorStr == null || turmaSelecionada == null || acordoFile == null) {
-            UIUtils.showAlert("Erro", "Todos os campos e o 'Acordo de Orientação' são obrigatórios.");
-            return;
-        }
-
-        String tipoTG = cbTipoTG.getValue();
-        String problema = "Artigo Tecnológico".equals(tipoTG) ? txtProblema.getText().trim() : "";
-        if ("Artigo Tecnológico".equals(tipoTG) && problema.isBlank()) {
-            UIUtils.showAlert("Erro", "Para 'Artigo Tecnológico', o campo 'Problema a ser resolvido' é obrigatório.");
-            return;
-        }
-
-
-        if (fotoPerfilFile != null) {
-            String caminhoRelativo = FileStorageUtils.salvarFotoPerfil(fotoPerfilFile, emailAluno);
-            if (caminhoRelativo != null) {
-                DatabaseUtils.atualizarFotoPerfil(emailAluno, caminhoRelativo);
-            }
-        }
-
-        Map<String, String> dadosCadastro = new HashMap<>();
-        dadosCadastro.put("emailPessoal", txtEmailPessoal.getText().trim());
-        dadosCadastro.put("tipoTG", tipoTG);
-        dadosCadastro.put("problema", problema);
-        dadosCadastro.put("emailOrientador", orientadorStr);
-        dadosCadastro.put("disciplina", turmaSelecionada.getDisciplina());
-        dadosCadastro.put("ano", String.valueOf(turmaSelecionada.getAno()));
-        dadosCadastro.put("semestre", String.valueOf(turmaSelecionada.getSemestre()));
-
-        boolean sucesso = DatabaseUtils.completarCadastroAluno(
-                emailAluno,
-                dadosCadastro,
-                acordoFile
-        );
-
-        if (sucesso) {
-            SessaoManager.getInstance().iniciarSessao(emailAluno, TipoUsuario.ALUNO);
-            UIUtils.showAlert("Sucesso", "Cadastro concluído! Bem-vindo(a).");
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            UIUtils.loadNewScene(stage, "AlunoScenes/navbar_Aluno.fxml");
-        } else {
-        }
-    }
-
-    private String extrairEmail(String valorComboBox, Pattern pattern) {
-        if (valorComboBox == null) return null;
-        Matcher matcher = pattern.matcher(valorComboBox);
-        return matcher.find() ? matcher.group(1) : null;
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(loginScene);
+        stage.setTitle("TgControl - Login");
+        stage.show();
     }
 }
