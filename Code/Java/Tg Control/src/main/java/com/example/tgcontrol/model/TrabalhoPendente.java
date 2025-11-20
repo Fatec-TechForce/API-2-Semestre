@@ -1,5 +1,7 @@
 package com.example.tgcontrol.model;
 
+import java.time.LocalDateTime; // Importação necessária
+
 public class TrabalhoPendente {
     private final Double progresso;
     private final String nomeAluno;
@@ -8,13 +10,20 @@ public class TrabalhoPendente {
     private final String semestre;
     private final String status;
 
-    public TrabalhoPendente(Double progresso, String nomeAluno, String emailAluno, String turma, String semestre, String status) {
+    // NOVOS CAMPOS
+    private final int sequenceOrder;
+    private final LocalDateTime submissionTimestamp;
+
+    // Atualize o construtor
+    public TrabalhoPendente(Double progresso, String nomeAluno, String emailAluno, String turma, String semestre, String status, int sequenceOrder, LocalDateTime submissionTimestamp) {
         this.progresso = progresso;
         this.nomeAluno = nomeAluno;
         this.emailAluno = emailAluno;
         this.turma = turma;
         this.semestre = semestre;
         this.status = status;
+        this.sequenceOrder = sequenceOrder;
+        this.submissionTimestamp = submissionTimestamp;
     }
 
     public Double getProgresso() { return progresso; }
@@ -23,4 +32,8 @@ public class TrabalhoPendente {
     public String getTurma() { return turma; }
     public String getSemestre() { return semestre; }
     public String getStatus() { return status; }
+
+    // Novos Getters
+    public int getSequenceOrder() { return sequenceOrder; }
+    public LocalDateTime getSubmissionTimestamp() { return submissionTimestamp; }
 }

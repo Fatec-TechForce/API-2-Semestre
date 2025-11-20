@@ -126,8 +126,15 @@ public class DatabaseUtils {
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         trabalhosPendentes.add(new TrabalhoPendente(
-                                rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
-                                rs.getString("turma"), rs.getString("semestre"), rs.getString("status")
+                                rs.getDouble("progresso"),
+                                rs.getString("nomeAluno"),
+                                rs.getString("emailAluno"),
+                                rs.getString("turma"),
+                                rs.getString("semestre"),
+                                rs.getString("status"),
+                                // NOVOS CAMPOS:
+                                rs.getInt("sequence_order"),
+                                rs.getTimestamp("submission_timestamp").toLocalDateTime()
                         ));
                     }
                 }
@@ -201,8 +208,15 @@ public class DatabaseUtils {
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlPendentesGeral)) {
                 while (rs.next()) {
                     trabalhosPendentesGeral.add(new TrabalhoPendente(
-                            rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
-                            rs.getString("turma"), rs.getString("semestre"), rs.getString("status")
+                            rs.getDouble("progresso"),
+                            rs.getString("nomeAluno"),
+                            rs.getString("emailAluno"),
+                            rs.getString("turma"),
+                            rs.getString("semestre"),
+                            rs.getString("status"),
+                            // NOVOS CAMPOS:
+                            rs.getInt("sequence_order"),
+                            rs.getTimestamp("submission_timestamp").toLocalDateTime()
                     ));
                 }
             }
@@ -1084,5 +1098,53 @@ public class DatabaseUtils {
                 " | Assunto: " + assunto +
                 " | Corpo: " + corpo.substring(0, Math.min(corpo.length(), 50)) + "...");
         return true;
+    }
+    public static String getCaminhoArquivoSubmissao(String emailAluno, int sequencia, LocalDateTime dataEnvio) {
+        String sql = "SELECT file_path FROM task_submission WHERE student_email = ? AND sequence_order = ? AND submission_timestamp = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+            stmt.setTimestamp(3, java.sql.Timestamp.valueOf(dataEnvio));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("file_path");
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Caminho Arquivo): " + e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * Registra a avaliação do professor (Aprovar ou Solicitar Revisão).
+     * O Trigger no banco já atualizará o status da tarefa principal se for 'approved'.
+     */
+    public static boolean salvarAvaliacaoProfessor(String emailAluno, int sequencia, LocalDateTime dataSubmissao,
+                                                   String emailProfessor, String status, String comentario) {
+        String sql = "INSERT INTO task_review (student_email, sequence_order, submission_timestamp, reviewer_email, status, review_comment) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+            stmt.setTimestamp(3, java.sql.Timestamp.valueOf(dataSubmissao));
+            stmt.setString(4, emailProfessor);
+            stmt.setString(5, status); // 'approved' ou 'revision_requested'
+            stmt.setString(6, comentario);
+
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Salvar Avaliação): " + e.getMessage(), e);
+            return false;
+        }
     }
 }
