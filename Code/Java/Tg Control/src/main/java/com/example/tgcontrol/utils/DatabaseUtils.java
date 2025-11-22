@@ -126,8 +126,15 @@ public class DatabaseUtils {
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         trabalhosPendentes.add(new TrabalhoPendente(
-                                rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
-                                rs.getString("turma"), rs.getString("semestre"), rs.getString("status")
+                                rs.getDouble("progresso"),
+                                rs.getString("nomeAluno"),
+                                rs.getString("emailAluno"),
+                                rs.getString("turma"),
+                                rs.getString("semestre"),
+                                rs.getString("status"),
+                                // NOVOS CAMPOS:
+                                rs.getInt("sequence_order"),
+                                rs.getTimestamp("submission_timestamp").toLocalDateTime()
                         ));
                     }
                 }
@@ -201,8 +208,15 @@ public class DatabaseUtils {
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlPendentesGeral)) {
                 while (rs.next()) {
                     trabalhosPendentesGeral.add(new TrabalhoPendente(
-                            rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
-                            rs.getString("turma"), rs.getString("semestre"), rs.getString("status")
+                            rs.getDouble("progresso"),
+                            rs.getString("nomeAluno"),
+                            rs.getString("emailAluno"),
+                            rs.getString("turma"),
+                            rs.getString("semestre"),
+                            rs.getString("status"),
+                            // NOVOS CAMPOS:
+                            rs.getInt("sequence_order"),
+                            rs.getTimestamp("submission_timestamp").toLocalDateTime()
                     ));
                 }
             }
@@ -1084,5 +1098,162 @@ public class DatabaseUtils {
                 " | Assunto: " + assunto +
                 " | Corpo: " + corpo.substring(0, Math.min(corpo.length(), 50)) + "...");
         return true;
+    }
+
+    public static String getCaminhoArquivoSubmissao(String emailAluno, int sequencia, LocalDateTime dataEnvio) {
+        String sql = "SELECT file_path FROM task_submission WHERE student_email = ? AND sequence_order = ? AND submission_timestamp = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+            stmt.setTimestamp(3, java.sql.Timestamp.valueOf(dataEnvio));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("file_path");
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Buscar Caminho Arquivo): " + e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * Registra a avaliação do professor e envia uma notificação automática para o aluno.
+     */
+    public static boolean salvarAvaliacaoProfessor(String emailAluno, int sequencia, LocalDateTime dataSubmissao,
+                                                   String emailProfessor, String status, String comentario) {
+
+        String sql = "INSERT INTO task_review (student_email, sequence_order, submission_timestamp, reviewer_email, status, review_comment, review_timestamp) " +
+                "VALUES (?, ?, ?, ?, ?, ?, NOW())";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+            stmt.setTimestamp(3, java.sql.Timestamp.valueOf(dataSubmissao));
+            stmt.setString(4, emailProfessor);
+            stmt.setString(5, status);
+            stmt.setString(6, comentario);
+
+            int rows = stmt.executeUpdate();
+
+            if (rows > 0) {
+                // --- INTEGRAÇÃO COM SEU MÉTODO DE NOTIFICAÇÃO ---
+
+                // 1. Busca o título da tarefa para a mensagem ficar mais bonita
+                String tituloTask = getTituloTask(emailAluno, sequencia);
+                String mensagem;
+
+                // 2. Define a mensagem baseada na decisão
+                if ("approved".equals(status)) {
+                    mensagem = "Parabéns! Sua entrega para '" + tituloTask + "' foi APROVADA pelo orientador.";
+                } else {
+                    mensagem = "Atenção: Sua entrega para '" + tituloTask + "' requer revisão. Veja o feedback do orientador.";
+                }
+
+                // 3. Chama o SEU método existente enviarNotificacao
+                enviarNotificacao(
+                        emailAluno,             // Destinatário (Aluno)
+                        mensagem,               // Conteúdo
+                        emailAluno,             // Email relacionado à task
+                        sequencia               // ID da task relacionada
+                );
+
+                return true;
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Salvar Avaliação): " + e.getMessage(), e);
+        }
+        return false;
+    }
+    /**
+     * Busca o título de uma Task baseado no email do aluno e no número da sequência.
+     */
+    public static String getTituloTask(String emailAluno, int sequencia) {
+        String sql = "SELECT title FROM task WHERE student_email = ? AND sequence_order = ?";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("title");
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao buscar título da task: " + e.getMessage(), e);
+        }
+        return "Seção " + sequencia; // Retorno padrão caso falhe
+    }
+
+    /**
+     * Busca o histórico de versões (submissões e revisões) de uma tarefa.
+     */
+    public static List<HistoricoVersao> getHistoricoVersoes(String emailAluno, int sequencia) {
+        List<HistoricoVersao> historico = new ArrayList<>();
+
+        // Fazemos LEFT JOIN com review porque pode ter submissão sem revisão ainda
+        String sql = "SELECT ts.attempt_number, ts.submission_timestamp, ts.file_path, " +
+                "       tr.review_comment, tr.status " +
+                "FROM task_submission ts " +
+                "LEFT JOIN task_review tr " +
+                "  ON ts.student_email = tr.student_email " +
+                "  AND ts.sequence_order = tr.sequence_order " +
+                "  AND ts.submission_timestamp = tr.submission_timestamp " +
+                "WHERE ts.student_email = ? AND ts.sequence_order = ? " +
+                "ORDER BY ts.submission_timestamp DESC"; // Do mais recente para o mais antigo
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    historico.add(new HistoricoVersao(
+                            rs.getInt("attempt_number"),
+                            rs.getTimestamp("submission_timestamp").toLocalDateTime(),
+                            rs.getString("file_path"),
+                            rs.getString("review_comment"),
+                            rs.getString("status")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao buscar histórico: " + e.getMessage(), e);
+        }
+        return historico;
+    }
+
+    /**
+     * Busca a data/hora da última submissão de uma tarefa para abrir na correção.
+     */
+    public static LocalDateTime getUltimaDataSubmissao(String emailAluno, int sequencia) {
+        String sql = "SELECT MAX(submission_timestamp) as ultima_data FROM task_submission WHERE student_email = ? AND sequence_order = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next() && rs.getTimestamp("ultima_data") != null) {
+                    return rs.getTimestamp("ultima_data").toLocalDateTime();
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao buscar última data de submissão: " + e.getMessage(), e);
+        }
+        return null; // Retorna null se o aluno nunca enviou nada
     }
 }

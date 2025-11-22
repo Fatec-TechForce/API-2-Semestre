@@ -16,6 +16,7 @@ module com.example.tgcontrol {
     requires mammoth;
     requires org.apache.pdfbox;
     requires flexmark.html2md.converter;
+    requires flexmark;
 
     opens com.example.tgcontrol to javafx.fxml;
     exports com.example.tgcontrol;

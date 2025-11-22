@@ -62,20 +62,30 @@ public class home_Professor_C implements Initializable {
         });
 
         colAcao.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Pendente");
+            private final Button btn = new Button("Corrigir"); // Mudei o texto para ficar mais claro
             {
                 btn.getStyleClass().add("action-button");
-
                 btn.setMaxWidth(Double.MAX_VALUE);
 
                 btn.setOnAction(event -> {
                     TrabalhoPendente trabalho = getTableView().getItems().get(getIndex());
                     try {
-                        String fxmlPath = "/com/example/tgcontrol/Scenes/ProfessorScenes/correcao_View.fxml";
+                        // 1. Aponta para o novo FXML da tela de correção
+                        String fxmlPath = "/com/example/tgcontrol/Scenes/ProfessorScenes/secao_Professor.fxml";
                         URL fxmlLocation = getClass().getResource(fxmlPath);
                         FXMLLoader loader = new FXMLLoader(fxmlLocation);
                         Parent novaTela = loader.load();
 
+                        // 2. Pega o controller da nova tela e passa os dados
+                        Secao_Professor_C controller = loader.getController();
+                        controller.setDadosSubmissao(
+                                trabalho.getEmailAluno(),
+                                trabalho.getNomeAluno(),
+                                trabalho.getSequenceOrder(),
+                                trabalho.getSubmissionTimestamp()
+                        );
+
+                        // 3. Troca a tela no ContentArea
                         StackPane contentArea = (StackPane) tabelaTgs.getScene().lookup("#contentArea");
                         if (contentArea != null) {
                             contentArea.getChildren().clear();
