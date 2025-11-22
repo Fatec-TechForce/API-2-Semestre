@@ -5,6 +5,7 @@ import com.example.tgcontrol.model.TrabalhoPendente;
 import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.utils.DatabaseUtils;
 import javafx.collections.FXCollections;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -128,6 +129,14 @@ public class home_ProfessorTG_C implements Initializable {
 
         graficoProgressoAlunos.getData().setAll(series);
         graficoProgressoAlunos.setLegendVisible(false);
+
+        Platform.runLater(() -> {
+            for (XYChart.Data<String, Number> data : series.getData()) {
+                if (data.getNode() != null) {
+                    data.getNode().setStyle("-fx-bar-fill: #6A1B9A;");
+                }
+            }
+        });
     }
 
     private void popularTabela(List<TrabalhoPendente> trabalhos) {

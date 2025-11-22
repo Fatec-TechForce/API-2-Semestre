@@ -39,7 +39,7 @@
                             </children>
                         </StackPane>
 
-                        <Button fx:id="btn_Login" maxWidth="Infinity" mnemonicParsing="false" onAction="#Login" prefHeight="35.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Logar" textFill="WHITE">
+                        <Button fx:id="btn_Login" maxWidth="Infinity" mnemonicParsing="false" onAction="#Login" prefHeight="35.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Entrar" textFill="WHITE">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
