@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="524.0" prefWidth="889.0" spacing="25.0" style="-fx-background-color: #f4f6f9;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.home_Aluno_C">
+<VBox prefHeight="524.0" prefWidth="889.0" spacing="25.0" style="-fx-background-color: #f4f6f9;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.Home_Aluno_C">
     <padding>
         <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
     </padding>

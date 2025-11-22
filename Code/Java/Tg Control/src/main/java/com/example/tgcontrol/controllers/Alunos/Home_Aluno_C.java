@@ -19,9 +19,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class home_Aluno_C implements Initializable {
+public class Home_Aluno_C implements Initializable {
 
-    private static final Logger LOGGER = Logger.getLogger(home_Aluno_C.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Home_Aluno_C.class.getName());
 
     @FXML private Label lblBemVindo;
     @FXML private ProgressBar pbProgressoGeral;

@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Cordinations_Professor_C">
+<BorderPane style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Cordinations_Professor_C">
     <left>
-        <VBox prefWidth="200.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0 1 0 0;">
+        <VBox prefWidth="250.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0 1 0 0;">
             <Label text="Alunos">
                 <font>
                     <Font name="System Bold" size="14.0" />
@@ -28,12 +28,14 @@
         </VBox>
     </left>
     <center>
+
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
             <VBox fx:id="sectionsContainer" alignment="TOP_CENTER" spacing="20.0">
                 <padding>
                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                 </padding>
             </VBox>
+
         </ScrollPane>
     </center>
     <right>
@@ -43,16 +45,22 @@
                     <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
                 </image>
             </ImageView>
+
             <Label fx:id="studentNameLabel" text="[Selecione um Aluno]">
                 <font>
                     <Font name="System Bold" size="16.0" />
                 </font>
             </Label>
             <Label fx:id="courseLabel" text=" " textFill="#949494" />
-            <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #9119B3; -fx-background-radius: 5px;" text="Ver perfil" textFill="WHITE" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Buscar conversas" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Imagens enviadas" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Mais opções" />
+
+            <Button fx:id="btnAgendarDefesa" managed="false" mnemonicParsing="false" onAction="#onAgendarDefesa" prefWidth="150.0" style="-fx-background-color: #4CAF50; -fx-background-radius: 5px; -fx-font-weight: bold;" text="Agendar Defesa" textFill="WHITE" visible="false">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" />
+                </VBox.margin>
+            </Button>
+
+            <Button fx:id="btnVisualizarPerfil" mnemonicParsing="false" onAction="#onVisualizarPerfil" prefWidth="150.0" style="-fx-background-color: #9119B3; -fx-background-radius: 5px;" text="Visualizar Perfil" textFill="WHITE" />
+
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
             </padding>

@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class home_Professor_C implements Initializable {
+public class Home_Professor_C implements Initializable {
 
     @FXML private Label lblTotalAlunos;
     @FXML private Label lblTgsConcluidos;
@@ -94,7 +94,7 @@ public class home_Professor_C implements Initializable {
                             System.err.println("Erro Crítico: #contentArea não foi encontrado na cena.");
                         }
                     } catch (IOException e) {
-                        Logger.getLogger(home_Professor_C.class.getName()).log(Level.SEVERE, "Falha ao carregar FXML.", e);
+                        Logger.getLogger(Home_Professor_C.class.getName()).log(Level.SEVERE, "Falha ao carregar FXML.", e);
                     }
                 });
             }

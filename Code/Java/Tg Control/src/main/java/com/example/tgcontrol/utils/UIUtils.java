@@ -163,4 +163,14 @@ public final class UIUtils {
             LOGGER.log(Level.SEVERE, "Erro ao carregar o ícone: " + iconPath, e);
         }
     }
+
+    public static void openPopupWindow(Parent root, String tituloJanela) {
+        Stage popupStage = new Stage();
+        setStageIcon(popupStage);
+        popupStage.setScene(new Scene(root));
+        popupStage.setTitle(tituloJanela);
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setResizable(false);
+        popupStage.showAndWait();
+    }
 }

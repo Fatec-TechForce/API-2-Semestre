@@ -6,6 +6,7 @@ import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,7 +77,7 @@ public class DatabaseUtils {
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Autenticação - Etapa 2): " + e.getMessage(), e);
-            return TipoUsuario.NAO_AUTENTICADO; // Retorna não autenticado em caso de erro na 2ª etapa
+            return TipoUsuario.NAO_AUTENTICADO;
         }
     }
 
@@ -157,34 +158,60 @@ public class DatabaseUtils {
     /**
      * Função: Busca os dados para o dashboard do Coordenador de TG.
      * Necessita: Email do Professor TG logado.
-     * Retorna: Um objeto DashboardTgData contendo totais gerais, progresso agregado dos alunos das turmas coordenadas e lista geral de pendências, ou dados zerados em caso de erro.
+     * Retorna: Um objeto DashboardTgData contendo totais gerais, progresso agregado dos alunos das turmas coordenadas e lista DE PENDÊNCIAS DE SEUS ORIENTANDOS, ou dados zerados em caso de erro.
+     * * NOTA: A lista de pendências é filtrada por orientação própria (advisor_email) para ser mais acionável (REQUISITO DA TAREFA).
      */
     public static DashboardTgData getProfessorTGDashboardData(String emailProfessorTg) {
         int totalAlunosGeral = 0; int tgsConcluidosGeral = 0; int totalOrientandosGeral = 0;
         Map<String, Integer> progressoAlunos = new LinkedHashMap<>(Map.of("Concluído", 0, "Em Dia", 0, "Atrasado", 0, "Não Iniciado", 0));
-        List<TrabalhoPendente> trabalhosPendentesGeral = new ArrayList<>();
+
+        // REUSANDO LÓGICA: Pendências de orientação própria (teacher_email == advisor_email)
+        List<TrabalhoPendente> trabalhosPendentesOrientacaoPropria = new ArrayList<>();
+
         List<String> turmasCoordenadasFiltro = new ArrayList<>();
 
         String sqlResumoGeral = "SELECT SUM(numero_alunos) AS total_alunos, SUM(tgs_concluidos) AS tgs_concluidos FROM vw_class_summary";
         String sqlTotalOrientandos = "SELECT COUNT(DISTINCT advisor_email) AS total FROM student WHERE advisor_email IS NOT NULL";
         String sqlTurmasCoordenadas = "SELECT DISTINCT CONCAT(\"('\", class_disciplina, \"', \", class_year, \", \", class_semester, \")\") AS turma_tupla FROM tg_coordenacao_turma WHERE teacher_email = ?";
-        String sqlDetalhesTasksBase = "SELECT emailAluno, estagio_aluno, estagio_task, task_status FROM vw_professortg_dashboard_tasks WHERE (turma_disciplina, turma_year, turma_semester) IN ";
-        String sqlPendentesGeral = "SELECT * FROM vw_professor_dashboard";
+
+        // Query de pendências filtrada pelo email do Professor TG como Orientador
+        String sqlPendentesOrientacaoPropria = "SELECT * FROM vw_professor_dashboard WHERE teacher_email = ?";
 
         try (Connection conn = DatabaseConnect.getConnection()) {
+
+            // 1. DADOS GERAIS DO DASHBOARD
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlResumoGeral)) { if (rs.next()) { totalAlunosGeral = rs.getInt("total_alunos"); tgsConcluidosGeral = rs.getInt("tgs_concluidos"); } }
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlTotalOrientandos)) { if (rs.next()) totalOrientandosGeral = rs.getInt("total"); }
+
+            // 2. BUSCA TURMAS COORDENADAS PARA FILTRO
             try(PreparedStatement stmt = conn.prepareStatement(sqlTurmasCoordenadas)) {
                 stmt.setString(1, emailProfessorTg);
                 try(ResultSet rs = stmt.executeQuery()) { while(rs.next()) turmasCoordenadasFiltro.add(rs.getString("turma_tupla")); }
             }
 
+            // 3. SE NÃO HOUVER TURMAS COORDENADAS, RETORNA APENAS DADOS GERAIS
             if(turmasCoordenadasFiltro.isEmpty()) {
-                return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoAlunos, trabalhosPendentesGeral);
+                // Mesmo que não coordene turma, ele pode ter pendências próprias de orientação
+                // Então, buscamos apenas as pendências de orientação própria e retornamos
+                try (PreparedStatement stmt = conn.prepareStatement(sqlPendentesOrientacaoPropria)) {
+                    stmt.setString(1, emailProfessorTg);
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        while (rs.next()) {
+                            trabalhosPendentesOrientacaoPropria.add(new TrabalhoPendente(
+                                    rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
+                                    rs.getString("turma"), rs.getString("semestre"), rs.getString("status"),
+                                    rs.getInt("sequence_order"), rs.getTimestamp("submission_timestamp").toLocalDateTime()
+                            ));
+                        }
+                    }
+                }
+                Map<String, Integer> progressoVazio = new LinkedHashMap<>(Map.of("Concluído", 0, "Em Dia", 0, "Atrasado", 0, "Não Iniciado", 0));
+                return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoVazio, trabalhosPendentesOrientacaoPropria);
             }
 
+            // 4. CÁLCULO DO GRÁFICO DE PROGRESSO (para alunos em turmas coordenadas)
             String filtroTurmasSql = String.join(",", turmasCoordenadasFiltro);
-            String sqlDetalhesTasksCompleta = sqlDetalhesTasksBase + "(" + filtroTurmasSql + ")";
+            String sqlDetalhesTasksCompleta = "SELECT emailAluno, estagio_aluno, estagio_task, task_status FROM vw_professortg_dashboard_tasks WHERE (turma_disciplina, turma_year, turma_semester) IN (" + filtroTurmasSql + ")";
             Map<String, String> statusAlunoMap = new HashMap<>();
 
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlDetalhesTasksCompleta)) {
@@ -205,22 +232,22 @@ public class DatabaseUtils {
                     progressoAlunos.put(statusAgregado, progressoAlunos.get(statusAgregado) + 1);
                 }
             }
-            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sqlPendentesGeral)) {
-                while (rs.next()) {
-                    trabalhosPendentesGeral.add(new TrabalhoPendente(
-                            rs.getDouble("progresso"),
-                            rs.getString("nomeAluno"),
-                            rs.getString("emailAluno"),
-                            rs.getString("turma"),
-                            rs.getString("semestre"),
-                            rs.getString("status"),
-                            // NOVOS CAMPOS:
-                            rs.getInt("sequence_order"),
-                            rs.getTimestamp("submission_timestamp").toLocalDateTime()
-                    ));
+
+            // 5. LISTA DE PENDÊNCIAS (Filtrada por Orientação Própria)
+            try (PreparedStatement stmt = conn.prepareStatement(sqlPendentesOrientacaoPropria)) {
+                stmt.setString(1, emailProfessorTg);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        trabalhosPendentesOrientacaoPropria.add(new TrabalhoPendente(
+                                rs.getDouble("progresso"), rs.getString("nomeAluno"), rs.getString("emailAluno"),
+                                rs.getString("turma"), rs.getString("semestre"), rs.getString("status"),
+                                rs.getInt("sequence_order"), rs.getTimestamp("submission_timestamp").toLocalDateTime()
+                        ));
+                    }
                 }
             }
-            return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoAlunos, trabalhosPendentesGeral);
+
+            return new DashboardTgData(totalAlunosGeral, tgsConcluidosGeral, totalOrientandosGeral, progressoAlunos, trabalhosPendentesOrientacaoPropria);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Dashboard Coordenador): " + e.getMessage(), e);
             Map<String, Integer> progressoVazio = new LinkedHashMap<>(Map.of("Concluído", 0, "Em Dia", 0, "Atrasado", 0, "Não Iniciado", 0));
@@ -237,6 +264,7 @@ public class DatabaseUtils {
         String sql = "SELECT profile_picture_url FROM user WHERE email = ?";
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -260,6 +288,7 @@ public class DatabaseUtils {
         String sql = "SELECT CONCAT(FirstName, ' ', LastName) AS nomeCompleto FROM user WHERE email = ?";
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -562,134 +591,6 @@ public class DatabaseUtils {
     }
 
     /**
-     * Função: Conclui o cadastro de um novo aluno, inserindo-o na tabela 'student'
-     * e criando suas 6 seções padrão.
-     * Isso é uma transação: ou tudo funciona, ou nada é salvo.
-     */
-    public static boolean completarCadastroAluno(String emailAluno, Map<String, String> dadosCadastro, File fotoPerfil, File arquivoAcordo) {
-        Connection conn = null;
-        String urlFotoPerfil = null;
-        String urlAcordo = null;
-
-        if (fotoPerfil != null) {
-            urlFotoPerfil = FileStorageUtils.salvarFotoPerfil(fotoPerfil, emailAluno);
-            if (urlFotoPerfil == null) {
-                UIUtils.showAlert("Erro de Arquivo", "Não foi possível salvar a foto de perfil.");
-                return false;
-            }
-        }
-
-        if (arquivoAcordo != null) {
-            urlAcordo = FileStorageUtils.salvarAcordoOrientacao(arquivoAcordo, emailAluno);
-            if (urlAcordo == null) {
-                return false;
-            }
-        } else {
-            LOGGER.log(Level.WARNING, "completarCadastroAluno foi chamado sem um arquivoAcordo, embora seja obrigatório.");
-            UIUtils.showAlert("Erro Interno", "O arquivo de acordo não foi recebido pelo servidor.");
-            return false;
-        }
-
-        String problemaResolvido = dadosCadastro.getOrDefault("problema", "");
-        String descricaoTask1 = "Apresentação Pessoal e Acadêmica.\n" +
-                "E-mail Pessoal: " + dadosCadastro.get("emailPessoal") + "\n" +
-                "Tipo de TG: " + dadosCadastro.get("tipoTG") + "\n" +
-                "Problema a Resolver: " + (problemaResolvido.isEmpty() ? "N/A" : problemaResolvido);
-
-        try {
-            conn = DatabaseConnect.getConnection();
-            conn.setAutoCommit(false);
-
-            if (urlFotoPerfil != null) {
-                String sqlUpdateUser = "UPDATE user SET profile_picture_url = ? WHERE email = ?";
-                try (PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateUser)) {
-                    stmtUpdate.setString(1, urlFotoPerfil);
-                    stmtUpdate.setString(2, emailAluno);
-                    stmtUpdate.executeUpdate();
-                }
-            }
-
-            String sqlInsertStudent = "INSERT INTO student (email, personal_email, advisor_email, agreement_document_url, class_disciplina, class_year, class_semester, estagio_tg_atual) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
-            try (PreparedStatement stmtStudent = conn.prepareStatement(sqlInsertStudent)) {
-                stmtStudent.setString(1, emailAluno);
-                stmtStudent.setString(2, dadosCadastro.get("emailPessoal"));
-                stmtStudent.setString(3, dadosCadastro.get("emailOrientador"));
-                stmtStudent.setString(4, urlAcordo);
-                stmtStudent.setString(5, dadosCadastro.get("disciplina"));
-                stmtStudent.setInt(6, Integer.parseInt(dadosCadastro.get("ano")));
-                stmtStudent.setInt(7, Integer.parseInt(dadosCadastro.get("semestre")));
-                stmtStudent.executeUpdate();
-            }
-
-            String sqlInsertTask = "INSERT INTO task (student_email, sequence_order, title, description, due_date, status, estagio_task) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-            String[] titulos = {
-                    "Apresentação Pessoal e Acadêmica",
-                    "Relatório PIM II", "Relatório PIM III", "Relatório PIM IV",
-                    "Relatório PIM V", "Relatório PIM VI"
-            };
-            String[] descricoes = {
-                    descricaoTask1,
-                    "Relatório referente ao PIM II", "Relatório referente ao PIM III", "Relatório referente ao PIM IV",
-                    "Relatório referente ao PIM V", "Relatório referente ao PIM VI"
-            };
-            int[] estagios = {1, 1, 1, 1, 2, 2};
-            LocalDate dataBase = LocalDate.now();
-
-            try (PreparedStatement stmtTask = conn.prepareStatement(sqlInsertTask)) {
-                for (int i = 0; i < 6; i++) {
-                    stmtTask.setString(1, emailAluno);
-                    stmtTask.setInt(2, i + 1);
-                    stmtTask.setString(3, titulos[i]);
-                    stmtTask.setString(4, descricoes[i]);
-                    stmtTask.setDate(5, java.sql.Date.valueOf(dataBase.plusMonths(i + 1)));
-                    stmtTask.setString(6, (i == 0) ? "in_progress" : "locked");
-                    stmtTask.setInt(7, estagios[i]);
-                    stmtTask.addBatch();
-                }
-                stmtTask.executeBatch();
-            }
-
-            conn.commit();
-            return true;
-
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "DB FALHA (Completar Cadastro Aluno - Transação): " + e.getMessage(), e);
-            if (conn != null) {
-                try { conn.rollback(); } catch (SQLException ex) { LOGGER.log(Level.SEVERE, "DB FALHA (Rollback): " + ex.getMessage(), ex); }
-            }
-            UIUtils.showAlert("Erro de Cadastro", "Não foi possível salvar os dados no banco: " + e.getMessage());
-            return false;
-        } finally {
-            if (conn != null) {
-                try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-            }
-        }
-    }
-
-    /**
-     * Função: Atualiza a URL da foto de perfil de um usuário.
-     * Usado pelos Forms_Aluno_C e Forms_Professor_C.
-     * Necessita: Email do usuário e o caminho relativo da nova foto.
-     */
-    public static void atualizarFotoPerfil(String email, String urlFoto) {
-        String sqlUpdateUser = "UPDATE user SET profile_picture_url = ? WHERE email = ?";
-
-        try (Connection conn = DatabaseConnect.getConnection();
-             PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateUser)) {
-
-            stmtUpdate.setString(1, urlFoto);
-            stmtUpdate.setString(2, email);
-            stmtUpdate.executeUpdate();
-
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "DB FALHA (Atualizar Foto Perfil): Não foi possível atualizar a foto para " + email, e);
-        }
-    }
-
-    /**
      * Função: Conclui o cadastro de um novo aluno (MODIFICADO)
      * Insere na tabela 'student' e cria suas 6 seções padrão.
      * A foto de perfil agora é tratada externamente pelo controlador.
@@ -777,6 +678,26 @@ public class DatabaseUtils {
             if (conn != null) {
                 try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
             }
+        }
+    }
+
+    /**
+     * Função: Atualiza a URL da foto de perfil de um usuário.
+     * Usado pelos Forms_Aluno_C e Forms_Professor_C.
+     * Necessita: Email do usuário e o caminho relativo da nova foto.
+     */
+    public static void atualizarFotoPerfil(String email, String urlFoto) {
+        String sqlUpdateUser = "UPDATE user SET profile_picture_url = ? WHERE email = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateUser)) {
+
+            stmtUpdate.setString(1, urlFoto);
+            stmtUpdate.setString(2, email);
+            stmtUpdate.executeUpdate();
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Atualizar Foto Perfil): Não foi possível atualizar a foto para " + email, e);
         }
     }
 
@@ -1005,6 +926,7 @@ public class DatabaseUtils {
 
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, userEmail);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -1040,6 +962,7 @@ public class DatabaseUtils {
         String sql = "UPDATE notification SET is_read = TRUE WHERE notification_id = ?";
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, notificationId);
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -1058,6 +981,7 @@ public class DatabaseUtils {
         String sql = "UPDATE notification SET is_read = TRUE WHERE user_email = ? AND is_read = FALSE";
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, userEmail);
             stmt.executeUpdate();
             return true;
@@ -1076,6 +1000,7 @@ public class DatabaseUtils {
         String sql = "SELECT COUNT(*) AS total FROM notification WHERE user_email = ? AND is_read = FALSE";
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, userEmail);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -1254,6 +1179,111 @@ public class DatabaseUtils {
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Erro ao buscar última data de submissão: " + e.getMessage(), e);
         }
-        return null; // Retorna null se o aluno nunca enviou nada
+        return null;
+    }
+
+
+    /**
+     * Função: Verifica se todas as tarefas de um aluno foram marcadas como 'completed'.
+     * @param emailAluno Email do aluno.
+     * @return true se o número de tarefas completas for igual ao máximo de tarefas configurado, false caso contrário.
+     */
+    public static boolean isTgConcluido(String emailAluno) {
+        String sql = "SELECT COUNT(*) as completed_tasks, c.max_tasks " +
+                "FROM task t " +
+                "JOIN student s ON t.student_email = s.email " +
+                "JOIN class c ON s.class_disciplina = c.disciplina AND s.class_year = c.year AND s.class_semester = c.semester " +
+                "WHERE t.student_email = ? AND t.status = 'completed' " +
+                "GROUP BY c.max_tasks";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int completedTasks = rs.getInt("completed_tasks");
+                    int maxTasks = rs.getInt("max_tasks");
+                    return completedTasks >= maxTasks;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (isTgConcluido): Falha ao verificar conclusão do TG para o aluno " + emailAluno, e);
+        }
+        return false;
+    }
+
+    /**
+     * Função: Busca detalhes de exibição de um aluno (nome do orientador e descrição da turma) usando a view vw_student_details.
+     * @param emailAluno Email do aluno.
+     * @return Um Map com os detalhes ou null se o email não for de um aluno.
+     */
+    public static Map<String, String> getStudentDisplayDetails(String emailAluno) {
+        Map<String, String> details = new HashMap<>();
+        // Usa a VIEW vw_student_details que já tem a descrição da turma
+        String sql = "SELECT vsd.turma_descricao, u_adv.FirstName, u_adv.LastName, vsd.advisor_email " +
+                "FROM vw_student_details vsd " +
+                "LEFT JOIN user u_adv ON vsd.advisor_email = u_adv.email " +
+                "WHERE vsd.email = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String advisorName = null;
+                    if (rs.getString("FirstName") != null) {
+                        advisorName = rs.getString("FirstName") + " " + rs.getString("LastName");
+                    }
+
+                    details.put("turma_descricao", rs.getString("turma_descricao"));
+                    details.put("advisor_name", advisorName != null ? advisorName : "Não Atribuído");
+                    details.put("advisor_email", rs.getString("advisor_email"));
+                    return details;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getStudentDisplayDetails): Falha ao buscar detalhes do aluno " + emailAluno, e);
+        }
+        return null;
+    }
+    /**
+     * Função: Registra o agendamento da defesa do TG.
+     */
+    public static boolean agendarDefesa(String studentEmail, String schedulerEmail, LocalDateTime dataHora, String localDefesa, String bancaAvaliadora) {
+        String sql = "INSERT INTO defesa_tg (student_email, scheduler_email, data_hora_defesa, local_defesa, banca_avaliadora, status_defesa) " +
+                "VALUES (?, ?, ?, ?, ?, 'Agendada')";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, studentEmail);
+            stmt.setString(2, schedulerEmail);
+            stmt.setTimestamp(3, Timestamp.valueOf(dataHora));
+            stmt.setString(4, localDefesa);
+            stmt.setString(5, bancaAvaliadora);
+
+            int rows = stmt.executeUpdate();
+
+            if (rows > 0) {
+                String content = "Sua defesa de TG foi agendada para: " + dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm")) + " no local: " + localDefesa;
+                enviarNotificacao(studentEmail, content, null, 0);
+                LOGGER.log(Level.INFO, "Defesa agendada para: " + studentEmail);
+                return true;
+            }
+
+        } catch (SQLException e) {
+            if (e.getSQLState() != null && e.getSQLState().startsWith("23")) {
+                LOGGER.log(Level.WARNING, "Conflito de agendamento: Possível data/local já ocupado.", e);
+                UIUtils.showAlert("Erro de Agendamento", "O horário ou local selecionado já está ocupado. Verifique a agenda.");
+            } else {
+                LOGGER.log(Level.SEVERE, "DB FALHA (Agendar Defesa): " + e.getMessage(), e);
+                UIUtils.showAlert("Erro de Banco de Dados", "Não foi possível salvar o agendamento.");
+            }
+        }
+        return false;
     }
 }

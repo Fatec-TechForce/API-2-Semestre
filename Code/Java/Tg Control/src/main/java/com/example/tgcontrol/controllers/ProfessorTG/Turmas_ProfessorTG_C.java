@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class turmas_ProfessorTG_C implements Initializable {
+public class Turmas_ProfessorTG_C implements Initializable {
 
     @FXML private TableView<Turma> tvTurmas;
     @FXML private TableColumn<Turma, String> colDisciplina;
@@ -31,7 +31,7 @@ public class turmas_ProfessorTG_C implements Initializable {
     @FXML private TableColumn<Turma, Integer> colSemestre;
     @FXML private TableColumn<Turma, Void> colAcao;
 
-    private static final Logger LOGGER = Logger.getLogger(turmas_ProfessorTG_C.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Turmas_ProfessorTG_C.class.getName());
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

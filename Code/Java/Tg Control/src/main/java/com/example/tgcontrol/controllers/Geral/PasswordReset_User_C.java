@@ -12,9 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static com.example.tgcontrol.utils.DatabaseUtils.redefinirSenha;
-
-public class passwordReset_User_C {
+public class PasswordReset_User_C {
 
     @FXML
     public TextField tbx_Login;

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="550.0" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #6A1B9A; -fx-border-width: 2;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.Agendar_Defesa_TG_C">
+    <children>
+        <VBox spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Label text="Agendar Defesa de TG">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblAluno" text="Aluno: [Nome do Aluno]" />
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Data da Defesa:" />
+                                <DatePicker fx:id="dpData" promptText="Selecione a data" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Hora (HH:mm):" />
+                                <TextField fx:id="txtHora" promptText="Ex: 14:30" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="Local da Defesa:" />
+                        <TextField fx:id="txtLocal" promptText="Ex: Sala 101 / Google Meet" />
+                    </children>
+                </VBox>
+                <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Banca Avaliadora (Separe por ponto e vírgula):" />
+                        <TextArea fx:id="txtBanca" promptText="Ex: Prof. João Silva; Prof. Maria Costa; Avaliador Externo" VBox.vgrow="ALWAYS" />
+                    </children>
+                </VBox>
+                <Button mnemonicParsing="false" onAction="#handleAgendar" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 5px; -fx-font-weight: bold;" text="Agendar Defesa" textFill="WHITE">
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

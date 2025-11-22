@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class home_ProfessorTG_C implements Initializable {
+public class Home_ProfessorTG_C implements Initializable {
 
     @FXML private Label lblTotalAlunos;
     @FXML private Label lblTgsConcluidos;
@@ -41,7 +41,7 @@ public class home_ProfessorTG_C implements Initializable {
     @FXML private TableColumn<TrabalhoPendente, String> colTurma;
     @FXML private TableColumn<TrabalhoPendente, Void> colAcao;
 
-    private static final Logger LOGGER = Logger.getLogger(home_ProfessorTG_C.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Home_ProfessorTG_C.class.getName());
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

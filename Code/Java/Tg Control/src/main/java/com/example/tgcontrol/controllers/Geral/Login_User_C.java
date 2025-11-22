@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class login_User_C {
+public class Login_User_C {
 
     @FXML
     public TextField tbx_Login;

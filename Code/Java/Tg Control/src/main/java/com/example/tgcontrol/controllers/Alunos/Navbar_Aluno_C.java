@@ -5,7 +5,7 @@ import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class navbar_Aluno_C extends BaseNavbarController {
+public class Navbar_Aluno_C extends BaseNavbarController {
 
     @Override
     protected String getInitialFxmlPath() {

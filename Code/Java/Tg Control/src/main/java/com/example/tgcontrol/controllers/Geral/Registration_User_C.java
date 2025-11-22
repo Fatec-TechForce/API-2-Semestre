@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class registration_User_C {
+public class Registration_User_C {
 
     @FXML public TextField tbx_Login;
     @FXML public PasswordField tbx_Senha;
