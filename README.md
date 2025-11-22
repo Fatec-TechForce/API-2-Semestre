@@ -48,6 +48,24 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 
 
 ---
+## 📦 Deploy Package
+
+Pacote completo para instalação e execução do sistema disponível na pasta **Deploy Package**.
+
+### 📚 Documentação
+
+- 📘 [Manual do Usuário](./deploy-package/Manual-do-Usuário.md) - Como usar o sistema
+- 📖 [Manual de Instalação](./deploy-package/Manual-de-Instalação.md) - Como instalar e configurar
+
+### 🚀 Início Rápido
+
+1. Baixe a pasta **Deploy Package**
+2. Siga o **Manual de Instalação**
+3. Execute **tg-control.jar**
+4. Acesse: `http://localhost:8080`
+
+---
+
 
 ## 📄 Documentação do Projeto
 
