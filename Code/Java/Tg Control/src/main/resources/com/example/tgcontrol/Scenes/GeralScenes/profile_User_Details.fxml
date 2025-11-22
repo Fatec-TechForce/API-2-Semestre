@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: #f4f6f9;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.Profile_User_Details_C">
+    <children>
+        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <VBox alignment="TOP_CENTER" maxWidth="600.0" spacing="25.0" style="-fx-background-color: WHITE; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label text="Detalhes do Usuário">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+
+                        <VBox alignment="CENTER" spacing="10.0">
+                            <children>
+                                <ImageView fx:id="imgFotoPerfil" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                                    <clip>
+                                        <Circle centerX="60.0" centerY="60.0" radius="60.0" />
+                                    </clip>
+                                    <image>
+                                        <Image url="@../../SceneImages/Task Images/fotoPerfil2Symbol.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btnCarregarFoto" mnemonicParsing="false" onAction="#handleCarregarFoto" style="-fx-background-color: #D9D9D9; -fx-background-radius: 5px;" text="Trocar Foto" visible="false" managed="false" />
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="5.0">
+                            <children>
+                                <Label fx:id="lblNome" text="[Nome Completo do Usuário]">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lblEmail" text="[email_institucional@fatec.sp.gov.br]" textFill="#7c7c7c" />
+                            </children>
+                        </VBox>
+
+                        <Separator prefWidth="200.0" />
+
+                        <VBox spacing="10.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label text="Perfil:" minWidth="120.0" />
+                                        <Label fx:id="lblPerfil" text="[Aluno/Professor Orientador/Coordenador TG]" style="-fx-font-weight: bold;" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <VBox fx:id="vboxStudentDetails" spacing="10.0" managed="false" visible="false">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label text="Turma:" minWidth="120.0" />
+                                        <Label fx:id="lblTurma" text="[Disciplina - Ano/Semestre]" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label text="Orientador:" minWidth="120.0" />
+                                        <Label fx:id="lblOrientador" text="[Nome do Orientador]" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label text="Status TG:" minWidth="120.0" />
+                                        <Label fx:id="lblStatusTG" text="[Em Andamento / Concluído]" style="-fx-font-weight: bold; -fx-text-fill: #0078D7;" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <StackPane maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0">
+                            <children>
+                                <Button fx:id="btnSolicitarDefesa" mnemonicParsing="false" onAction="#handleSolicitarDefesa" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #4CAF50; -fx-background-radius: 5px;" text="Solicitar Defesa do TG" textFill="WHITE" visible="false" managed="false" />
+                                <Button fx:id="btnBloquearUsuario" mnemonicParsing="false" onAction="#handleBloquearUsuario" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #E04F5F; -fx-background-radius: 5px;" text="Bloquear Usuário" textFill="WHITE" visible="false" managed="false" />
+                            </children>
+                        </StackPane>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                    </VBox.margin>
+                </VBox>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

@@ -90,22 +90,30 @@ public final class UIUtils {
             Parent root = FXMLLoader.load(fxmlLocation);
             Scene scene = new Scene(root);
 
+            // Lógica para arrastar a janela (só funciona se não estiver maximizada)
             scene.setOnMousePressed(mouseEvent -> {
                 xOffset = mouseEvent.getSceneX();
                 yOffset = mouseEvent.getSceneY();
             });
 
             scene.setOnMouseDragged(mouseEvent -> {
-                stage.setX(mouseEvent.getScreenX() - xOffset);
-                stage.setY(mouseEvent.getScreenY() - yOffset);
+                if (!stage.isMaximized()) {
+                    stage.setX(mouseEvent.getScreenX() - xOffset);
+                    stage.setY(mouseEvent.getScreenY() - yOffset);
+                }
             });
 
             stage.setScene(scene);
             stage.setTitle("TgControl");
-            //stage.resizableProperty().setValue(false);
-            stage.setHeight(524.0);
-            stage.setWidth(889.0);
-            stage.show();
+            stage.setResizable(true);
+
+            stage.show(); // Mostra a janela (ela pode encolher aqui para caber o FXML)
+
+            // Força um "reset" no estado maximizado para garantir que o JavaFX aplique
+            stage.setMaximized(false);
+            stage.setMaximized(true);
+
+            stage.toFront();
             setStageIcon(stage);
 
         } catch (IOException e) {
@@ -154,5 +162,15 @@ public final class UIUtils {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Erro ao carregar o ícone: " + iconPath, e);
         }
+    }
+
+    public static void openPopupWindow(Parent root, String tituloJanela) {
+        Stage popupStage = new Stage();
+        setStageIcon(popupStage);
+        popupStage.setScene(new Scene(root));
+        popupStage.setTitle(tituloJanela);
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setResizable(false);
+        popupStage.showAndWait();
     }
 }

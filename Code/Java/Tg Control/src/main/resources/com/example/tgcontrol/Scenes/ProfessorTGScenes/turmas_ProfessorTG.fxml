@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="524.0" prefWidth="889.0" spacing="15.0" style="-fx-background-color: #f4f6f9; -fx-font-family: 'Segoe UI', Arial, sans-serif;"
-      stylesheets="@../../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.turmas_ProfessorTG_C">
+      stylesheets="@../../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/18.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.ProfessorTG.Turmas_ProfessorTG_C">
     <padding>
         <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
     </padding>

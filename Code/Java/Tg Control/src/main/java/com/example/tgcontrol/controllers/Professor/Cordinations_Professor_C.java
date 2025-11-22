@@ -1,29 +1,42 @@
 package com.example.tgcontrol.controllers.Professor;
 
+import com.example.tgcontrol.controllers.Geral.Profile_User_Details_C;
 import com.example.tgcontrol.model.SecaoAluno;
+import com.example.tgcontrol.model.TipoUsuario;
 import com.example.tgcontrol.model.Turma;
 import com.example.tgcontrol.utils.DatabaseUtils;
 import com.example.tgcontrol.utils.SessaoManager;
+import com.example.tgcontrol.utils.UIUtils;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.example.tgcontrol.controllers.ProfessorTG.Agendar_Defesa_TG_C;
+
 public class Cordinations_Professor_C {
+
+    private static final Logger LOGGER = Logger.getLogger(Cordinations_Professor_C.class.getName());
 
     @FXML private ListView<String> studentListView;
     @FXML private ImageView profileImageView;
@@ -31,7 +44,8 @@ public class Cordinations_Professor_C {
     @FXML private Label courseLabel;
     @FXML private VBox sectionsContainer;
 
-    private static final Logger LOGGER = Logger.getLogger(Cordinations_Professor_C.class.getName());
+    @FXML private Button btnAgendarDefesa;
+    @FXML private Button btnVisualizarPerfil;
 
     private List<Map<String, String>> allStudentsData = new ArrayList<>();
     private static final String DEFAULT_PROFILE_IMAGE_PATH = "/com/example/tgcontrol/SceneImages/Task Images/fotoPerfil2Symbol.png";
@@ -50,6 +64,13 @@ public class Cordinations_Professor_C {
                             atualizarPainelDireito(selectedStudentData);
                             carregarSecoesDoAluno(selectedStudentData.get("email"));
                         }
+                    } else {
+                        studentNameLabel.setText("[Nenhum Aluno]");
+                        courseLabel.setText("");
+                        btnAgendarDefesa.setVisible(false);
+                        btnAgendarDefesa.setManaged(false);
+                        loadDefaultProfileImage();
+                        sectionsContainer.getChildren().clear();
                     }
                 }
         );
@@ -67,7 +88,6 @@ public class Cordinations_Professor_C {
         String emailProfessor = SessaoManager.getInstance().getEmailUsuario();
         Turma turmaSelecionada = SessaoManager.getInstance().getTurmaSelecionada();
 
-        SessaoManager.getInstance().setTurmaSelecionada(null);
 
         if (emailProfessor == null || emailProfessor.isEmpty()) {
             return;
@@ -103,9 +123,22 @@ public class Cordinations_Professor_C {
         String nomeCompleto = studentData.get("nomeCompleto");
         String turmaDescricao = studentData.get("turma_descricao");
         String imageUrl = studentData.get("profile_picture_url");
+        String emailAluno = studentData.get("email");
 
         studentNameLabel.setText(nomeCompleto);
         courseLabel.setText(turmaDescricao);
+
+        TipoUsuario tipoLogado = SessaoManager.getInstance().getTipoUsuario();
+
+        boolean isTgConcluido = DatabaseUtils.isTgConcluido(emailAluno);
+
+        if (tipoLogado == TipoUsuario.PROFESSOR_TG && isTgConcluido) {
+            btnAgendarDefesa.setVisible(true);
+            btnAgendarDefesa.setManaged(true);
+        } else {
+            btnAgendarDefesa.setVisible(false);
+            btnAgendarDefesa.setManaged(false);
+        }
 
         if (profileImageView != null && imageUrl != null && !imageUrl.isBlank()) {
             try {
@@ -164,10 +197,86 @@ public class Cordinations_Professor_C {
         }
 
         Parent card = loader.load();
+
         Card_Secao_Professor_C controller = loader.getController();
 
-        controller.configurar(secao);
+        String nomeAlunoAtual = studentNameLabel.getText();
+        controller.configurar(secao, nomeAlunoAtual);
 
         sectionsContainer.getChildren().add(card);
+    }
+
+    @FXML
+    public void onAgendarDefesa(ActionEvent actionEvent) {
+        String nomeSelecionado = studentListView.getSelectionModel().getSelectedItem();
+        Map<String, String> selectedStudentData = findStudentData(nomeSelecionado);
+
+        if (selectedStudentData == null) {
+            UIUtils.showAlert("Erro", "Dados do aluno não encontrados.");
+            return;
+        }
+
+        String emailAluno = selectedStudentData.get("email");
+        String nomeAluno = selectedStudentData.get("nomeCompleto");
+
+        if (!DatabaseUtils.isTgConcluido(emailAluno)) {
+            UIUtils.showAlert("Aviso", "O TG do aluno ainda não foi marcado como Concluído.");
+            return;
+        }
+
+        try {
+            String fxmlPath = "/com/example/tgcontrol/Scenes/ProfessorTGScenes/agendar_Defesa_TG.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            Agendar_Defesa_TG_C controller = loader.getController();
+            controller.setDadosAluno(emailAluno, nomeAluno);
+
+            Stage popupStage = new Stage();
+            popupStage.setScene(new Scene(root));
+            popupStage.setTitle("Agendar Defesa");
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+            popupStage.setResizable(false);
+            popupStage.showAndWait();
+
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Falha ao carregar tela de agendamento.", e);
+            UIUtils.showAlert("Erro", "Não foi possível carregar a tela de agendamento.");
+        }
+    }
+
+    @FXML
+    private void onVisualizarPerfil(ActionEvent event) {
+        String nomeSelecionado = studentListView.getSelectionModel().getSelectedItem();
+        if (nomeSelecionado == null) {
+            UIUtils.showAlert("Aviso", "Selecione um aluno para visualizar o perfil.");
+            return;
+        }
+
+        Map<String, String> selectedStudentData = findStudentData(nomeSelecionado);
+        if (selectedStudentData != null) {
+            try {
+                String fxmlPath = "/com/example/tgcontrol/Scenes/GeralScenes/profile_User_Details.fxml";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+                Parent novaTela = loader.load();
+
+                Profile_User_Details_C controller = loader.getController();
+                controller.setUserData(selectedStudentData.get("email"));
+
+                StackPane contentArea = (StackPane) ((Node) event.getSource()).getScene().lookup("#contentArea");
+
+                if (contentArea != null) {
+                    contentArea.getChildren().clear();
+                    contentArea.getChildren().add(novaTela);
+                } else {
+                    LOGGER.log(Level.SEVERE, "Falha ao encontrar #contentArea para navegação.");
+                    UIUtils.showAlert("Erro de Navegação", "Não foi possível encontrar a área de conteúdo.");
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Falha ao carregar tela de perfil.", e);
+                UIUtils.showAlert("Erro", "Não foi possível carregar a tela de perfil do aluno.");
+            }
+        }
     }
 }

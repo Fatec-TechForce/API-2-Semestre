@@ -48,102 +48,24 @@ Gerenciar o ciclo dos Trabalhos de Graduação (TG) da modalidade Portfólio é 
 
 
 ---
+## 📦 Deploy Package
 
-## 📖 Manual de Instalação
+Pacote completo para instalação e execução do sistema disponível na pasta **Deploy Package**.
 
-### Pré-requisitos
+### 📚 Documentação
 
-Antes de iniciar, certifique-se de ter os seguintes programas instalados:
+- 📘 [Manual do Usuário](./deploy-package/Manual-do-Usuário.md) - Como usar o sistema
+- 📖 [Manual de Instalação](./deploy-package/Manual-de-Instalação.md) - Como instalar e configurar
 
-* Git 
-* Java 18+ 
-* Maven 
-* IntelliJ IDEA 
-* MySQL Workbench 
+### 🚀 Início Rápido
 
----
-
-### Git
-
-O Git é um sistema de controle de versão distribuído, usado para gerenciar projetos de software.
-
-**Instalação:**
-
-1. Acesse o site oficial: **[Download Git](https://git-scm.com/downloads)**
-2. Escolha a versão compatível com seu sistema operacional (Windows, macOS, Linux).
-3. Execute o instalador e siga as instruções padrão.
-4. Para verificar se foi instalado corretamente, abra o terminal e digite:
-```bash
-git --version
-```
+1. Baixe a pasta **Deploy Package**
+2. Siga o **Manual de Instalação**
+3. Execute **tg-control.jar**
+4. Acesse: `http://localhost:8080`
 
 ---
 
-### Java (JDK)
-
-O Java é necessário para rodar o backend e algumas ferramentas como o Maven.
-
-**Instalação:**
-
-1. Acesse: **[Download Java JDK](https://www.oracle.com/java/technologies/javase-downloads.html)**
-2. Baixe a versão Java SE Development Kit (18 ou superior).
-3. Instale o pacote e configure a variável de ambiente `JAVA_HOME`.
-4. Para verificar a instalação:
-```bash
-java -version
-```
-
----
-
-###  Maven
-
-O Maven é uma ferramenta de automação e gerenciamento de dependências para projetos Java.
-
-**Instalação:**
-
-1. Baixe em: **[Download Maven](https://maven.apache.org/download.cgi)**
-2. Extraia o arquivo `.zip` em uma pasta (ex: `C:\apache-maven`).
-3. Configure a variável de ambiente:
-   * Adicione `C:\apache-maven\bin` ao `PATH`.
-4. Verifique a instalação:
-```bash
-mvn -version
-```
-
----
-
-### IntelliJ IDEA
-
-O IntelliJ IDEA é a IDE recomendada para trabalhar com projetos Java.
-
-**Instalação:**
-
-1. Baixe em: **[Download IntelliJ IDEA](https://www.jetbrains.com/idea/download/)**
-2. Escolha entre a versão **Community** (gratuita) ou **Ultimate** (paga, com mais recursos).
-3. Instale normalmente no Windows/macOS/Linux.
-4. Recomendado instalar plugins:
-   * Maven Helper
-   * Database Navigator
-   * GitToolBox
-
----
-
-### MySQL Workbench
-
-O MySQL Workbench é uma interface gráfica para gerenciar o banco de dados MySQL.
-
-**Instalação:**
-
-1. Baixe em: **[Download MySQL Workbench](https://dev.mysql.com/downloads/workbench/)**
-2. Escolha a versão compatível com seu sistema.
-3. Instale normalmente.
-4. Configure uma conexão com seu servidor MySQL.
-5. Teste acessando o banco com:
-```sql
-SELECT VERSION();
-```
-
----
 
 ## 📄 Documentação do Projeto
 

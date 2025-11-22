@@ -121,19 +121,12 @@ public abstract class BaseNavbarController implements Initializable {
     @FXML
     private void showProfileMenu(ActionEvent event) {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem historicoItem = null; // Declare outside the if
+        MenuItem historicoItem = null;
 
         MenuItem perfilItem = new MenuItem("Perfil");
         perfilItem.setOnAction(e -> {
-            UIUtils.loadFxml("GeralScenes/profile_User.fxml");
+            UIUtils.loadFxml("GeralScenes/profile_User_Details.fxml");
         });
-
-        if (SessaoManager.getInstance().getTipoUsuario() == TipoUsuario.ALUNO) {
-            historicoItem = new MenuItem("Histórico");
-            historicoItem.setOnAction(e -> {
-                UIUtils.loadFxml("GeralScenes/notifications_User.fxml");
-            });
-        }
 
         MenuItem sairItem = new MenuItem("Sair");
         sairItem.setOnAction(e -> {

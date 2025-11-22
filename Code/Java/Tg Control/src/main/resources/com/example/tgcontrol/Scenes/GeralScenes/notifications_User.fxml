@@ -5,28 +5,51 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="524.0" prefWidth="889.0" stylesheets="@../../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.Notification_User_C">
-    <TableView fx:id="tvNotificacoes" layoutX="-3.0" layoutY="44.0" prefHeight="477.0" prefWidth="889.0" BorderPane.alignment="CENTER">
-        <columns>
-            <TableColumn fx:id="colStatus" maxWidth="85.6000030040741" prefWidth="85.6000030040741" text="Status" />
-            <TableColumn fx:id="colConteudo" prefWidth="681.6000518798828" text="Conteúdo" />
-            <TableColumn fx:id="colData" maxWidth="116.7999267578125" prefWidth="116.7999267578125" text="Data/Hora" />
-        </columns>
-        <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-        </columnResizePolicy>
-        <BorderPane.margin>
-            <Insets left="20.0" right="20.0" />
-        </BorderPane.margin>
-    </TableView>
-    <Label fx:id="lblContadorNaoLidas" layoutX="14.0" layoutY="20.0" text="Você tem X notificações não lidas.">
-        <font>
-            <Font size="14.0" />
-        </font>
-    </Label>
-    <Button fx:id="btnMarcarTodas" layoutX="719.0" layoutY="17.0" mnemonicParsing="false" onAction="#marcarTodasComoLidas" style="-fx-background-color: #9119B3;" text="Marcar todas como lidas" textFill="WHITE" />
-</AnchorPane>
+<BorderPane prefHeight="524.0" prefWidth="889.0"
+            style="-fx-background-color: WHITE;"
+            stylesheets="@../../SceneStyles/tableStyle.css"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.tgcontrol.controllers.Geral.Notification_User_C">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="lblContadorNaoLidas" text="Você tem X notificações não lidas.">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button fx:id="btnMarcarTodas" mnemonicParsing="false" onAction="#marcarTodasComoLidas" style="-fx-background-color: #9119B3;" text="Marcar todas como lidas" textFill="WHITE" />
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tvNotificacoes" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colStatus" maxWidth="100.0" minWidth="80.0" prefWidth="85.0" text="Status" />
+                <TableColumn fx:id="colConteudo" text="Conteúdo" />
+                <TableColumn fx:id="colData" maxWidth="150.0" minWidth="110.0" prefWidth="120.0" text="Data/Hora" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+            <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+
+</BorderPane>

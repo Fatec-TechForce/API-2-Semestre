@@ -1,30 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="524.0" prefWidth="889.0" stylesheets="@../../SceneStyles/tableStyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Geral.Versoes_User_C">
-    <Pane prefHeight="524.0" prefWidth="889.0">
-        <children>
-            <TableView fx:id="tableView" layoutX="39.0" layoutY="47.0" prefHeight="389.0" prefWidth="797.0">
-                <columns>
-                    <TableColumn fx:id="colNome" maxWidth="400.8000373840332" minWidth="-Infinity" prefWidth="397.60002517700195" text="Nome do Arquivo" />
-                    <TableColumn fx:id="colData" maxWidth="608.9999847412109" minWidth="-Infinity" prefWidth="399.20001220703125" text="Data de Upload" />
-                </columns>
-            </TableView>
+<BorderPane prefHeight="524.0" prefWidth="889.0"
+            style="-fx-background-color: WHITE;"
+            stylesheets="@../../SceneStyles/tableStyle.css"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.tgcontrol.controllers.Geral.Versoes_User_C">
 
-            <Button fx:id="btnVerDetalhes" layoutX="570.0" layoutY="556.0" mnemonicParsing="false" onAction="#onVerDetalhes" prefHeight="25.0" prefWidth="126.0" style="-fx-background-color: #9119B3;" text="Ver Detalhes" textFill="WHITE" translateY="-90.0" />
-            <Button fx:id="btnBaixar" layoutX="710.0" layoutY="556.0" mnemonicParsing="false" onAction="#onBaixar" prefHeight="25.0" prefWidth="126.0" style="-fx-background-color: #9119B3;" text="Baixar Selecionado" textFill="WHITE" translateY="-90.0" />
-            <Label layoutX="39.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Histórico" textAlignment="CENTER">
-                <font>
-                    <Font size="14.0" />
-                </font>
-            </Label>
-         <Button fx:id="btnVolta" layoutX="431.0" layoutY="466.0" mnemonicParsing="false" onAction="#voltar" prefHeight="25.0" prefWidth="126.0" style="-fx-background-color: #9119B3;" text="Voltar" textFill="WHITE" />
-        </children></Pane>
-</AnchorPane>
+    <top>
+        <Label style="-fx-font-weight: bold;" text="Histórico" BorderPane.alignment="CENTER_LEFT">
+            <font>
+                <Font size="18.0" />
+            </font>
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="20.0" top="20.0" />
+            </BorderPane.margin>
+        </Label>
+    </top>
+
+    <center>
+        <TableView fx:id="tableView" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colNome" text="Nome do Arquivo" />
+                <TableColumn fx:id="colData" text="Data de Upload" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+            <BorderPane.margin>
+                <Insets left="20.0" right="20.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnVolta" mnemonicParsing="false" onAction="#voltar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #9119B3;" text="Voltar" textFill="WHITE" />
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button fx:id="btnVerDetalhes" mnemonicParsing="false" onAction="#onVerDetalhes" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #9119B3;" text="Ver Detalhes" textFill="WHITE" />
+                <Button fx:id="btnBaixar" mnemonicParsing="false" onAction="#onBaixar" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #9119B3;" text="Baixar Selecionado" textFill="WHITE" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+
+</BorderPane>
