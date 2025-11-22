@@ -13,124 +13,176 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Secao_Professor_C">
-   <children>
-      <BorderPane layoutX="345.0" layoutY="162.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="889.0" style="-fx-border-color: a7a7a7; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
-               <children>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                     <StackPane.margin>
-                        <Insets left="20.0" />
-                     </StackPane.margin>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-                  <Label text="Nome do aluno" StackPane.alignment="TOP_LEFT">
-                     <StackPane.margin>
-                        <Insets left="80.0" top="10.0" />
-                     </StackPane.margin>
-                  </Label>
-                  <Label text="Email do aluno" textFill="#7c7c7c" StackPane.alignment="TOP_LEFT">
-                     <StackPane.margin>
-                        <Insets left="80.0" top="30.0" />
-                     </StackPane.margin>
-                  </Label>
-                  <Button fx:id="BTfeedback" mnemonicParsing="false" onAction="#EnviarFeedback" style="-fx-background-color: #e10ae1; -fx-background-radius: 5px;" text="Enviar Feedback" textFill="WHITE">
-                     <StackPane.margin>
-                        <Insets right="-450.0" top="10.0" />
-                     </StackPane.margin>
-                  </Button>
-                  <Button fx:id="BTaceitar" mnemonicParsing="false" onAction="#AceitarSecao" style="-fx-background-color: green; -fx-background-radius: 5px;" text="Aceitar" textFill="WHITE">
-                     <StackPane.margin>
-                        <Insets right="-700.0" top="10.0" />
-                     </StackPane.margin>
-                  </Button>
-               </children>
-            </StackPane>
-         </top>
-         <right>
-            <VBox prefHeight="454.0" prefWidth="100.0" style="-fx-border-color: a7a7a7; -fx-border-width: 0 0 0 1;" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="Histórico">
-                     <VBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0">
-                     <children>
-                         <Button fx:id="BTvisualizarhist" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#Visualizarhist" prefHeight="26.0" prefWidth="180.0" style="-fx-background-color: #9119B3;" text="Visualizar histórico de versões" textFill="WHITE" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
-         </right>
-         <center>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="669.0" style="-fx-background-color: c5c5c5; -fx-background-radius: 10px;" BorderPane.alignment="TOP_CENTER">
-               <children>
-                  <VBox prefHeight="341.0" prefWidth="658.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <StackPane prefHeight="50.0" prefWidth="669.0">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                                 <StackPane.margin>
-                                    <Insets left="10.0" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@../../SceneImages/Task Images/task-icon.png" />
-                                 </image>
-                              </ImageView>
-                              <Label text="Assunto" StackPane.alignment="TOP_LEFT">
-                                 <StackPane.margin>
-                                    <Insets left="60.0" top="5.0" />
-                                 </StackPane.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Data de envio" textFill="#7c7c7c" StackPane.alignment="TOP_LEFT">
-                                 <StackPane.margin>
-                                    <Insets left="60.0" top="20.0" />
-                                 </StackPane.margin>
-                              </Label>
-                           </children>
-                        </StackPane>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: a7a7a7; -fx-border-radius: 10px;">
-                           <VBox.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </VBox.margin>
-                           <children>
-                              <TextArea fx:id="SecaoEnviada" layoutX="257.0" layoutY="1.0" prefHeight="200.0" prefWidth="163.0" style="-fx-background-color: white; -fx-control-inner-background: white;" text="       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                           </children>
-                        </AnchorPane>
-                        <Label text="Feedback">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="30.0" top="25.0" />
-                           </VBox.margin>
+<?import javafx.scene.web.WebView?>
+<AnchorPane prefHeight="524.0" prefWidth="889.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Secao_Professor_C">
+    <children>
+        <BorderPane layoutX="345.0" layoutY="162.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <StackPane prefHeight="70.0" style="-fx-border-color: a7a7a7; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="imgFotoPerfil" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                            <StackPane.margin>
+                                <Insets left="20.0" />
+                            </StackPane.margin>
+                        </ImageView>
+
+                        <Label fx:id="lblNomeAluno" text="Nome do aluno" StackPane.alignment="TOP_LEFT">
+                            <StackPane.margin>
+                                <Insets left="80.0" top="10.0" />
+                            </StackPane.margin>
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
                         </Label>
-                        <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="669.0" style="-fx-border-color: a7a7a7; -fx-border-radius: 10px;">
-                           <children>
-                              <TextArea fx:id="TxtFeedback" prefHeight="200.0" prefWidth="200.0" style="-fx-control-inner-background: white;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </VBox.margin>
+
+                        <Label fx:id="lblEmailAluno" text="Email do aluno" textFill="#7c7c7c" StackPane.alignment="TOP_LEFT">
+                            <StackPane.margin>
+                                <Insets left="80.0" top="30.0" />
+                            </StackPane.margin>
+                        </Label>
+
+                        <Button fx:id="BTaceitar" mnemonicParsing="false" onAction="#AceitarSecao" style="-fx-background-color: green; -fx-background-radius: 5px;" text="Aceitar" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
+                            <StackPane.margin>
+                                <Insets right="20.0" top="20.0" />
+                            </StackPane.margin>
+                        </Button>
+
+                        <Button fx:id="BTfeedback" mnemonicParsing="false" onAction="#EnviarFeedback" style="-fx-background-color: #6A1B9A; -fx-background-radius: 5px;" text="Enviar Feedback" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
+                            <StackPane.margin>
+                                <Insets right="90.0" top="20.0" />
+                            </StackPane.margin>
+                        </Button>
+
+                        <Button fx:id="btnVisualizarMD" mnemonicParsing="false" onAction="#alternarVisualizacao" style="-fx-background-color: #0078D7; -fx-background-radius: 5px;" text="Visualizar MD" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
+                            <StackPane.margin>
+                                <Insets right="210.0" top="20.0" />
+                            </StackPane.margin>
+                        </Button>
+                    </children>
+                </StackPane>
+            </top>
+            <right>
+                <VBox prefHeight="454.0" prefWidth="240.0" style="-fx-border-color: a7a7a7; -fx-border-width: 0 0 0 1;" BorderPane.alignment="CENTER">
+                    <children>
+
+                        <Label text="Histórico de Versões">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="10.0" top="10.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+
+                        <javafx.scene.control.ListView fx:id="listaHistorico" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </javafx.scene.control.ListView>
+
+                        <Label text="*Clique para ver detalhes" textFill="#7c7c7c" wrapText="true">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" />
+                            </VBox.margin>
+                        </Label>
+
+                        <AnchorPane prefHeight="200.0" style="-fx-border-color: a7a7a7; -fx-border-width: 1 0 0 0; -fx-background-color: #f9f9f9;">
+                            <children>
+                                <Label text="Requisitos da Seção" textFill="#5e5e5e" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+
+                                <Label text="(Em breve: Checkboxes de avaliação)" textFill="#a1a1a1" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+                                    <font>
+                                        <Font size="10.0" />
+                                    </font>
+                                </Label>
+
+                                <VBox fx:id="vboxRequisitos" spacing="8.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                                </VBox>
+                            </children>
                         </AnchorPane>
-                     </children>
-                  </VBox>
-               </children>
-               <BorderPane.margin>
-                  <Insets top="10.0" />
-               </BorderPane.margin>
-            </AnchorPane>
-         </center>
-      </BorderPane>
-   </children>
+
+                    </children>
+                </VBox>
+            </right>
+            <center>
+                <AnchorPane style="-fx-background-color: c5c5c5; -fx-background-radius: 10px;" BorderPane.alignment="TOP_CENTER">
+                    <children>
+                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <StackPane prefHeight="50.0">
+                                    <children>
+                                        <ImageView fitHeight="40.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="10.0" />
+                                            </StackPane.margin>
+                                            <image>
+                                                <Image url="@../../SceneImages/Task Images/task-icon.png" />
+                                            </image>
+                                        </ImageView>
+
+                                        <Label fx:id="lblAssunto" text="Assunto" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="60.0" top="5.0" />
+                                            </StackPane.margin>
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+
+                                        <Label fx:id="lblDataEnvio" text="Data de envio" textFill="#7c7c7c" StackPane.alignment="TOP_LEFT">
+                                            <StackPane.margin>
+                                                <Insets left="60.0" top="20.0" />
+                                            </StackPane.margin>
+                                        </Label>
+                                    </children>
+                                </StackPane>
+
+                                <AnchorPane style="-fx-border-color: a7a7a7; -fx-border-radius: 10px;" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets left="15.0" right="15.0" />
+                                    </VBox.margin>
+                                    <children>
+                                        <StackPane AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+
+                                            <WebView fx:id="webSecaoEnviada" />
+
+                                            <TextArea fx:id="txtRawMarkdown" visible="false" editable="false" wrapText="true" style="-fx-font-family: 'Consolas', 'Monospaced';" />
+
+                                        </StackPane>
+                                    </children>
+                                </AnchorPane>
+
+                                <Label text="Feedback">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets left="30.0" top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" style="-fx-border-color: a7a7a7; -fx-border-radius: 10px;">
+                                    <children>
+                                        <TextArea fx:id="TxtFeedback" style="-fx-control-inner-background: white;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets bottom="15.0" left="15.0" right="15.0" />
+                                    </VBox.margin>
+                                </AnchorPane>
+                            </children>
+                        </VBox>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </BorderPane.margin>
+                </AnchorPane>
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>

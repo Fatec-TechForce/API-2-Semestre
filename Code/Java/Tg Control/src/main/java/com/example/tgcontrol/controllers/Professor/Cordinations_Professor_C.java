@@ -164,10 +164,14 @@ public class Cordinations_Professor_C {
         }
 
         Parent card = loader.load();
+
         Card_Secao_Professor_C controller = loader.getController();
 
-        controller.configurar(secao);
+        // Pega o nome do aluno que está na label da tela atual
+        String nomeAlunoAtual = studentNameLabel.getText();
+        controller.configurar(secao, nomeAlunoAtual);
 
+        // Adiciona o card visual na lista
         sectionsContainer.getChildren().add(card);
     }
 }

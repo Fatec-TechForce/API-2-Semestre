@@ -80,6 +80,7 @@ public class home_Professor_C implements Initializable {
                         Secao_Professor_C controller = loader.getController();
                         controller.setDadosSubmissao(
                                 trabalho.getEmailAluno(),
+                                trabalho.getNomeAluno(),
                                 trabalho.getSequenceOrder(),
                                 trabalho.getSubmissionTimestamp()
                         );
