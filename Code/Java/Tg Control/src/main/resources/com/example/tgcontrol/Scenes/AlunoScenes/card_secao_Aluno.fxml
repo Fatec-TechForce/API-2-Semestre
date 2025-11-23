@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="apCard" maxHeight="150.0" minHeight="150.0" prefHeight="150.0" style="-fx-background-radius: 20px; -fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.Card_Secao_Aluno_C">
+<AnchorPane maxHeight="150.0" minHeight="150.0" prefHeight="150.0" style="-fx-background-radius: 20px; -fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Alunos.Card_Secao_Aluno_C">
     <children>
         <StackPane prefHeight="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -47,14 +47,14 @@
                 </Label>
             </children>
         </StackPane>
-        <StackPane prefHeight="60.0" style="-fx-border-color: #A1A1A1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <StackPane prefHeight="60.0" style="-fx-border-color: #a1a1a1; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <Label fx:id="lbNomeTarefa" text="API 1" textFill="#322c2c" StackPane.alignment="CENTER_LEFT">
                     <StackPane.margin>
                         <Insets left="10.0" />
                     </StackPane.margin>
                 </Label>
-                <Button fx:id="btnExibirTarefa" mnemonicParsing="false" onAction="#exibirTarefa" style="-fx-background-color: TRANSPARENT; -fx-border-color: #DD08A1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#DD08A1" StackPane.alignment="CENTER_RIGHT">
+                <Button fx:id="btnExibirTarefa" mnemonicParsing="false" onAction="#exibirTarefa" style="-fx-background-color: TRANSPARENT; -fx-border-color: #dd08a1; -fx-border-radius: 7px;" text="Exibir Tarefa" textFill="#dd08a1" StackPane.alignment="CENTER_RIGHT">
                     <StackPane.margin>
                         <Insets right="10.0" />
                     </StackPane.margin>

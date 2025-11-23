@@ -66,7 +66,7 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </Label>
-                        <BarChart fx:id="graficoProgressoAlunos" style="-fx-bar-fill: #3498db;" VBox.vgrow="ALWAYS">
+                        <BarChart fx:id="graficoProgressoAlunos" VBox.vgrow="ALWAYS">
                             <xAxis>
                                 <CategoryAxis side="BOTTOM" />
                             </xAxis>
@@ -146,7 +146,7 @@
                         </VBox>
                         <TableView fx:id="tabelaPendentes">
                             <columns>
-                                <TableColumn fx:id="colProgresso" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Progresso" />
+                                <TableColumn fx:id="colProgresso" minWidth="150.0" prefWidth="150.0" maxWidth="150.0" text="Progresso" />
 
                                 <TableColumn fx:id="colAluno" prefWidth="211.0" text="Aluno" />
 
@@ -154,7 +154,7 @@
                                     <style>-fx-alignment: CENTER;</style>
                                 </TableColumn>
 
-                                <TableColumn fx:id="colAcao" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Ação" />
+                                <TableColumn fx:id="colAcao" minWidth="120.0" prefWidth="120.0" maxWidth="120.0" text="Ação" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
