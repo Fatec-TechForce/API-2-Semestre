@@ -3,7 +3,11 @@ package com.example.tgcontrol.controllers.Alunos;
 import com.example.tgcontrol.model.SecaoAluno;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -13,6 +17,8 @@ public class Card_Secao_Aluno_C {
     @FXML private Label lbDataSecao;
     @FXML private Label lbNomeTarefa;
     @FXML private Label lbStatus;
+    @FXML private AnchorPane apCard;
+    @FXML private Button btnExibirTarefa;
 
     private static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -30,6 +36,10 @@ public class Card_Secao_Aluno_C {
             lbDataSecao.setText("Seção em andamento");
         } else if (secao.getStatus() != null && secao.getStatus().equalsIgnoreCase("locked")){
             lbDataSecao.setText("Seção bloqueada");
+            apCard.setStyle("-fx-background-color: #E0DCDC; -fx-background-radius: 20px");
+            btnExibirTarefa.setVisible(false);
+            btnExibirTarefa.setDisable(true);
+
         } else {
             lbDataSecao.setText("Sem atualizações recentes");
         }
@@ -82,5 +92,17 @@ public class Card_Secao_Aluno_C {
     public void exibirTarefa() {
         String caminho = "AlunoScenes/secao_Aluno.fxml";
         UIUtils.loadFxml(caminho);
+    }
+    //Muda a aparência do botão ao passar em cima
+    @FXML
+    public void escurecerBotaoCard(MouseEvent mouseEvent) {
+        Button btn = (Button) mouseEvent.getSource();
+        btn.setStyle("-fx-background-color: #6A1B9A; -fx-text-fill: #6A1B9A");
+    }
+
+    @FXML
+    public void  esbranquecerBotaoCard(MouseEvent mouseEvent) {
+        Button btn = (Button) mouseEvent.getSource();
+        btn.setStyle("-fx-background-color: #DD08A1; -fx-text-fill: #DD08A1");
     }
 }
