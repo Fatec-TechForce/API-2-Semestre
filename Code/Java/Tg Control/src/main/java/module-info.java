@@ -27,6 +27,4 @@ module com.example.tgcontrol {
     opens com.example.tgcontrol.controllers.ProfessorTG to javafx.fxml;
     opens com.example.tgcontrol.model to javafx.base;
     opens com.example.tgcontrol.utils to javafx.base;
-
-
 }

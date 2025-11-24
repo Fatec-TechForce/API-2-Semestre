@@ -455,50 +455,6 @@ public class DatabaseUtils {
     }
 
     /**
-     * Função: Realiza o upload de uma nova versão (submissão) de uma tarefa.
-     * Necessita: Email do aluno, número de sequência da tarefa, nome do arquivo e caminho de armazenamento.
-     * Retorna: O número da nova tentativa (versão) criada ou -1 em caso de erro.
-     */
-    public static int uploadNovaVersao(String emailAluno, int sequence_order, String nomeArquivo, String caminhoArquivo) {
-        int proximoNumeroVersao = 1;
-
-        String sqlMaxVersao = "SELECT MAX(attempt_number) AS max_attempt FROM task_submission " +
-                "WHERE student_email = ? AND sequence_order = ?";
-
-        try (Connection conn = DatabaseConnect.getConnection();
-             PreparedStatement stmtMax = conn.prepareStatement(sqlMaxVersao)) {
-
-            stmtMax.setString(1, emailAluno);
-            stmtMax.setInt(2, sequence_order);
-
-            try (ResultSet rs = stmtMax.executeQuery()) {
-                if (rs.next() && rs.getObject("max_attempt") != null) {
-                    proximoNumeroVersao = rs.getInt("max_attempt") + 1;
-                }
-            }
-
-            String sqlInsert = "INSERT INTO task_submission " +
-                    "(student_email, sequence_order, submission_timestamp, file_path, submission_title, attempt_number) " +
-                    "VALUES (?, ?, NOW(), ?, ?, ?)";
-
-            try (PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert)) {
-                stmtInsert.setString(1, emailAluno);
-                stmtInsert.setInt(2, sequence_order);
-                stmtInsert.setString(3, caminhoArquivo);
-                stmtInsert.setString(4, nomeArquivo);
-                stmtInsert.setInt(5, proximoNumeroVersao);
-                stmtInsert.executeUpdate();
-            }
-
-            return proximoNumeroVersao;
-
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "DB FALHA (Upload Nova Versão): " + e.getMessage(), e);
-            return -1;
-        }
-    }
-
-    /**
      * Função: Redefine a senha de um usuário no banco de dados.
      * Necessita: O email do usuário e a nova senha.
      * Retorna: true se a senha foi atualizada (usuário encontrado), false caso contrário (usuário não encontrado ou erro).
@@ -670,13 +626,13 @@ public class DatabaseUtils {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Completar Cadastro Aluno - Transação): " + e.getMessage(), e);
             if (conn != null) {
-                try { conn.rollback(); } catch (SQLException ex) { LOGGER.log(Level.SEVERE, "DB FALHA (Rollback): " + ex.getMessage(), ex); }
+                try (Connection c = conn) { c.rollback(); } catch (SQLException ex) { LOGGER.log(Level.SEVERE, "DB FALHA (Rollback): " + ex.getMessage(), ex); }
             }
             UIUtils.showAlert("Erro de Cadastro", "Não foi possível salvar os dados no banco: " + e.getMessage());
             return false;
         } finally {
             if (conn != null) {
-                try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try (Connection c = conn) { c.setAutoCommit(true); } catch (SQLException e) { e.printStackTrace(); }
             }
         }
     }
@@ -769,13 +725,13 @@ public class DatabaseUtils {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "DB FALHA (Completar Cadastro Professor - Transação): " + e.getMessage(), e);
             if (conn != null) {
-                try { conn.rollback(); } catch (SQLException ex) { LOGGER.log(Level.SEVERE, "DB FALHA (Rollback): " + ex.getMessage(), ex); }
+                try (Connection c = conn) { c.rollback(); } catch (SQLException ex) { LOGGER.log(Level.SEVERE, "DB FALHA (Rollback): " + ex.getMessage(), ex); }
             }
             UIUtils.showAlert("Erro de Cadastro", "Não foi possível salvar os dados no banco: " + e.getMessage());
             return false;
         } finally {
             if (conn != null) {
-                try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try (Connection c = conn) { c.setAutoCommit(true); } catch (SQLException e) { e.printStackTrace(); }
             }
         }
     }
@@ -1246,7 +1202,7 @@ public class DatabaseUtils {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "DB FALHA (getStudentDisplayDetails): Falha ao buscar detalhes do aluno " + emailAluno, e);
+            LOGGER.log(Level.SEVERE, "DB FALHA (getStudentDisplayDetails): " + e.getMessage(), e);
         }
         return null;
     }
@@ -1286,4 +1242,250 @@ public class DatabaseUtils {
         }
         return false;
     }
+
+    /**
+     * Função: Busca os detalhes da última submissão e revisão de uma tarefa para o aluno.
+     * Necessita: Email do aluno e o número de sequência da tarefa.
+     * Retorna: Map com {caminhoArquivo, proximaTentativa, statusRevisao, feedbackProfessor} ou null.
+     */
+    public static Map<String, Object> getLatestSubmissionDetails(String emailAluno, int sequencia) {
+        // Query para encontrar a submissão mais recente (último timestamp) e o status de revisão correspondente.
+        String sql = "SELECT ts.submission_timestamp, ts.file_path, ts.attempt_number, " +
+                "       tr.status AS statusRevisao, tr.review_comment AS feedbackProfessor " +
+                "FROM task_submission ts " +
+                "LEFT JOIN task_review tr ON ts.student_email = tr.student_email " +
+                "  AND ts.sequence_order = tr.sequence_order " +
+                "  AND ts.submission_timestamp = tr.submission_timestamp " +
+                "WHERE ts.student_email = ? AND ts.sequence_order = ? " +
+                "ORDER BY ts.submission_timestamp DESC LIMIT 1";
+
+        String sqlMaxTentativa = "SELECT COALESCE(MAX(attempt_number), 0) AS max_attempt FROM task_submission " +
+                "WHERE student_email = ? AND sequence_order = ?";
+
+        Map<String, Object> result = new HashMap<>();
+        int maxAttempt = 0;
+
+        try (Connection conn = DatabaseConnect.getConnection()) {
+            LOGGER.log(Level.FINE, "Buscando máxima tentativa para Aluno: " + emailAluno + ", Seção: " + sequencia);
+            // 1. Busca a maior tentativa registrada (para calcular a próxima)
+            try (PreparedStatement stmtMax = conn.prepareStatement(sqlMaxTentativa)) {
+                stmtMax.setString(1, emailAluno);
+                stmtMax.setInt(2, sequencia);
+                try (ResultSet rsMax = stmtMax.executeQuery()) {
+                    if (rsMax.next()) {
+                        maxAttempt = rsMax.getInt("max_attempt");
+                    }
+                }
+            }
+            result.put("proximaTentativa", maxAttempt + 1);
+
+            // 2. Busca os detalhes da última submissão e revisão
+            LOGGER.log(Level.FINE, "Buscando detalhes da última submissão para Aluno: " + emailAluno + ", Seção: " + sequencia);
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, emailAluno);
+                stmt.setInt(2, sequencia);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        result.put("caminhoArquivo", rs.getString("file_path"));
+
+                        // Se houver status de revisão, usa ele. Senão, marca como "Pendente" (enviado, mas sem review)
+                        result.put("statusRevisao", rs.getString("statusRevisao") != null ? rs.getString("statusRevisao") : "Pendente");
+
+                        result.put("feedbackProfessor", rs.getString("feedbackProfessor"));
+
+                        LOGGER.log(Level.INFO, "Última submissão encontrada. Status: " + result.get("statusRevisao"));
+                        return result;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getLatestSubmissionDetails) para Aluno: " + emailAluno + ", Seção: " + sequencia + ". Erro: " + e.getMessage(), e);
+            return null;
+        }
+        LOGGER.log(Level.INFO, "Nenhuma submissão encontrada para Aluno: " + emailAluno + ", Seção: " + sequencia);
+        return null;
+    }
+
+    /**
+     * Função: Realiza o upload de uma nova versão (submissão) de uma tarefa.
+     * Retorna: O número da nova tentativa (versão) criada ou -1 em caso de erro.
+     */
+    public static int uploadNovaVersao(String emailAluno, int sequence_order, String submissionTitle, String caminhoArquivo) {
+        int proximoNumeroVersao = 1;
+
+        String sqlMaxVersao = "SELECT MAX(attempt_number) AS max_attempt FROM task_submission " +
+                "WHERE student_email = ? AND sequence_order = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtMax = conn.prepareStatement(sqlMaxVersao)) {
+
+            stmtMax.setString(1, emailAluno);
+            stmtMax.setInt(2, sequence_order);
+
+            try (ResultSet rs = stmtMax.executeQuery()) {
+                if (rs.next() && rs.getObject("max_attempt") != null) {
+                    proximoNumeroVersao = rs.getInt("max_attempt") + 1;
+                }
+            }
+
+            String sqlInsert = "INSERT INTO task_submission " +
+                    "(student_email, sequence_order, submission_timestamp, file_path, submission_title, attempt_number) " +
+                    "VALUES (?, ?, NOW(), ?, ?, ?)";
+
+            try (PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert)) {
+                stmtInsert.setString(1, emailAluno);
+                stmtInsert.setInt(2, sequence_order);
+                stmtInsert.setString(3, caminhoArquivo);
+                stmtInsert.setString(4, submissionTitle);
+                stmtInsert.setInt(5, proximoNumeroVersao);
+                stmtInsert.executeUpdate();
+            }
+
+            return proximoNumeroVersao;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (Upload Nova Versão): " + e.getMessage(), e);
+            return -1;
+        }
+    }
+
+    /**
+     * Função: Busca o número da última tentativa de submissão.
+     * Retorna: O número da última tentativa ou 0 se não houver nenhuma.
+     */
+    public static int getLastAttemptNumber(String emailAluno, int sequence_order) {
+        String sqlMaxVersao = "SELECT MAX(attempt_number) AS max_attempt FROM task_submission " +
+                "WHERE student_email = ? AND sequence_order = ?";
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtMax = conn.prepareStatement(sqlMaxVersao)) {
+
+            stmtMax.setString(1, emailAluno);
+            stmtMax.setInt(2, sequence_order);
+
+            try (ResultSet rs = stmtMax.executeQuery()) {
+                if (rs.next() && rs.getObject("max_attempt") != null) {
+                    return rs.getInt("max_attempt");
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getLastAttemptNumber): " + e.getMessage(), e);
+        }
+        return 0;
+    }
+
+    /**
+     * Função: Atualiza o file_path e submission_title para uma submissão específica.
+     */
+    public static boolean updateSubmissionFilePath(String emailAluno, int sequenceOrder, int attemptNumber, String newFilePath) {
+        String submissionTitle = "Entrega da Seção " + sequenceOrder + " (v" + attemptNumber + ")";
+
+        String sql = "UPDATE task_submission SET file_path = ?, submission_title = ? " +
+                "WHERE student_email = ? AND sequence_order = ? AND attempt_number = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newFilePath);
+            stmt.setString(2, submissionTitle);
+            stmt.setString(3, emailAluno);
+            stmt.setInt(4, sequenceOrder);
+            stmt.setInt(5, attemptNumber);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (updateSubmissionFilePath): Falha ao atualizar caminho do arquivo para " + emailAluno, e);
+            return false;
+        }
+    }
+
+    /**
+     * Função: Busca o comentário de feedback da última revisão (se houver).
+     */
+    public static String getLatestReviewFeedback(String emailAluno, int sequenceOrder) {
+        String sqlLatestSubmission = "SELECT MAX(submission_timestamp) as latest_ts FROM task_submission " +
+                "WHERE student_email = ? AND sequence_order = ?";
+        Timestamp latestTs = null;
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtLatest = conn.prepareStatement(sqlLatestSubmission)) {
+
+            stmtLatest.setString(1, emailAluno);
+            stmtLatest.setInt(2, sequenceOrder);
+
+            try (ResultSet rs = stmtLatest.executeQuery()) {
+                if (rs.next() && rs.getTimestamp("latest_ts") != null) {
+                    latestTs = rs.getTimestamp("latest_ts");
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getLatestReviewFeedback - Latest TS): Falha ao buscar última submissão para " + emailAluno, e);
+            return null;
+        }
+
+        String sqlLatestReview = "SELECT review_comment FROM task_review " +
+                "WHERE student_email = ? AND sequence_order = ? AND submission_timestamp = ? " +
+                "ORDER BY review_timestamp DESC LIMIT 1";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmtReview = conn.prepareStatement(sqlLatestReview)) {
+
+            stmtReview.setString(1, emailAluno);
+            stmtReview.setInt(2, sequenceOrder);
+            stmtReview.setTimestamp(3, latestTs);
+
+            try (ResultSet rs = stmtReview.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("review_comment");
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "DB FALHA (getLatestReviewFeedback - Latest Review): " + e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * Função: Lista todas as versões (submissões) de uma seção para a tela do ALUNO.
+     */
+    public static List<HistoricoVersao> getHistoricoVersoesAluno(String emailAluno, int sequencia) {
+        List<HistoricoVersao> historico = new ArrayList<>();
+
+        String sql = "SELECT ts.attempt_number, ts.submission_timestamp, ts.file_path, " +
+                "       tr.review_comment, tr.status " +
+                "FROM task_submission ts " +
+                "LEFT JOIN task_review tr " +
+                "  ON ts.student_email = tr.student_email " +
+                "  AND ts.sequence_order = tr.sequence_order " +
+                "  AND ts.submission_timestamp = (SELECT MAX(submission_timestamp) FROM task_submission WHERE student_email = ts.student_email AND sequence_order = ts.sequence_order AND attempt_number = ts.attempt_number) " +
+                "WHERE ts.student_email = ? AND ts.sequence_order = ? " +
+                "ORDER BY ts.submission_timestamp DESC";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emailAluno);
+            stmt.setInt(2, sequencia);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    historico.add(new HistoricoVersao(
+                            rs.getInt("attempt_number"),
+                            rs.getTimestamp("submission_timestamp").toLocalDateTime(),
+                            rs.getString("file_path"),
+                            rs.getString("review_comment"),
+                            rs.getString("status")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao buscar histórico do aluno: " + e.getMessage(), e);
+        }
+        return historico;
+    }
+
+
 }

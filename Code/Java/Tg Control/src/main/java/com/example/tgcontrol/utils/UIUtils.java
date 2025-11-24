@@ -90,28 +90,11 @@ public final class UIUtils {
             Parent root = FXMLLoader.load(fxmlLocation);
             Scene scene = new Scene(root);
 
-            // Lógica para arrastar a janela (só funciona se não estiver maximizada)
-            scene.setOnMousePressed(mouseEvent -> {
-                xOffset = mouseEvent.getSceneX();
-                yOffset = mouseEvent.getSceneY();
-            });
-
-            scene.setOnMouseDragged(mouseEvent -> {
-                if (!stage.isMaximized()) {
-                    stage.setX(mouseEvent.getScreenX() - xOffset);
-                    stage.setY(mouseEvent.getScreenY() - yOffset);
-                }
-            });
-
             stage.setScene(scene);
             stage.setTitle("TgControl");
             stage.setResizable(true);
-
-            stage.show(); // Mostra a janela (ela pode encolher aqui para caber o FXML)
-
-            // Força um "reset" no estado maximizado para garantir que o JavaFX aplique
-            stage.setMaximized(false);
             stage.setMaximized(true);
+            stage.show();
 
             stage.toFront();
             setStageIcon(stage);

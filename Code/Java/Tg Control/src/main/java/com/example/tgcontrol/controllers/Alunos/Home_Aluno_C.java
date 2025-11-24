@@ -6,13 +6,17 @@ import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -143,7 +147,26 @@ public class Home_Aluno_C implements Initializable {
     @FXML
     void abrirUltimaSecao(ActionEvent event) {
         if (ultimaSecao != null) {
-            UIUtils.loadFxml("AlunoScenes/secao_Aluno.fxml");
+            try {
+                String caminho = "/com/example/tgcontrol/Scenes/AlunoScenes/secao_Aluno.fxml";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
+                Parent root = loader.load();
+
+                Secao_Aluno_C controller = loader.getController();
+                controller.setDadosSecao(this.ultimaSecao); // PASSAGEM DO CONTEXTO CORRIGIDA
+
+                StackPane contentArea = (StackPane) ((javafx.scene.Node) event.getSource()).getScene().lookup("#contentArea");
+                if (contentArea != null) {
+                    contentArea.getChildren().clear();
+                    contentArea.getChildren().add(root);
+                    LOGGER.log(Level.INFO, "Navegação da Home para Secao_Aluno_C bem-sucedida.");
+                } else {
+                    LOGGER.log(Level.SEVERE, "Erro de Navegação: #contentArea não encontrado para abrir seção.");
+                }
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Falha ao carregar FXML da seção do aluno a partir da Home.", e);
+                UIUtils.showAlert("Erro", "Não foi possível abrir a tela da seção.");
+            }
         } else {
             UIUtils.showAlert("Informação", "Não há uma seção ativa para visualizar.");
         }

@@ -321,20 +321,20 @@ INSERT INTO `task` (`student_email`, `sequence_order`, `title`, `description`, `
 -- ========================================================================== --
 -- Submissões da Maria (Cenário 2)
 INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 1, NOW() - INTERVAL 20 DAY, 'Server/submissions/maria_t1_v1.pdf', 'Entrega Apresentação (v1)', 1);
+VALUES ('maria.oliveira@fatec.sp.gov.br', 1, NOW() - INTERVAL 20 DAY, 'Server/submissions/maria_t1_v1.md', 'Entrega Apresentação (v1)', 1);
 
 INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 15 DAY, 'Server/submissions/maria_t2_v1.pdf', 'Entrega PIM II (v1)', 1);
+VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 15 DAY, 'Server/submissions/maria_t2_v1.md', 'Entrega PIM II (v1)', 1);
 
 INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 10 DAY, 'Server/submissions/maria_t2_v2.pdf', 'Correção PIM II (v2)', 2);
+VALUES ('maria.oliveira@fatec.sp.gov.br', 2, NOW() - INTERVAL 10 DAY, 'Server/submissions/maria_t2_v2.md', 'Correção PIM II (v2)', 2);
 
 INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('maria.oliveira@fatec.sp.gov.br', 3, NOW() - INTERVAL 2 DAY, 'Server/submissions/maria_t3_v1.pdf', 'Entrega PIM III (v1)', 1);
+VALUES ('maria.oliveira@fatec.sp.gov.br', 3, NOW() - INTERVAL 2 DAY, 'Server/submissions/maria_t3_v1.md', 'Entrega PIM III (v1)', 1);
 
 -- Submissão do Niuan (Cenário 6)
 INSERT INTO `task_submission` (`student_email`, `sequence_order`, `submission_timestamp`, `file_path`, `submission_title`, `attempt_number`) 
-VALUES ('niuan.souza@fatec.sp.gov.br', 1, NOW() - INTERVAL 1 DAY, 'Server/submissions/niuan_t1_v1.docx', 'Apresentação Pessoal e Acadêmica', 1);
+VALUES ('niuan.souza@fatec.sp.gov.br', 1, NOW() - INTERVAL 1 DAY, 'Server/submissions/niuan_t1_v1.md', 'Apresentação Pessoal e Acadêmica', 1);
 
 -- ========================================================================== --
 -- Tabela: task_review

@@ -2,6 +2,7 @@ package com.example.tgcontrol.controllers.Geral;
 
 import com.example.tgcontrol.model.VersaoTG;
 import com.example.tgcontrol.utils.DatabaseUtils;
+import com.example.tgcontrol.utils.SessaoManager;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,8 +29,8 @@ public class Versoes_User_C {
     @FXML private Button btnVoltar;
 
     // Exemplo: e-mail do aluno logado (deve ser obtido do SessaoManager)
-    // private final String emailAluno = SessaoManager.getInstance().getUsuarioLogado().getEmail();
-    private final String emailAluno = "maria.oliveira@fatec.sp.gov.br"; // Mock para teste
+     private final String emailAluno = SessaoManager.getInstance().getEmailUsuario();
+    //private final String emailAluno = "maria.oliveira@fatec.sp.gov.br"; // Mock para teste
 
     // Simulação: A tarefa/seção que está sendo visualizada (deve ser obtida do contexto da tela anterior)
     private final int sequence_order = 1; // Mock para teste

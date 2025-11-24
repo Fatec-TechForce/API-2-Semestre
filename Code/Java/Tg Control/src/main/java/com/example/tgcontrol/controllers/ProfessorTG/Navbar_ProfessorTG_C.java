@@ -3,7 +3,10 @@ package com.example.tgcontrol.controllers.ProfessorTG;
 import com.example.tgcontrol.controllers.BaseNavbarController;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+
 
 public class Navbar_ProfessorTG_C extends BaseNavbarController {
 
@@ -24,5 +27,17 @@ public class Navbar_ProfessorTG_C extends BaseNavbarController {
 
     @FXML
     public void coordinations(ActionEvent actionEvent) { UIUtils.loadFxml("ProfessorScenes/coordinations_Professor.fxml");
+    }
+    //Muda a aparência do botão ao passar em cima
+    @FXML
+    public void escurecerBotaoNavbar(MouseEvent mouseEvent) {
+        Button btn = (Button) mouseEvent.getSource();
+        btn.setStyle("-fx-background-color: #D3D5E0;");
+    }
+
+    @FXML
+    public void  esbranquecerBotaoNavBar(MouseEvent mouseEvent) {
+        Button btn = (Button) mouseEvent.getSource();
+        btn.setStyle("-fx-background-color: #FFFFFF;");
     }
 }

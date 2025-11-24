@@ -105,9 +105,3 @@ Esta sprint cobre as novas funcionalidades do sistema **TG Control**, incluindo:
 ---
 
 # 📊 Burndown da Sprint
-<img width="398" height="250" alt="image" src="https://github.com/user-attachments/assets/e812d6a0-505b-46b5-bc25-84c785012077" />
----
-# 🎥 Vídeo
-
-https://github.com/user-attachments/assets/54b96d81-1160-486f-8986-6c242b600601
-

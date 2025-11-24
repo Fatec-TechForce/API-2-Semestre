@@ -20,7 +20,11 @@ public final class FileStorageUtils {
     private static final Logger LOGGER = Logger.getLogger(FileStorageUtils.class.getName());
     private static final String SERVER_BASE_DIR = "Server";
     private static final String PROFILE_PICS_DIR = SERVER_BASE_DIR + File.separator + "profiles";
-    private static final String MARKDOWN_TGS_DIR = SERVER_BASE_DIR + File.separator + "TGs_Markdown";
+
+    /** Diretório para submissões de tarefas. */
+    private static final String SUBMISSIONS_DIR = SERVER_BASE_DIR + File.separator + "submissions";
+    private static final String DRAFT_DIR = SERVER_BASE_DIR + File.separator + "TGs_Markdown";
+
     private static final String AGREEMENTS_DIR = SERVER_BASE_DIR + File.separator + "agreements";
 
     private FileStorageUtils() {
@@ -131,12 +135,15 @@ public final class FileStorageUtils {
     }
 
     /**
-     * Função: Converte conteúdo HTML para Markdown e salva em um arquivo .md.
-     * Necessita: O texto HTML e o nome desejado para o arquivo de saída.
-     * Retorna: true se sucesso, false caso contrário.
+     * Função: Converte conteúdo HTML para Markdown e salva em um arquivo .md no diretório especificado.
+     * @param htmlInput O texto HTML.
+     * @param nomeArquivoSaida O nome desejado para o arquivo de saída.
+     * @param isSubmission Indica se é uma submissão (salva em SUBMISSIONS_DIR) ou rascunho (salva em DRAFT_DIR).
+     * @return true se sucesso, false caso contrário.
      */
-    public static boolean converterESalvarMarkdown(String htmlInput, String nomeArquivoSaida) {
-        String diretorioSaida = MARKDOWN_TGS_DIR;
+    public static boolean converterESalvarMarkdown(String htmlInput, String nomeArquivoSaida, boolean isSubmission) {
+        // Usa o diretório de submissions ou o diretório de rascunhos, conforme a flag
+        String diretorioSaida = isSubmission ? SUBMISSIONS_DIR : DRAFT_DIR;
 
         if (htmlInput == null || htmlInput.isBlank()) {
             LOGGER.log(Level.WARNING, "Conversão HTML->MD: Conteúdo HTML de entrada está vazio.");

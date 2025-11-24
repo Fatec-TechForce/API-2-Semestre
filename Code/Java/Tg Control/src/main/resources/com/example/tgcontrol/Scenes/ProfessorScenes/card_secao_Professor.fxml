@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="150.0" minHeight="150.0" prefHeight="150.0" style="-fx-background-radius: 20px; -fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Card_Secao_Professor_C">
+<AnchorPane maxHeight="150.0" minHeight="150.0" prefHeight="150.0" style="-fx-background-radius: 20px; -fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Card_Secao_Professor_C">
     <children>
         <StackPane prefHeight="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>

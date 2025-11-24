@@ -3,9 +3,15 @@ package com.example.tgcontrol.controllers.Alunos;
 import com.example.tgcontrol.model.SecaoAluno;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Card_Secao_Aluno_C {
 
@@ -13,12 +19,19 @@ public class Card_Secao_Aluno_C {
     @FXML private Label lbDataSecao;
     @FXML private Label lbNomeTarefa;
     @FXML private Label lbStatus;
+    @FXML private Button btnExibirTarefa;
 
     private static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final Logger LOGGER = Logger.getLogger(Card_Secao_Aluno_C.class.getName());
+
+    private SecaoAluno secao;
 
     public void configurar(SecaoAluno secao) {
-        if (secao == null) return;
+        if (secao == null) {
+            LOGGER.log(Level.SEVERE, "Erro de Configuração: Objeto SecaoAluno nulo ao configurar o card.");
+            return;
+        }
+        this.secao = secao;
 
         lbTituloSecao.setText(secao.getTitulo());
 
@@ -29,6 +42,8 @@ public class Card_Secao_Aluno_C {
         } else if (secao.getStatus() != null && secao.getStatus().equalsIgnoreCase("in_progress")) {
             lbDataSecao.setText("Seção em andamento");
         } else if (secao.getStatus() != null && secao.getStatus().equalsIgnoreCase("locked")){
+            btnExibirTarefa.setVisible(false);
+            btnExibirTarefa.setDisable(true);
             lbDataSecao.setText("Seção bloqueada");
         } else {
             lbDataSecao.setText("Sem atualizações recentes");
@@ -80,7 +95,33 @@ public class Card_Secao_Aluno_C {
 
     @FXML
     public void exibirTarefa() {
-        String caminho = "AlunoScenes/secao_Aluno.fxml";
-        UIUtils.loadFxml(caminho);
+        if (secao == null) {
+            LOGGER.log(Level.SEVERE, "Falha na navegação: Objeto SecaoAluno é nulo ao clicar no card.");
+            UIUtils.showAlert("Aviso", "Não foi possível carregar os dados desta seção.");
+            return;
+        }
+
+        try {
+            String caminho = "/com/example/tgcontrol/Scenes/AlunoScenes/secao_Aluno.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
+            Parent root = loader.load();
+
+            Secao_Aluno_C controller = loader.getController();
+            controller.setDadosSecao(this.secao);
+
+            LOGGER.log(Level.INFO, "Navegando para Secao_Aluno_C com Email: " + this.secao.getEmailAluno() + ", Seção: " + this.secao.getTaskSequence());
+
+            StackPane contentArea = (StackPane) lbTituloSecao.getScene().lookup("#contentArea");
+            if (contentArea != null) {
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(root);
+            } else {
+                LOGGER.log(Level.SEVERE, "Erro de Navegação: #contentArea não encontrado na Scene.");
+                UIUtils.showAlert("Erro", "Não foi possível encontrar a área de conteúdo (contentArea).");
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao carregar FXML da seção do aluno.", e);
+            UIUtils.showAlert("Erro", "Não foi possível abrir a tela da seção.");
+        }
     }
 }
