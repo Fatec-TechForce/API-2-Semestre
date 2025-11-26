@@ -3,6 +3,7 @@ package com.example.tgcontrol.controllers.Alunos;
 import com.example.tgcontrol.utils.FileStorageUtils;
 import com.example.tgcontrol.utils.UIUtils;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,8 +22,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -43,10 +46,20 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import com.example.tgcontrol.model.*;
 
-public class Secao_Aluno_C {
+public class Secao_Aluno_C{
     @FXML Button btn_Arquivo;
     @FXML Label lblMensagemSucesso;
     @FXML HTMLEditor htmlEditor;
+    @FXML VBox vbRequisitos;
+
+    @FXML
+    public void initialize(){
+    }
+
+    private void criarCheckBox(String texto) {
+        CheckBox cb = new CheckBox(texto);
+        vbRequisitos.getChildren().add(cb);
+    }
 
     private String formatarTamanhoArquivo(long tamanho) {
         if(tamanho <= 0) return null;

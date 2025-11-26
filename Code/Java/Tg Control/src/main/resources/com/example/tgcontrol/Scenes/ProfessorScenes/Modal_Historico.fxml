@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.web.WebView?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: white; -fx-border-color: #9119B3; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Modal_Historico_C">
+<AnchorPane prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #F4F6F9; -fx-border-color: #9119B3; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tgcontrol.controllers.Professor.Modal_Historico_C">
     <children>
         <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
@@ -26,12 +24,11 @@
 
                 <AnchorPane style="-fx-border-color: #a7a7a7; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                     <children>
-                        <WebView fx:id="webConteudo" prefHeight="-1.0" prefWidth="-1.0"
-                                 AnchorPane.bottomAnchor="5.0"
-                                 AnchorPane.leftAnchor="5.0"
-                                 AnchorPane.rightAnchor="5.0"
-                                 AnchorPane.topAnchor="5.0" />
+                        <WebView fx:id="webConteudo" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                     </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
                 </AnchorPane>
 
                 <Label text="Feedback do Professor nesta versão:">
@@ -43,7 +40,10 @@
                     </VBox.margin>
                 </Label>
 
-                <TextArea fx:id="txtFeedback" editable="false" prefHeight="150.0" wrapText="true" style="-fx-background-color: #f4f4f4;" />
+                <TextArea fx:id="txtFeedback" editable="false" prefHeight="150.0" style="-fx-background-color: #f4f4f4;" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin></TextArea>
             </children>
         </VBox>
     </children>

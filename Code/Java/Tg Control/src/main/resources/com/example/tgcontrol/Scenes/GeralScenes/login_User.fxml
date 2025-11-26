@@ -39,7 +39,7 @@
                             </children>
                         </StackPane>
 
-                        <Button fx:id="btn_Login" maxWidth="Infinity" mnemonicParsing="false" onAction="#Login" prefHeight="35.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Logar" textFill="WHITE">
+                        <Button fx:id="btn_Login" maxWidth="Infinity" mnemonicParsing="false" onAction="#Login" prefHeight="35.0" style="-fx-background-color: #6A1B9A; -fx-background-radius: 25px;" text="Entrar" textFill="WHITE">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
@@ -58,12 +58,12 @@
     <bottom>
         <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #D9D9D9;" BorderPane.alignment="CENTER">
             <children>
-                <Label text="Ao continuar, você concorda com os nossos.">
+                <Label visible="false" text="Ao continuar, você concorda com os nossos">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <Label text="Termos de Serviço e Política de Privacidade">
+                <Label visible="false" text="Termos de Serviço e Política de Privacidade">
                     <font>
                         <Font size="14.0" />
                     </font>

@@ -108,6 +108,10 @@ public class DatabaseUtils {
         return secoes;
     }
 
+    //public static SecaoAluno getSecaoAluno(String titulo) {
+
+    //}
+
     /**
      * Função: Busca os dados para o dashboard do professor orientador.
      * Necessita: Email do professor orientador.

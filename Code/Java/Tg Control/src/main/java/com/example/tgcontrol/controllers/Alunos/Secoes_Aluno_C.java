@@ -17,13 +17,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Secoes_Aluno_C implements Initializable {
+public class Secoes_Aluno_C {
 
     @FXML private VBox vbSecoes;
     private static final Logger LOGGER = Logger.getLogger(Secoes_Aluno_C.class.getName());
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
         carregarSecoesDoAluno();
     }
 
